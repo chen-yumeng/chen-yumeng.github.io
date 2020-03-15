@@ -11,25 +11,25 @@
   <meta name="description" content="翻译至 Redis 命令参考  一、Key（键）1.DELDEL key [key …] 删除给定的一个或多个 key 。 不存在的 key 会被忽略。  可用版本：  &#x3D; 1.0.0   时间复杂度： O(N)， N 为被删除的 key 的数量。删除单个字符串类型的 key ，时间复杂度为O(1)。删除单个列表、集合、有序集合或哈希表类型的 key ，时间复杂度为O(M)， M 为以上数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis所有命令+集群（翻译转载）">
-<meta property="og:url" content="http://chen-yumeng.github.io/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/index.html">
+<meta property="og:url" content="http://chen-yumeng.github.io/2020/03/15/Redis_translate/index.html">
 <meta property="og:site_name" content="Chenyumeng的博客">
 <meta property="og:description" content="翻译至 Redis 命令参考  一、Key（键）1.DELDEL key [key …] 删除给定的一个或多个 key 。 不存在的 key 会被忽略。  可用版本：  &#x3D; 1.0.0   时间复杂度： O(N)， N 为被删除的 key 的数量。删除单个字符串类型的 key ，时间复杂度为O(1)。删除单个列表、集合、有序集合或哈希表类型的 key ，时间复杂度为O(M)， M 为以上数据结构">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-03-15T08:15:53.000Z">
-<meta property="article:modified_time" content="2020-03-15T09:20:51.693Z">
+<meta property="article:modified_time" content="2020-03-15T12:19:35.875Z">
 <meta property="article:author" content="Chenyumeng">
+<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="CentOS7">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="Redis">
-<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="NoSQL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Chenyumeng的博客" type="application/atom+xml">
   
   
-    <link rel="icon" href="/img/favicon.png">
+    <link rel="icon" href="/assets/img/favicon.png">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
   <style type="text/css">
@@ -49,11 +49,11 @@
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
       
-<div class="overlay" style="background: #E386D1"></div>
+<div class="overlay" style="background: #F9690E"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/img/touxiang.JPG" class="js-avatar">
+			<img src="/assets/img/touxiang.JPG" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Chenyumeng</a></h1>
@@ -66,6 +66,8 @@
 			<ul>
 			
 				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/archives/index.html">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -85,8 +87,6 @@
 				
 					<a class="github" target="_blank" href="https://github.com/chen-yumeng" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="mail" target="_blank" href="/2390651924@qq.com" title="mail"><i class="icon-mail"></i></a>
-		        
 			</div>
 		</nav>
 	</header>		
@@ -96,14 +96,14 @@
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
-  	<div class="overlay js-overlay" style="background: #E386D1"></div>
+  	<div class="overlay js-overlay" style="background: #F9690E"></div>
 	<div class="btnctn js-mobile-btnctn">
   		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
 	</div>
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/img/touxiang.JPG" class="js-avatar">
+				<img src="/assets/img/touxiang.JPG" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Chenyumeng</h1>
@@ -115,14 +115,14 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
 				<div class="social">
 					
 						<a class="github" target="_blank" href="https://github.com/chen-yumeng" title="github"><i class="icon-github"></i></a>
-			        
-						<a class="mail" target="_blank" href="/2390651924@qq.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -131,7 +131,9 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
+		        
+					<li style="width: 50%"><a href="/archives/index.html">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -146,7 +148,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Redis所有命令+集群（翻译转载）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Redis_translate" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -157,8 +159,18 @@
     </h1>
   
 
+        <!--显示阅读次数-->
         
-        <a href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/" class="archive-article-date">
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        
+        <a href="/2020/03/15/Redis_translate/" class="archive-article-date">
   	<time datetime="2020-03-15T08:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
 </a>
         
@@ -4331,7 +4343,49 @@
 <p>在目前的实现中， 节点会将接收到的信息广播至集群中的其他所有节点， 在将来的实现中， 可能会使用 bloom filter 或者其他算法来优化这一操作。</p>
 <h2 id="附录-A：-CRC16-算法的-ANSI-实现参考"><a href="#附录-A：-CRC16-算法的-ANSI-实现参考" class="headerlink" title="附录 A： CRC16 算法的 ANSI 实现参考"></a>附录 A： CRC16 算法的 ANSI 实现参考</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright 2001-2010 Georges Menie (www.menie.org)</span><br><span class="line"> * Copyright 2010 Salvatore Sanfilippo (adapted to Redis coding style)</span><br><span class="line"> * All rights reserved.</span><br><span class="line"> * Redistribution and use <span class="keyword">in</span> <span class="built_in">source</span> and binary forms, with or without</span><br><span class="line"> * modification, are permitted provided that the following conditions are met:</span><br><span class="line"> *</span><br><span class="line"> *     * Redistributions of <span class="built_in">source</span> code must retain the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer.</span><br><span class="line"> *     * Redistributions <span class="keyword">in</span> binary form must reproduce the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer <span class="keyword">in</span> the</span><br><span class="line"> *       documentation and/or other materials provided with the distribution.</span><br><span class="line"> *     * Neither the name of the University of California, Berkeley nor the</span><br><span class="line"> *       names of its contributors may be used to endorse or promote products</span><br><span class="line"> *       derived from this software without specific prior written permission.</span><br><span class="line"> *</span><br><span class="line"> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS<span class="string">''</span> AND ANY</span><br><span class="line"> * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span><br><span class="line"> * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span><br><span class="line"> * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY</span><br><span class="line"> * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span><br><span class="line"> * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span><br><span class="line"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span><br><span class="line"> * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span><br><span class="line"> * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span><br><span class="line"> * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/* CRC16 implementation acording to CCITT standards.</span><br><span class="line"> *</span><br><span class="line"> * Note by @antirez: this is actually the XMODEM CRC 16 algorithm, using the</span><br><span class="line"> * following parameters:</span><br><span class="line"> *</span><br><span class="line"> * Name                       : <span class="string">"XMODEM"</span>, also known as <span class="string">"ZMODEM"</span>, <span class="string">"CRC-16/ACORN"</span></span><br><span class="line"> * Width                      : 16 bit</span><br><span class="line"> * Poly                       : 1021 (That is actually x^16 + x^12 + x^5 + 1)</span><br><span class="line"> * Initialization             : 0000</span><br><span class="line"> * Reflect Input byte         : False</span><br><span class="line"> * Reflect Output CRC         : False</span><br><span class="line"> * Xor constant to output CRC : 0000</span><br><span class="line"> * Output <span class="keyword">for</span> <span class="string">"123456789"</span>     : 31C3</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">static const uint16_t crc16tab[256]= &#123;</span><br><span class="line">    0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,</span><br><span class="line">    0x8108,0x9129,0xa14a,0xb16b,0xc18c,0xd1ad,0xe1ce,0xf1ef,</span><br><span class="line">    0x1231,0x0210,0x3273,0x2252,0x52b5,0x4294,0x72f7,0x62d6,</span><br><span class="line">    0x9339,0x8318,0xb37b,0xa35a,0xd3bd,0xc39c,0xf3ff,0xe3de,</span><br><span class="line">    0x2462,0x3443,0x0420,0x1401,0x64e6,0x74c7,0x44a4,0x5485,</span><br><span class="line">    0xa56a,0xb54b,0x8528,0x9509,0xe5ee,0xf5cf,0xc5ac,0xd58d,</span><br><span class="line">    0x3653,0x2672,0x1611,0x0630,0x76d7,0x66f6,0x5695,0x46b4,</span><br><span class="line">    0xb75b,0xa77a,0x9719,0x8738,0xf7df,0xe7fe,0xd79d,0xc7bc,</span><br><span class="line">    0x48c4,0x58e5,0x6886,0x78a7,0x0840,0x1861,0x2802,0x3823,</span><br><span class="line">    0xc9cc,0xd9ed,0xe98e,0xf9af,0x8948,0x9969,0xa90a,0xb92b,</span><br><span class="line">    0x5af5,0x4ad4,0x7ab7,0x6a96,0x1a71,0x0a50,0x3a33,0x2a12,</span><br><span class="line">    0xdbfd,0xcbdc,0xfbbf,0xeb9e,0x9b79,0x8b58,0xbb3b,0xab1a,</span><br><span class="line">    0x6ca6,0x7c87,0x4ce4,0x5cc5,0x2c22,0x3c03,0x0c60,0x1c41,</span><br><span class="line">    0xedae,0xfd8f,0xcdec,0xddcd,0xad2a,0xbd0b,0x8d68,0x9d49,</span><br><span class="line">    0x7e97,0x6eb6,0x5ed5,0x4ef4,0x3e13,0x2e32,0x1e51,0x0e70,</span><br><span class="line">    0xff9f,0xefbe,0xdfdd,0xcffc,0xbf1b,0xaf3a,0x9f59,0x8f78,</span><br><span class="line">    0x9188,0x81a9,0xb1ca,0xa1eb,0xd10c,0xc12d,0xf14e,0xe16f,</span><br><span class="line">    0x1080,0x00a1,0x30c2,0x20e3,0x5004,0x4025,0x7046,0x6067,</span><br><span class="line">    0x83b9,0x9398,0xa3fb,0xb3da,0xc33d,0xd31c,0xe37f,0xf35e,</span><br><span class="line">    0x02b1,0x1290,0x22f3,0x32d2,0x4235,0x5214,0x6277,0x7256,</span><br><span class="line">    0xb5ea,0xa5cb,0x95a8,0x8589,0xf56e,0xe54f,0xd52c,0xc50d,</span><br><span class="line">    0x34e2,0x24c3,0x14a0,0x0481,0x7466,0x6447,0x5424,0x4405,</span><br><span class="line">    0xa7db,0xb7fa,0x8799,0x97b8,0xe75f,0xf77e,0xc71d,0xd73c,</span><br><span class="line">    0x26d3,0x36f2,0x0691,0x16b0,0x6657,0x7676,0x4615,0x5634,</span><br><span class="line">    0xd94c,0xc96d,0xf90e,0xe92f,0x99c8,0x89e9,0xb98a,0xa9ab,</span><br><span class="line">    0x5844,0x4865,0x7806,0x6827,0x18c0,0x08e1,0x3882,0x28a3,</span><br><span class="line">    0xcb7d,0xdb5c,0xeb3f,0xfb1e,0x8bf9,0x9bd8,0xabbb,0xbb9a,</span><br><span class="line">    0x4a75,0x5a54,0x6a37,0x7a16,0x0af1,0x1ad0,0x2ab3,0x3a92,</span><br><span class="line">    0xfd2e,0xed0f,0xdd6c,0xcd4d,0xbdaa,0xad8b,0x9de8,0x8dc9,</span><br><span class="line">    0x7c26,0x6c07,0x5c64,0x4c45,0x3ca2,0x2c83,0x1ce0,0x0cc1,</span><br><span class="line">    0xef1f,0xff3e,0xcf5d,0xdf7c,0xaf9b,0xbfba,0x8fd9,0x9ff8,</span><br><span class="line">    0x6e17,0x7e36,0x4e55,0x5e74,0x2e93,0x3eb2,0x0ed1,0x1ef0</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">uint16_t crc16(const char *buf, int len) &#123;</span><br><span class="line">    int counter;</span><br><span class="line">    uint16_t crc = 0;</span><br><span class="line">    <span class="keyword">for</span> (counter = 0; counter &lt; len; counter++)</span><br><span class="line">            crc = (crc&lt;&lt;8) ^ crc16tab[((crc&gt;&gt;8) ^ *buf++)&amp;0x00FF];</span><br><span class="line">    <span class="built_in">return</span> crc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
-
+      <!-- 增加版权声明 -->
+      
+      
+        <div class="declare">
+          <strong>本文作者：</strong>
+          
+            Chenyumeng
+          
+          <br>
+          <strong>本文链接：</strong>
+          http://chen-yumeng.github.io/2020/03/15/Redis_translate/
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
+      
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -4341,6 +4395,10 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        		</li>
+      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
         		</li>
@@ -4355,10 +4413,6 @@
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -4418,7 +4472,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://chen-yumeng.github.io/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://chen-yumeng.github.io/2020/03/15/Redis_translate/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -4432,7 +4486,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/03/15/centOs7_Redis/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -4442,7 +4496,7 @@
     </a>
   
   
-    <a href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/03/15/nginx/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">nginx安装配置笔记</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -4463,10 +4517,45 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Key（键）"><span class="toc-number">1.</span> <span class="toc-text">一、Key（键）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DEL"><span class="toc-number">1.1.</span> <span class="toc-text">1.DEL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-DUMP"><span class="toc-number">1.2.</span> <span class="toc-text">2.DUMP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-EXISTS"><span class="toc-number">1.3.</span> <span class="toc-text">3.EXISTS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-EXPIRE"><span class="toc-number">1.4.</span> <span class="toc-text">4.EXPIRE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-EXPIREAT"><span class="toc-number">1.5.</span> <span class="toc-text">5.EXPIREAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-KEYS"><span class="toc-number">1.6.</span> <span class="toc-text">6.KEYS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-MIGRATE"><span class="toc-number">1.7.</span> <span class="toc-text">7.MIGRATE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">1.7.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-MIGRATE"><span class="toc-number">1.8.</span> <span class="toc-text">8.MIGRATE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-1"><span class="toc-number">1.8.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-MOVE"><span class="toc-number">1.9.</span> <span class="toc-text">9.MOVE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-OBJECT"><span class="toc-number">1.10.</span> <span class="toc-text">10.OBJECT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-PERSIST"><span class="toc-number">1.11.</span> <span class="toc-text">11.PERSIST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-PEXPIRE"><span class="toc-number">1.12.</span> <span class="toc-text">12.PEXPIRE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-PEXPIREAT"><span class="toc-number">1.13.</span> <span class="toc-text">13.PEXPIREAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-PTTL"><span class="toc-number">1.14.</span> <span class="toc-text">14.PTTL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-RANDOMKEY"><span class="toc-number">1.15.</span> <span class="toc-text">15.RANDOMKEY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-RENAME"><span class="toc-number">1.16.</span> <span class="toc-text">16.RENAME</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-RENAMENX"><span class="toc-number">1.17.</span> <span class="toc-text">17.RENAMENX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-RESTORE"><span class="toc-number">1.18.</span> <span class="toc-text">18.RESTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-SORT"><span class="toc-number">1.19.</span> <span class="toc-text">19.SORT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一般-SORT-用法"><span class="toc-number">1.19.1.</span> <span class="toc-text">一般 SORT 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-ALPHA-修饰符对字符串进行排序"><span class="toc-number">1.19.2.</span> <span class="toc-text">使用 ALPHA 修饰符对字符串进行排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-LIMIT-修饰符限制返回结果"><span class="toc-number">1.19.3.</span> <span class="toc-text">使用 LIMIT 修饰符限制返回结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用外部-key-进行排序"><span class="toc-number">1.19.4.</span> <span class="toc-text">使用外部 key 进行排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BY-选项"><span class="toc-number">1.19.4.1.</span> <span class="toc-text">BY 选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET-选项"><span class="toc-number">1.19.4.2.</span> <span class="toc-text">GET 选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组合使用-BY-和-GET"><span class="toc-number">1.19.4.3.</span> <span class="toc-text">组合使用 BY 和 GET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取多个外部键"><span class="toc-number">1.19.4.4.</span> <span class="toc-text">获取多个外部键</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取外部键，但不进行排序"><span class="toc-number">1.19.4.5.</span> <span class="toc-text">获取外部键，但不进行排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将哈希表作为-GET-或-BY-的参数"><span class="toc-number">1.19.4.6.</span> <span class="toc-text">将哈希表作为 GET 或 BY 的参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保存排序结果"><span class="toc-number">1.19.5.</span> <span class="toc-text">保存排序结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-TTL"><span class="toc-number">1.20.</span> <span class="toc-text">20.TTL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-TYPE"><span class="toc-number">1.21.</span> <span class="toc-text">21.TYPE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-SCAN"><span class="toc-number">1.22.</span> <span class="toc-text">22.SCAN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SCAN-命令的基本用法"><span class="toc-number">1.22.1.</span> <span class="toc-text">SCAN 命令的基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCAN-命令的保证（guarantees）"><span class="toc-number">1.22.2.</span> <span class="toc-text">SCAN 命令的保证（guarantees）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCAN-命令每次执行返回的元素数量"><span class="toc-number">1.22.3.</span> <span class="toc-text">SCAN 命令每次执行返回的元素数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COUNT-选项"><span class="toc-number">1.22.4.</span> <span class="toc-text">COUNT 选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MATCH-选项"><span class="toc-number">1.22.5.</span> <span class="toc-text">MATCH 选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发执行多个迭代"><span class="toc-number">1.22.6.</span> <span class="toc-text">并发执行多个迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中途停止迭代"><span class="toc-number">1.22.7.</span> <span class="toc-text">中途停止迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用错误的游标进行增量式迭代"><span class="toc-number">1.22.8.</span> <span class="toc-text">使用错误的游标进行增量式迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代终结的保证"><span class="toc-number">1.22.9.</span> <span class="toc-text">迭代终结的保证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、String（字符串）"><span class="toc-number">2.</span> <span class="toc-text">二、String（字符串）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-APPEND"><span class="toc-number">2.1.</span> <span class="toc-text">1.APPEND</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：时间序列-Time-series"><span class="toc-number">2.1.1.</span> <span class="toc-text">模式：时间序列(Time series)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-BITCOUNT"><span class="toc-number">2.2.</span> <span class="toc-text">2.BITCOUNT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：使用-bitmap-实现用户上线次数统计"><span class="toc-number">2.2.1.</span> <span class="toc-text">模式：使用 bitmap 实现用户上线次数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能"><span class="toc-number">2.2.2.</span> <span class="toc-text">性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-BITOP"><span class="toc-number">2.3.</span> <span class="toc-text">3.BITOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-DECR"><span class="toc-number">2.4.</span> <span class="toc-text">4.DECR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-DECRBY"><span class="toc-number">2.5.</span> <span class="toc-text">5.DECRBY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-GET"><span class="toc-number">2.6.</span> <span class="toc-text">6.GET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-GETBIT"><span class="toc-number">2.7.</span> <span class="toc-text">7.GETBIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-GETRANGE"><span class="toc-number">2.8.</span> <span class="toc-text">8.GETRANGE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-GETSET"><span class="toc-number">2.9.</span> <span class="toc-text">9.GETSET</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式"><span class="toc-number">2.9.1.</span> <span class="toc-text">模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-INCR"><span class="toc-number">2.10.</span> <span class="toc-text">10.INCR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：计数器"><span class="toc-number">2.10.1.</span> <span class="toc-text">模式：计数器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：限速器"><span class="toc-number">2.10.2.</span> <span class="toc-text">模式：限速器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-INCRBY"><span class="toc-number">2.11.</span> <span class="toc-text">11.INCRBY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-INCRBYFLOAT"><span class="toc-number">2.12.</span> <span class="toc-text">12.INCRBYFLOAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-MGET"><span class="toc-number">2.13.</span> <span class="toc-text">13.MGET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-MSET"><span class="toc-number">2.14.</span> <span class="toc-text">14.MSET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-MSETNX"><span class="toc-number">2.15.</span> <span class="toc-text">15.MSETNX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-PSETEX"><span class="toc-number">2.16.</span> <span class="toc-text">16.PSETEX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-SET"><span class="toc-number">2.17.</span> <span class="toc-text">17.SET</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用模式"><span class="toc-number">2.17.1.</span> <span class="toc-text">使用模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-SETBIT"><span class="toc-number">2.18.</span> <span class="toc-text">18.SETBIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-SETEX"><span class="toc-number">2.19.</span> <span class="toc-text">19.SETEX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-SETNX"><span class="toc-number">2.20.</span> <span class="toc-text">20.SETNX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-SETRANGE"><span class="toc-number">2.21.</span> <span class="toc-text">21.SETRANGE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式-1"><span class="toc-number">2.21.1.</span> <span class="toc-text">模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-STRLEN"><span class="toc-number">2.22.</span> <span class="toc-text">22.STRLEN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Hash（哈希表）"><span class="toc-number">3.</span> <span class="toc-text">三、Hash（哈希表）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HDEL"><span class="toc-number">3.1.</span> <span class="toc-text">1.HDEL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HEXISTS"><span class="toc-number">3.2.</span> <span class="toc-text">2.HEXISTS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-HGET"><span class="toc-number">3.3.</span> <span class="toc-text">3.HGET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-HGETALL"><span class="toc-number">3.4.</span> <span class="toc-text">4.HGETALL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-HINCRBY"><span class="toc-number">3.5.</span> <span class="toc-text">5.HINCRBY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-HINCRBYFLOAT"><span class="toc-number">3.6.</span> <span class="toc-text">6.HINCRBYFLOAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-HKEYS"><span class="toc-number">3.7.</span> <span class="toc-text">7.HKEYS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-HLEN"><span class="toc-number">3.8.</span> <span class="toc-text">8.HLEN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-HMGET"><span class="toc-number">3.9.</span> <span class="toc-text">9.HMGET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-HMSET"><span class="toc-number">3.10.</span> <span class="toc-text">10.HMSET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-HSET"><span class="toc-number">3.11.</span> <span class="toc-text">11.HSET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-HSETNX"><span class="toc-number">3.12.</span> <span class="toc-text">12.HSETNX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-HVALS"><span class="toc-number">3.13.</span> <span class="toc-text">13.HVALS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-HSCAN"><span class="toc-number">3.14.</span> <span class="toc-text">14.HSCAN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、List（列表）"><span class="toc-number">4.</span> <span class="toc-text">四、List（列表）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-BLPOP"><span class="toc-number">4.1.</span> <span class="toc-text">1.BLPOP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：事件提醒"><span class="toc-number">4.1.1.</span> <span class="toc-text">模式：事件提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-BRPOP"><span class="toc-number">4.2.</span> <span class="toc-text">2.BRPOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-BRPOPLPUSH"><span class="toc-number">4.3.</span> <span class="toc-text">3.BRPOPLPUSH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：安全队列"><span class="toc-number">4.3.1.</span> <span class="toc-text">模式：安全队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：循环列表"><span class="toc-number">4.3.2.</span> <span class="toc-text">模式：循环列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-LINDEX"><span class="toc-number">4.4.</span> <span class="toc-text">4.LINDEX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-LINSERT"><span class="toc-number">4.5.</span> <span class="toc-text">5.LINSERT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-LLEN"><span class="toc-number">4.6.</span> <span class="toc-text">6.LLEN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-LPOP"><span class="toc-number">4.7.</span> <span class="toc-text">7.LPOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-LPUSH"><span class="toc-number">4.8.</span> <span class="toc-text">8.LPUSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-LPUSHX"><span class="toc-number">4.9.</span> <span class="toc-text">9.LPUSHX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-LRANGE"><span class="toc-number">4.10.</span> <span class="toc-text">10.LRANGE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-LREM"><span class="toc-number">4.11.</span> <span class="toc-text">11.LREM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-LSET"><span class="toc-number">4.12.</span> <span class="toc-text">12.LSET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-LTRIM"><span class="toc-number">4.13.</span> <span class="toc-text">13.LTRIM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-RPOP"><span class="toc-number">4.14.</span> <span class="toc-text">14.RPOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-RPOPLPUSH"><span class="toc-number">4.15.</span> <span class="toc-text">15.RPOPLPUSH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：-安全的队列"><span class="toc-number">4.15.1.</span> <span class="toc-text">模式： 安全的队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式：循环列表-1"><span class="toc-number">4.15.2.</span> <span class="toc-text">模式：循环列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-RPUSH"><span class="toc-number">4.16.</span> <span class="toc-text">16.RPUSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-RPUSHX"><span class="toc-number">4.17.</span> <span class="toc-text">17.RPUSHX</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、Set（集合）"><span class="toc-number">5.</span> <span class="toc-text">五、Set（集合）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SADD"><span class="toc-number">5.1.</span> <span class="toc-text">1.SADD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-SCARD"><span class="toc-number">5.2.</span> <span class="toc-text">2.SCARD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-SDIFF"><span class="toc-number">5.3.</span> <span class="toc-text">3.SDIFF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-SDIFFSTORE"><span class="toc-number">5.4.</span> <span class="toc-text">4.SDIFFSTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-SINTER"><span class="toc-number">5.5.</span> <span class="toc-text">5.SINTER</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-SINTERSTORE"><span class="toc-number">5.6.</span> <span class="toc-text">6.SINTERSTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-SISMEMBER"><span class="toc-number">5.7.</span> <span class="toc-text">7.SISMEMBER</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-SMEMBERS"><span class="toc-number">5.8.</span> <span class="toc-text">8.SMEMBERS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-SMOVE"><span class="toc-number">5.9.</span> <span class="toc-text">9.SMOVE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-SPOP"><span class="toc-number">5.10.</span> <span class="toc-text">10.SPOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-SRANDMEMBER"><span class="toc-number">5.11.</span> <span class="toc-text">11.SRANDMEMBER</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-SREM"><span class="toc-number">5.12.</span> <span class="toc-text">12.SREM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-SUNION"><span class="toc-number">5.13.</span> <span class="toc-text">13.SUNION</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-SUNIONSTORE"><span class="toc-number">5.14.</span> <span class="toc-text">14.SUNIONSTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-SSCAN"><span class="toc-number">5.15.</span> <span class="toc-text">15.SSCAN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、SortedSet（有序集合）"><span class="toc-number">6.</span> <span class="toc-text">六、SortedSet（有序集合）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ZADD"><span class="toc-number">6.1.</span> <span class="toc-text">1.ZADD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ZCARD"><span class="toc-number">6.2.</span> <span class="toc-text">2.ZCARD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ZCOUNT"><span class="toc-number">6.3.</span> <span class="toc-text">3.ZCOUNT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ZINCRBY"><span class="toc-number">6.4.</span> <span class="toc-text">4.ZINCRBY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ZRANGE"><span class="toc-number">6.5.</span> <span class="toc-text">5.ZRANGE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-ZRANGEBYSCORE"><span class="toc-number">6.6.</span> <span class="toc-text">6.ZRANGEBYSCORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ZRANK"><span class="toc-number">6.7.</span> <span class="toc-text">7.ZRANK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ZREM"><span class="toc-number">6.8.</span> <span class="toc-text">8.ZREM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-ZREMRANGEBYRANK"><span class="toc-number">6.9.</span> <span class="toc-text">9.ZREMRANGEBYRANK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-ZREMRANGEBYSCORE"><span class="toc-number">6.10.</span> <span class="toc-text">10.ZREMRANGEBYSCORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-ZREVRANGE"><span class="toc-number">6.11.</span> <span class="toc-text">11.ZREVRANGE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-ZREVRANGEBYSCORE"><span class="toc-number">6.12.</span> <span class="toc-text">12.ZREVRANGEBYSCORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-ZREVRANK"><span class="toc-number">6.13.</span> <span class="toc-text">13.ZREVRANK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-ZSCORE"><span class="toc-number">6.14.</span> <span class="toc-text">14.ZSCORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-ZUNIONSTORE"><span class="toc-number">6.15.</span> <span class="toc-text">15.ZUNIONSTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-ZINTERSTORE"><span class="toc-number">6.16.</span> <span class="toc-text">16.ZINTERSTORE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-ZSCAN"><span class="toc-number">6.17.</span> <span class="toc-text">17.ZSCAN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、Pub-Sub（发布-订阅）"><span class="toc-number">7.</span> <span class="toc-text">七、Pub&#x2F;Sub（发布&#x2F;订阅）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-PSUBSCRIBE"><span class="toc-number">7.1.</span> <span class="toc-text">1.PSUBSCRIBE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-PUBLISH"><span class="toc-number">7.2.</span> <span class="toc-text">2.PUBLISH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PUBSUB"><span class="toc-number">7.3.</span> <span class="toc-text">3.PUBSUB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PUBSUB-CHANNELS-pattern"><span class="toc-number">7.3.1.</span> <span class="toc-text">PUBSUB CHANNELS [pattern]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUBSUB-NUMSUB-channel-1-…-channel-N"><span class="toc-number">7.3.2.</span> <span class="toc-text">PUBSUB NUMSUB [channel-1 … channel-N]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUBSUB-NUMPAT"><span class="toc-number">7.3.3.</span> <span class="toc-text">PUBSUB NUMPAT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-PUNSUBSCRIBE"><span class="toc-number">7.4.</span> <span class="toc-text">4.PUNSUBSCRIBE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-SUBSCRIBE"><span class="toc-number">7.5.</span> <span class="toc-text">5.SUBSCRIBE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-UNSUBSCRIBE"><span class="toc-number">7.6.</span> <span class="toc-text">6.UNSUBSCRIBE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、Transaction（事务）"><span class="toc-number">8.</span> <span class="toc-text">八、Transaction（事务）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DISCARD"><span class="toc-number">8.1.</span> <span class="toc-text">1.DISCARD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-EXEC"><span class="toc-number">8.2.</span> <span class="toc-text">2.EXEC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-MULTI"><span class="toc-number">8.3.</span> <span class="toc-text">3.MULTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-UNWATCH"><span class="toc-number">8.4.</span> <span class="toc-text">4.UNWATCH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-WATCH"><span class="toc-number">8.5.</span> <span class="toc-text">5.WATCH</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#九、Script（脚本）"><span class="toc-number">9.</span> <span class="toc-text">九、Script（脚本）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-EVAL"><span class="toc-number">9.1.</span> <span class="toc-text">1.EVAL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在-Lua-数据类型和-Redis-数据类型之间转换"><span class="toc-number">9.1.1.</span> <span class="toc-text">在 Lua 数据类型和 Redis 数据类型之间转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本的原子性"><span class="toc-number">9.1.2.</span> <span class="toc-text">脚本的原子性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误处理"><span class="toc-number">9.1.3.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带宽和-EVALSHA"><span class="toc-number">9.1.4.</span> <span class="toc-text">带宽和 EVALSHA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本缓存"><span class="toc-number">9.1.5.</span> <span class="toc-text">脚本缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCRIPT-命令"><span class="toc-number">9.1.6.</span> <span class="toc-text">SCRIPT 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#纯函数脚本"><span class="toc-number">9.1.7.</span> <span class="toc-text">纯函数脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局变量保护"><span class="toc-number">9.1.8.</span> <span class="toc-text">全局变量保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#库"><span class="toc-number">9.1.9.</span> <span class="toc-text">库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用脚本散发-Redis-日志"><span class="toc-number">9.1.10.</span> <span class="toc-text">使用脚本散发 Redis 日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#沙箱-sandbox-和最大执行时间"><span class="toc-number">9.2.</span> <span class="toc-text">沙箱(sandbox)和最大执行时间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流水线-pipeline-上下文-context-中的-EVALSHA"><span class="toc-number">9.2.1.</span> <span class="toc-text">流水线(pipeline)上下文(context)中的 EVALSHA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-EVALSHA"><span class="toc-number">9.3.</span> <span class="toc-text">2.EVALSHA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-SCRIPT-EXISTS"><span class="toc-number">9.4.</span> <span class="toc-text">3.SCRIPT EXISTS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-SCRIPT-FLUSH"><span class="toc-number">9.5.</span> <span class="toc-text">4.SCRIPT FLUSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-SCRIPT-KILL"><span class="toc-number">9.6.</span> <span class="toc-text">5.SCRIPT KILL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-SCRIPT-LOAD"><span class="toc-number">9.7.</span> <span class="toc-text">6.SCRIPT LOAD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#十、Connection（连接）"><span class="toc-number">10.</span> <span class="toc-text">十、Connection（连接）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-AUTH"><span class="toc-number">10.1.</span> <span class="toc-text">1.AUTH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ECHO"><span class="toc-number">10.2.</span> <span class="toc-text">2.ECHO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PING"><span class="toc-number">10.3.</span> <span class="toc-text">3.PING</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-QUIT"><span class="toc-number">10.4.</span> <span class="toc-text">4.QUIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-SELECT"><span class="toc-number">10.5.</span> <span class="toc-text">5.SELECT</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#十一、Server（服务器）"><span class="toc-number">11.</span> <span class="toc-text">十一、Server（服务器）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-BGREWRITEAOF"><span class="toc-number">11.1.</span> <span class="toc-text">1.BGREWRITEAOF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-BGSAVE"><span class="toc-number">11.2.</span> <span class="toc-text">2.BGSAVE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-CLIENT-GETNAME"><span class="toc-number">11.3.</span> <span class="toc-text">3.CLIENT GETNAME</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-CLIENT-KILL"><span class="toc-number">11.4.</span> <span class="toc-text">4.CLIENT KILL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-CLIENT-LIST"><span class="toc-number">11.5.</span> <span class="toc-text">5.CLIENT LIST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-CLIENT-SETNAME"><span class="toc-number">11.6.</span> <span class="toc-text">6.CLIENT SETNAME</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-CONFIG-GET"><span class="toc-number">11.7.</span> <span class="toc-text">7.CONFIG GET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-CONFIG-RESETSTAT"><span class="toc-number">11.8.</span> <span class="toc-text">8.CONFIG RESETSTAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-CONFIG-REWRITE"><span class="toc-number">11.9.</span> <span class="toc-text">9.CONFIG REWRITE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原子性重写"><span class="toc-number">11.9.1.</span> <span class="toc-text">原子性重写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可用版本"><span class="toc-number">11.9.2.</span> <span class="toc-text">可用版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回值"><span class="toc-number">11.9.3.</span> <span class="toc-text">返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">11.9.4.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-CONFIG-SET"><span class="toc-number">11.10.</span> <span class="toc-text">10.CONFIG SET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-DBSIZE"><span class="toc-number">11.11.</span> <span class="toc-text">11.DBSIZE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-DEBUG-OBJECT"><span class="toc-number">11.12.</span> <span class="toc-text">12.DEBUG OBJECT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-DEBUG-SEGFAULT"><span class="toc-number">11.13.</span> <span class="toc-text">13.DEBUG SEGFAULT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-FLUSHALL"><span class="toc-number">11.14.</span> <span class="toc-text">14.FLUSHALL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-FLUSHDB"><span class="toc-number">11.15.</span> <span class="toc-text">15.FLUSHDB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-INFO"><span class="toc-number">11.16.</span> <span class="toc-text">16.INFO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-LASTSAVE"><span class="toc-number">11.17.</span> <span class="toc-text">17.LASTSAVE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-MONITOR"><span class="toc-number">11.18.</span> <span class="toc-text">18.MONITOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-PSYNC"><span class="toc-number">11.19.</span> <span class="toc-text">19.PSYNC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-SAVE"><span class="toc-number">11.20.</span> <span class="toc-text">20.SAVE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-SHUTDOWN"><span class="toc-number">11.21.</span> <span class="toc-text">21.SHUTDOWN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-SLAVEOF"><span class="toc-number">11.22.</span> <span class="toc-text">22.SLAVEOF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-SLOWLOG"><span class="toc-number">11.23.</span> <span class="toc-text">23.SLOWLOG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-SYNC"><span class="toc-number">11.24.</span> <span class="toc-text">24.SYNC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-TIME"><span class="toc-number">11.25.</span> <span class="toc-text">25.TIME</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#十二、集群教程"><span class="toc-number">12.</span> <span class="toc-text">十二、集群教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#集群简介"><span class="toc-number">12.1.</span> <span class="toc-text">集群简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-集群数据共享"><span class="toc-number">12.2.</span> <span class="toc-text">Redis 集群数据共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-集群中的主从复制"><span class="toc-number">12.3.</span> <span class="toc-text">Redis 集群中的主从复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-集群的一致性保证（guarantee）"><span class="toc-number">12.4.</span> <span class="toc-text">Redis 集群的一致性保证（guarantee）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建并使用-Redis-集群"><span class="toc-number">12.5.</span> <span class="toc-text">创建并使用 Redis 集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建集群"><span class="toc-number">12.6.</span> <span class="toc-text">创建集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群的客户端"><span class="toc-number">12.7.</span> <span class="toc-text">集群的客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-redis-rb-cluster-编写一个示例应用"><span class="toc-number">12.8.</span> <span class="toc-text">使用 redis-rb-cluster 编写一个示例应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对集群进行重新分片"><span class="toc-number">12.9.</span> <span class="toc-text">对集群进行重新分片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个更有趣的示例应用"><span class="toc-number">12.10.</span> <span class="toc-text">一个更有趣的示例应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#故障转移测试"><span class="toc-number">12.11.</span> <span class="toc-text">故障转移测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加新节点到集群"><span class="toc-number">12.12.</span> <span class="toc-text">添加新节点到集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移除一个节点"><span class="toc-number">12.13.</span> <span class="toc-text">移除一个节点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#十二、Redis-集群规范"><span class="toc-number">13.</span> <span class="toc-text">十二、Redis 集群规范</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">13.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是-Redis-集群？"><span class="toc-number">13.2.</span> <span class="toc-text">什么是 Redis 集群？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-集群实现的功能子集"><span class="toc-number">13.3.</span> <span class="toc-text">Redis 集群实现的功能子集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-集群协议中的客户端和服务器"><span class="toc-number">13.4.</span> <span class="toc-text">Redis 集群协议中的客户端和服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键分布模型"><span class="toc-number">13.5.</span> <span class="toc-text">键分布模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群节点属性"><span class="toc-number">13.6.</span> <span class="toc-text">集群节点属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点握手（已实现）"><span class="toc-number">13.7.</span> <span class="toc-text">节点握手（已实现）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MOVED-转向"><span class="toc-number">13.8.</span> <span class="toc-text">MOVED 转向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群在线重配置（live-reconfiguration）"><span class="toc-number">13.9.</span> <span class="toc-text">集群在线重配置（live reconfiguration）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASK-转向"><span class="toc-number">13.10.</span> <span class="toc-text">ASK 转向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容错"><span class="toc-number">13.11.</span> <span class="toc-text">容错</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#节点失效检测"><span class="toc-number">13.11.1.</span> <span class="toc-text">节点失效检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集群状态检测（已部分实现）"><span class="toc-number">13.11.2.</span> <span class="toc-text">集群状态检测（已部分实现）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从节点选举"><span class="toc-number">13.11.3.</span> <span class="toc-text">从节点选举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布-订阅（已实现，但仍然需要改善）"><span class="toc-number">13.12.</span> <span class="toc-text">发布&#x2F;订阅（已实现，但仍然需要改善）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录-A：-CRC16-算法的-ANSI-实现参考"><span class="toc-number">13.13.</span> <span class="toc-text">附录 A： CRC16 算法的 ANSI 实现参考</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
 
+ 
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80OTExNy8yNTYxMg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+  
 
   
   
@@ -4483,17 +4572,34 @@
         </div>
       </div>
       <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2020 Chenyumeng
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
-    </div>
-  </div>
-</footer>
+	<div class="outer">
+	  <div id="footer-info">
+		  <div class="footer-left">
+			&copy; 2020 Chenyumeng <!-- - <a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备16022690号</a> -->
+		  </div>
+		  <div class="footer-right">
+			  <a href="https://hexo.io/zh-cn/" target="_blank">Chenyumeng</a>  Always Love<a href="https://github.com/litten/hexo-theme-yilia" target="_blank"> Code</a>
+		  </div>
+		  </div>
+		  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span> &||& <span id="busuanzi_container_site_uv">你是本博第 <span id="busuanzi_value_site_uv"></span> 位访客</span> || <span id="busuanzi_container_site_pv">历经 <span id="busuanzi_value_site_pv"></span> 次回眸才与你相遇</span> 
+	  <script>
+		  var now = new Date(); 
+		  function createtime() { 
+			  var grt= new Date("03/15/2020 12:02:00");//此处修改你的建站时间或者网站上线时间 
+			  now.setTime(now.getTime()+250); 
+			  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+			  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+			  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+			  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+			  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+			  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+			  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+			  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+		  } 
+	  setInterval("createtime()",250);
+	  </script>
+	</div>
+  </footer>
     </div>
     <script>
 	var yiliaConfig = {
@@ -4561,6 +4667,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">整理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
@@ -4574,18 +4692,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">整理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4609,7 +4715,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">webstorm</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4625,11 +4735,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">webstorm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4684,7 +4790,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">陈广&lt;br&gt;&lt;/br&gt;现就读于湖南网络工程职业学院&lt;br&gt;&lt;/br&gt;在很努力的学习中</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">陈广&lt;br&gt;现就读于湖南网络工程职业学院&lt;br&gt;在很努力的学习中</div>
   	  	
     	</section>
     
