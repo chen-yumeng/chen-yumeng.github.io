@@ -6,37 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://chen-yumeng.github.io">
-  <title>Archives | Chenyumeng的博客</title>
+  <title>ZooKeeper单机与集群安装笔记 | Chenyumeng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chenyumeng的博客">
-<meta property="og:url" content="http://chen-yumeng.github.io/archives/index.html">
+  <meta name="description" content="ZooKeeper安装　　安装环境： 　　　　1、系统：CentOS 7.4 　　　　2、Java环境：JDK8 　　zookeeper有单机、伪集群、集群三种部署方式，本例使用的zookeeper版本是：zookeeper-3.4.12 单机模式1、下载ZooKeeper，地址：http:&#x2F;&#x2F;mirrors.hust.edu.cn&#x2F;apache&#x2F;zookeeper&#x2F; 2、解压，命令：tar -z">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZooKeeper单机与集群安装笔记">
+<meta property="og:url" content="http://chen-yumeng.github.io/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Chenyumeng的博客">
-<meta property="og:description" content="用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解">
+<meta property="og:description" content="ZooKeeper安装　　安装环境： 　　　　1、系统：CentOS 7.4 　　　　2、Java环境：JDK8 　　zookeeper有单机、伪集群、集群三种部署方式，本例使用的zookeeper版本是：zookeeper-3.4.12 单机模式1、下载ZooKeeper，地址：http:&#x2F;&#x2F;mirrors.hust.edu.cn&#x2F;apache&#x2F;zookeeper&#x2F; 2、解压，命令：tar -z">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-15T08:18:53.000Z">
+<meta property="article:modified_time" content="2020-03-15T08:24:01.730Z">
 <meta property="article:author" content="Chenyumeng">
-<meta property="article:tag" content="前端">
-<meta property="article:tag" content="js">
-<meta property="article:tag" content="jquery">
-<meta property="article:tag" content="javascript">
-<meta property="article:tag" content="html5">
-<meta property="article:tag" content="开发者">
-<meta property="article:tag" content="程序猿">
-<meta property="article:tag" content="程序媛">
-<meta property="article:tag" content="极客">
-<meta property="article:tag" content="编程">
-<meta property="article:tag" content="代码">
-<meta property="article:tag" content="开源">
-<meta property="article:tag" content="IT网站">
-<meta property="article:tag" content="Developer">
-<meta property="article:tag" content="Programmer">
-<meta property="article:tag" content="Coder">
-<meta property="article:tag" content="Geek">
-<meta property="article:tag" content="html">
-<meta property="article:tag" content="css">
-<meta property="article:tag" content="css3">
-<meta property="article:tag" content="用户体验">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="ZooKeeper">
+<meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Chenyumeng的博客" type="application/atom+xml">
@@ -159,36 +145,59 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ZooKeeper单机与集群安装笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:18:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">ZooKeeper单机与集群安装笔记</a>
+    <h1 class="article-title" itemprop="name">
+      ZooKeeper单机与集群安装笔记
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:18:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ZooKeeper安装"><a href="#ZooKeeper安装" class="headerlink" title="ZooKeeper安装"></a>ZooKeeper安装</h1><p>　　安装环境：</p>
+<p>　　　　1、系统：CentOS 7.4</p>
+<p>　　　　2、Java环境：JDK8</p>
+<p>　　zookeeper有单机、伪集群、集群三种部署方式，本例使用的zookeeper版本是：zookeeper-3.4.12</p>
+<h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><p>1、下载ZooKeeper，地址：<a href="http://mirrors.hust.edu.cn/apache/zookeeper/" target="_blank" rel="noopener">http://mirrors.hust.edu.cn/apache/zookeeper/</a></p>
+<p>2、解压，命令：tar -zxvf zookeeper-3.4.12.tar.gz -C /data/soft/</p>
+<p>解压后目录如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@chenyumeng zookeeper-3.4.13]# ll</span><br><span class="line">总用量 1652</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 bin</span><br><span class="line">-rw-r--r--.  1 501 games   91400 6月  30 2018 build.xml</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 conf</span><br><span class="line">drwxr-xr-x. 10 501 games    4096 2月  21 22:39 contrib</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 dist-maven</span><br><span class="line">drwxr-xr-x.  6 501 games    4096 2月  21 22:39 docs</span><br><span class="line">-rw-r--r--.  1 501 games    1709 6月  30 2018 ivysettings.xml</span><br><span class="line">-rw-r--r--.  1 501 games    8502 6月  30 2018 ivy.xml</span><br><span class="line">drwxr-xr-x.  4 501 games    4096 2月  21 22:39 lib</span><br><span class="line">-rw-r--r--.  1 501 games   11938 6月  30 2018 LICENSE.txt</span><br><span class="line">-rw-r--r--.  1 501 games    3132 6月  30 2018 NOTICE.txt</span><br><span class="line">-rw-r--r--.  1 501 games    1585 6月  30 2018 README.md</span><br><span class="line">-rw-r--r--.  1 501 games    1770 6月  30 2018 README_packaging.txt</span><br><span class="line">drwxr-xr-x.  5 501 games    4096 2月  21 22:39 recipes</span><br><span class="line">drwxr-xr-x.  8 501 games    4096 6月  30 2018 src</span><br><span class="line">-rw-r--r--.  1 501 games 1508639 6月  30 2018 zookeeper-3.4.13.jar</span><br><span class="line">-rw-r--r--.  1 501 games     833 7月   1 2018 zookeeper-3.4.13.jar.asc</span><br><span class="line">-rw-r--r--.  1 501 games      33 6月  30 2018 zookeeper-3.4.13.jar.md5</span><br><span class="line">-rw-r--r--.  1 501 games      41 6月  30 2018 zookeeper-3.4.13.jar.sha1</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>3、进入conf目录，创建一个zookeeper的配置文件zoo.cfg，可复制conf/zoo_sample.cfg作为配置文件</p>
+<p>命令：cd conf</p>
+<p>命令：cp zoo_sample.cfg zoo.cfg</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@chenyumeng zookeeper-3.4.12]# cd conf</span><br><span class="line">[root@chenyumeng conf]# ls</span><br><span class="line">configuration.xsl log4j.properties zoo_sample.cfg</span><br><span class="line">[root@chenyumeng conf]# cp zoo_sample.cfg zoo.cfg</span><br><span class="line">[root@chenyumeng conf]# ls</span><br><span class="line">configuration.xsl log4j.properties zoo_sample.cfg zoo.cfg</span><br></pre></td></tr></table></figure>
+
+<p>配置文件说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"># The number of milliseconds of each tick</span><br><span class="line"># tickTime：CS通信心跳数</span><br><span class="line"># Zookeeper 服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个 tickTime 时间就会发送一个心跳。tickTime以毫秒为单位。</span><br><span class="line">tickTime&#x3D;2000</span><br><span class="line"></span><br><span class="line"># The number of ticks that the initial </span><br><span class="line"># synchronization phase can take</span><br><span class="line"># initLimit：LF初始通信时限</span><br><span class="line"># 集群中的follower服务器(F)与leader服务器(L)之间初始连接时能容忍的最多心跳数（tickTime的数量）。</span><br><span class="line">initLimit&#x3D;5</span><br><span class="line"></span><br><span class="line"># The number of ticks that can pass between </span><br><span class="line"># sending a request and getting an acknowledgement</span><br><span class="line"># syncLimit：LF同步通信时限</span><br><span class="line"># 集群中的follower服务器与leader服务器之间请求和应答之间能容忍的最多心跳数（tickTime的数量）。</span><br><span class="line">syncLimit&#x3D;2</span><br><span class="line"></span><br><span class="line"># the directory where the snapshot is stored.</span><br><span class="line"># do not use &#x2F;tmp for storage, &#x2F;tmp here is just </span><br><span class="line"># example sakes.</span><br><span class="line"># dataDir：数据文件目录</span><br><span class="line"># Zookeeper保存数据的目录，默认情况下，Zookeeper将写数据的日志文件也保存在这个目录里。</span><br><span class="line">dataDir&#x3D;&#x2F;data&#x2F;soft&#x2F;zookeeper-3.4.12&#x2F;data</span><br><span class="line"></span><br><span class="line"># dataLogDir：日志文件目录</span><br><span class="line"># Zookeeper保存日志文件的目录。</span><br><span class="line">dataLogDir&#x3D;&#x2F;data&#x2F;soft&#x2F;zookeeper-3.4.12&#x2F;logs</span><br><span class="line"></span><br><span class="line"># the port at which the clients will connect</span><br><span class="line"># clientPort：客户端连接端口</span><br><span class="line"># 客户端连接 Zookeeper 服务器的端口，Zookeeper 会监听这个端口，接受客户端的访问请求。</span><br><span class="line">clientPort&#x3D;2181</span><br><span class="line"></span><br><span class="line"># the maximum number of client connections.</span><br><span class="line"># increase this if you need to handle more clients</span><br><span class="line">#maxClientCnxns&#x3D;60</span><br><span class="line">#</span><br><span class="line"># Be sure to read the maintenance section of the </span><br><span class="line"># administrator guide before turning on autopurge.</span><br><span class="line">#</span><br><span class="line"># http:&#x2F;&#x2F;zookeeper.apache.org&#x2F;doc&#x2F;current&#x2F;zookeeperAdmin.html#sc_maintenance</span><br><span class="line">#</span><br><span class="line"># The number of snapshots to retain in dataDir</span><br><span class="line">#autopurge.snapRetainCount&#x3D;3</span><br><span class="line"># Purge task interval in hours</span><br><span class="line"># Set to &quot;0&quot; to disable auto purge feature</span><br><span class="line">#autopurge.purgeInterval&#x3D;1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 服务器名称与地址：集群信息（服务器编号，服务器地址，LF通信端口，选举端口）</span><br><span class="line"># 这个配置项的书写格式比较特殊，规则如下：</span><br><span class="line"></span><br><span class="line"># server.N&#x3D;YYY:A:B  </span><br><span class="line"></span><br><span class="line"># 其中N表示服务器编号，YYY表示服务器的IP地址，A为LF通信端口，表示该服务器与集群中的leader交换的信息的端口。B为选举端口，表示选举新leader时服务器间相互通信的端口（当leader挂掉时，其余服务器会相互通信，选择出新的leader）。一般来说，集群中每个服务器的A端口都是一样，每个服务器的B端口也是一样。但是当所采用的为伪集群时，IP地址都一样，只能时A端口和B端口不一样。</span><br></pre></td></tr></table></figure>
+
+<p>4、可以不修改zoo.cfg，默认配置就行，进去zookeeper安装目录，启动ZooKeeper</p>
+<p>　　　　　　启动命令：./bin/zkServer.sh start</p>
+<p>　　　　　　停止命令：./bin/zkServer.sh stop　　</p>
+<p>　　　　　　重启命令：./bin/zkServer.sh restart</p>
+<p>　　　　　　状态查看命令：./bin/zkServer.sh status</p>
+<h2 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h2><p>配置文件说明：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> tickTime=2000</span><br><span class="line"> initLimit=5</span><br><span class="line"> syncLimit=2</span><br><span class="line"> dataDir=/data/soft/zookeeper-3.4.12/data</span><br><span class="line"> dataLogDir=/data/soft/zookeeper-3.4.12/logs</span><br><span class="line"> clientPort=2181</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> server.A=B：C：D</span></span><br><span class="line"> server.1=127.0.0.1:2888:3888</span><br><span class="line"> server.2=127.0.0.2:2888:3888</span><br><span class="line"> server.3=127.0.0.3:2888:3888</span><br><span class="line"><span class="meta">#</span><span class="bash"> A是一个数字,表示这个是第几号服务器；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> B是这个服务器的IP地址（或者是与IP地址做了映射的主机名）；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> C第一个端口用来集群成员的信息交换,表示这个服务器与集群中的Leader服务器交换信息的端口；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> D是在leader挂掉时专门用来进行选举leader所用的端口。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意：如果是伪集群的配置方式，不同的 Zookeeper 实例通信端口号不能一样，所以要给它们分配不同的端口号。</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -216,403 +225,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://chen-yumeng.github.io/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">centOs7下安装Redis记录</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/">centOs7下安装Redis记录</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CentOS7</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/">Redis所有命令+集群（翻译转载）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CentOS7</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:09:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/">nginx安装配置笔记</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">中间件</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:06:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/">MySQL命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/git%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2020-03-15T07:10:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/git%E5%91%BD%E4%BB%A4/">git命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2020-03-15T07:07:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/">css格式化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="archive-article-date">
-  	<time datetime="2020-03-15T07:03:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/">webstorm快捷键</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">webstorm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="archive-article-date">
-  	<time datetime="2020-03-15T07:02:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/">idea快捷键</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">idea</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -635,8 +347,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

@@ -161,29 +161,37 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ZooKeeper单机与集群安装笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">我的第一篇博客</a>
+      <a class="article-title" href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">ZooKeeper单机与集群安装笔记</a>
     </h1>
   
 
         
-        <a href="/2020/03/15/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-03-15T02:27:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+        <a href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:18:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h1><p>内容</p>
-<h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><p>内容</p>
-
+        <h1 id="ZooKeeper安装"><a href="#ZooKeeper安装" class="headerlink" title="ZooKeeper安装"></a>ZooKeeper安装</h1><p>　　安装环境：</p>
+<p>　　　　1、系统：CentOS 7.4</p>
+<p>　　　　2、Java环境：JDK8</p>
+<p>　　zookeeper有单机、伪集群、集群三种部署方式，本例使用的zookeeper版本是：zookeeper-3.4.12</p>
+<h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><p>1、下载ZooKeeper，地址：<a href="http://mirrors.hust.edu.cn/apache/zookeeper/" target="_blank" rel="noopener">http://mirrors.hust.edu.cn/apache/zookeeper/</a></p>
+<p>2、解压，命令：tar -zxvf zookeeper-3.4.12.tar.gz -C /data/soft/</p>
+<p>解压后目录如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@chenyumeng zookeeper-3.4.13]# ll</span><br><span class="line">总用量 1652</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 bin</span><br><span class="line">-rw-r--r--.  1 501 games   91400 6月  30 2018 build.xml</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 conf</span><br><span class="line">drwxr-xr-x. 10 501 games    4096 2月  21 22:39 contrib</span><br><span class="line">drwxr-xr-x.  2 501 games    4096 2月  21 22:39 dist-maven</span><br><span class="line">drwxr-xr-x.  6 501 games    4096 2月  21 22:39 docs</span><br><span class="line">-rw-r--r--.  1 501 games    1709 6月  30 2018 ivysettings.xml</span><br><span class="line">-rw-r--r--.  1 501 games    8502 6月  30 2018 ivy.xml</span><br><span class="line">drwxr-xr-x.  4 501 games    4096 2月  21 22:39 lib</span><br><span class="line">-rw-r--r--.  1 501 games   11938 6月  30 2018 LICENSE.txt</span><br><span class="line">-rw-r--r--.  1 501 games    3132 6月  30 2018 NOTICE.txt</span><br><span class="line">-rw-r--r--.  1 501 games    1585 6月  30 2018 README.md</span><br><span class="line">-rw-r--r--.  1 501 games    1770 6月  30 2018 README_packaging.txt</span><br><span class="line">drwxr-xr-x.  5 501 games    4096 2月  21 22:39 recipes</span><br><span class="line">drwxr-xr-x.  8 501 games    4096 6月  30 2018 src</span><br><span class="line">-rw-r--r--.  1 501 games 1508639 6月  30 2018 zookeeper-3.4.13.jar</span><br><span class="line">-rw-r--r--.  1 501 games     833 7月   1 2018 zookeeper-3.4.13.jar.asc</span><br><span class="line">-rw-r--r--.  1 501 games      33 6月  30 2018 zookeeper-3.4.13.jar.md5</span><br><span class="line">-rw-r--r--.  1 501 games      41 6月  30 2018 zookeeper-3.4.13.jar.sha1</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/#more">more >></a>
+        
       
 
       
@@ -191,11 +199,38 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ZooKeeper</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">中间件</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/03/15/ZooKeeper%E5%8D%95%E6%9C%BA%E4%B8%8E%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">展开全文 >></a>
         </p>
       
 
@@ -225,32 +260,33 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-centOs7下安装Redis笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/hello-world/">Hello World</a>
+      <a class="article-title" href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/">centOs7下安装Redis记录</a>
     </h1>
   
 
         
-        <a href="/2020/03/15/hello-world/" class="archive-article-date">
-  	<time datetime="2020-03-15T02:22:25.929Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+        <a href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h1 id="CentOS7下安装Redis"><a href="#CentOS7下安装Redis" class="headerlink" title="CentOS7下安装Redis"></a>CentOS7下安装Redis</h1><h2 id="一、安装redis"><a href="#一、安装redis" class="headerlink" title="一、安装redis"></a>一、安装redis</h2><h3 id="第一步：下载redis安装包"><a href="#第一步：下载redis安装包" class="headerlink" title="第一步：下载redis安装包"></a>第一步：下载redis安装包</h3><p>wget <a href="http://download.redis.io/releases/redis-4.0.6.tar.gz" target="_blank" rel="noopener">http://download.redis.io/releases/redis-4.0.6.tar.gz</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz991stxdwj560bfmadtZ local]# wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-4.0.6.tar.gz</span><br><span class="line">--2017-12-13 12:35:12--  http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-4.0.6.tar.gz</span><br><span class="line">Resolving download.redis.io (download.redis.io)... 109.74.203.151</span><br><span class="line">Connecting to download.redis.io (download.redis.io)|109.74.203.151|:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 1723533 (1.6M) [application&#x2F;x-gzip]</span><br><span class="line">Saving to: ‘redis-4.0.6.tar.gz’</span><br><span class="line"></span><br><span class="line">100%[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;] 1,723,533    608KB&#x2F;s   in 2.8s   </span><br><span class="line"></span><br><span class="line">2017-12-13 12:35:15 (608 KB&#x2F;s) - ‘redis-4.0.6.tar.gz’ saved [1723533&#x2F;1723533]</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="第二步：解压压缩包"><a href="#第二步：解压压缩包" class="headerlink" title="第二步：解压压缩包"></a>第二步：解压压缩包</h3><p>tar -zxvf redis-4.0.6.tar.gz</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz991stxdwj560bfmadtZ local]# tar -zxvf redis-4.0.6.tar.gz</span><br></pre></td></tr></table></figure>
         
-          <a class="article-more-a" href="/2020/03/15/hello-world/#more">more >></a>
+          <a class="article-more-a" href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/#more">more >></a>
         
       
 
@@ -259,11 +295,689 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CentOS7</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/03/15/centOs7%E4%B8%8B%E5%AE%89%E8%A3%85Redis%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis所有命令+集群（翻译转载）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/">Redis所有命令+集群（翻译转载）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>翻译至</p>
+<p><a href="http://doc.redisfans.co" target="_blank" rel="noopener"><em>Redis 命令参考</em></a></p>
+</blockquote>
+<h1 id="一、Key（键）"><a href="#一、Key（键）" class="headerlink" title="一、Key（键）"></a>一、Key（键）</h1><h2 id="1-DEL"><a href="#1-DEL" class="headerlink" title="1.DEL"></a>1.DEL</h2><p><strong>DEL key [key …]</strong></p>
+<p>删除给定的一个或多个 <code>key</code> 。</p>
+<p>不存在的 <code>key</code> 会被忽略。</p>
+<ul>
+<li><p><strong>可用版本：</strong></p>
+<blockquote>
+<p>= 1.0.0</p>
+</blockquote>
+</li>
+<li><p><strong>时间复杂度：</strong></p>
+<p>O(N)， <code>N</code> 为被删除的 <code>key</code> 的数量。删除单个字符串类型的 <code>key</code> ，时间复杂度为O(1)。删除单个列表、集合、有序集合或哈希表类型的 <code>key</code> ，时间复杂度为O(M)， <code>M</code> 为以上数据结构内的元素数量。</p>
+</li>
+<li><p><strong>返回值：</strong></p>
+<p>被删除 <code>key</code> 的数量。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  删除单个 key</span></span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> SET name huangz</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> DEL name</span></span><br><span class="line">(integer) 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除一个不存在的 key</span></span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> EXISTS phone</span></span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> DEL phone <span class="comment"># 失败，没有 key 被删除</span></span></span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同时删除多个 key</span></span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> SET name <span class="string">"redis"</span></span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> SET <span class="built_in">type</span> <span class="string">"key-value store"</span></span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> SET website <span class="string">"redis.com"</span></span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> DEL name <span class="built_in">type</span> website</span></span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CentOS7</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/Redis%E6%89%80%E6%9C%89%E5%91%BD%E4%BB%A4+%E9%9B%86%E7%BE%A4%EF%BC%88%E7%BF%BB%E8%AF%91%E8%BD%AC%E8%BD%BD%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-nginx安装配置笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/">nginx安装配置笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:09:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、nginx安装"><a href="#一、nginx安装" class="headerlink" title="一、nginx安装"></a>一、nginx安装</h1><p>下载nginx：</p>
+<p>官方网站：<a href="http://nginx.org/" target="_blank" rel="noopener">http://nginx.org/</a></p>
+<h2 id="1-要求的安装环境"><a href="#1-要求的安装环境" class="headerlink" title="1. 要求的安装环境"></a>1. 要求的安装环境</h2><p>1、需要安装gcc的环境。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
+
+<p>2、第三方的开发包。</p>
+<p><strong>PCRE</strong></p>
+<p>​       PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-devel</span><br></pre></td></tr></table></figure>
+
+<p>注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。</p>
+<p><strong>zlib</strong></p>
+<p>​       zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zlib zlib-devel</span><br></pre></td></tr></table></figure>
+
+<p><strong>openssl</strong></p>
+<p>​       OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。</p>
+<p>​       nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">中间件</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MySQL命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/">MySQL命令</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:06:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="启动MySQL"><a href="#启动MySQL" class="headerlink" title="启动MySQL"></a>启动MySQL</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接与断开服务器"><a href="#连接与断开服务器" class="headerlink" title="连接与断开服务器"></a>连接与断开服务器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h 地址 -P 端口 -u 用户名 -p 密码</span><br></pre></td></tr></table></figure>
+
+<h2 id="跳过权限验证登录MySQL"><a href="#跳过权限验证登录MySQL" class="headerlink" title="跳过权限验证登录MySQL"></a>跳过权限验证登录MySQL</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --skip-grant-tables</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/MySQL%E5%91%BD%E4%BB%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-git命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/git%E5%91%BD%E4%BB%A4/">git命令</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/git%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2020-03-15T07:10:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>几个专用名词的译名如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Workspace：工作区</span><br><span class="line">Index / Stage：暂存区</span><br><span class="line">Repository：仓库区（或本地仓库）</span><br><span class="line">Remote：远程仓库</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>我从网上看到的一张很全面的git命令图，分享下</p>
+</blockquote>
+<p><img src="img/git.jpg" alt="git命令"></p>
+<h4 id="一、新建代码库"><a href="#一、新建代码库" class="headerlink" title="一、新建代码库"></a>一、新建代码库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在当前目录新建一个Git代码库</span></span><br><span class="line">$ git init</span><br><span class="line"><span class="comment"># 新建一个目录，将其初始化为Git代码库</span></span><br><span class="line">$ git init [project-name]</span><br><span class="line"><span class="comment"># 下载一个项目和它的整个代码历史</span></span><br><span class="line">$ git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/03/15/git%E5%91%BD%E4%BB%A4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/git%E5%91%BD%E4%BB%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-css格式化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/">css格式化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/" class="archive-article-date">
+  	<time datetime="2020-03-15T07:07:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>/<em>======== 全局 ========</em>/</strong><br>body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td { margin:0; padding:0; }<br>body { font-size:12px; color:#666; font-family:Verdana, Microsoft YaHei, Simsun; background:#fff; line-height:24px; }<br>fieldset, img { border:0; }<br>ol, ul { list-style:none; }<br>h1, h2, h3, h4, h5, h6{ font-size:100%; }<br>em { font-style:normal; }<br>input, button, select, textarea { outline:none; }<br>textarea { resize:none; } //禁用了文本的拖拉，尤其在谷歌下<br>p{ text-align:justify; text-justify:distribute;} //为了使文本段落左右两边对齐<br>/<em>======== Link ========</em>/<br>a { color: #666; text-decoration:none; }<br>a:hover { color: #f60; text-decoration:none; }</p>
+        
+          <a class="article-more-a" href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/css%E6%A0%BC%E5%BC%8F%E5%8C%96/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-webstorm快捷键" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/">webstorm快捷键</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="archive-article-date">
+  	<time datetime="2020-03-15T07:03:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="ctrl-shift-n-打开工程中的文件，目的是打开当前工程下任意目录的文件。"><a href="#ctrl-shift-n-打开工程中的文件，目的是打开当前工程下任意目录的文件。" class="headerlink" title="ctrl + shift + n: 打开工程中的文件，目的是打开当前工程下任意目录的文件。"></a>ctrl + shift + n: 打开工程中的文件，目的是打开当前工程下任意目录的文件。</h4><h4 id="ctrl-j-输出模板"><a href="#ctrl-j-输出模板" class="headerlink" title="ctrl + j: 输出模板"></a>ctrl + j: 输出模板</h4><h4 id="ctrl-b-跳到变量申明处"><a href="#ctrl-b-跳到变量申明处" class="headerlink" title="ctrl + b: 跳到变量申明处"></a>ctrl + b: 跳到变量申明处</h4><h4 id="ctrl-alt-T-围绕包裹代码-包括zencoding的Wrap-with-Abbreviation"><a href="#ctrl-alt-T-围绕包裹代码-包括zencoding的Wrap-with-Abbreviation" class="headerlink" title="ctrl + alt + T: 围绕包裹代码(包括zencoding的Wrap with Abbreviation)"></a>ctrl + alt + T: 围绕包裹代码(包括zencoding的Wrap with Abbreviation)</h4><h4 id="ctrl-匹配"><a href="#ctrl-匹配" class="headerlink" title="ctrl + []: 匹配 {}[]"></a>ctrl + []: 匹配 {}[]</h4><h4 id="ctrl-F12-可以显示当前文件的结构"><a href="#ctrl-F12-可以显示当前文件的结构" class="headerlink" title="ctrl + F12: 可以显示当前文件的结构"></a>ctrl + F12: 可以显示当前文件的结构</h4><h4 id="ctrl-x-剪切-删除-行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容"><a href="#ctrl-x-剪切-删除-行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容" class="headerlink" title="ctrl + x: 剪切(删除)行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容"></a>ctrl + x: 剪切(删除)行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容</h4><h4 id="alt-left-right-标签切换"><a href="#alt-left-right-标签切换" class="headerlink" title="alt + left/right:标签切换"></a>alt + left/right:标签切换</h4>
+        
+          <a class="article-more-a" href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">webstorm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-idea快捷键" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/">idea快捷键</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="archive-article-date">
+  	<time datetime="2020-03-15T07:02:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>-Dfile.encoding=UTF-8</strong></p>
+<p>更新不完整依赖<br><strong>-U idea:idea</strong></p>
+<p>1.———–自动代码——– </p>
+<p>常用的有fori/sout/psvm+Tab即可生成循环、System.out、main方法等boilerplate样板代码<br>例如要输入for(User user : users)只需输入<strong>user.for+Tab</strong> </p>
+<p>再比如，要输入Date birthday = user.getBirthday();只需输入<strong>user.getBirthday().var+Tab</strong>即可。代码标签输入完成后，按Tab，生成代码。<br><strong>Ctrl+Alt+O</strong> 优化导入的类和包<br><strong>Alt+Insert</strong> 生成代码(如get,set方法,构造函数等)   或者右键（Generate）<br><strong>fori/sout/psvm + Tab</strong><br><strong>Ctrl+Alt+T</strong>  生成try catch  或者 Alt+enter<br><strong>CTRL+ALT+T</strong>  把选中的代码放在 TRY{} IF{} ELSE{} 里<br><strong>Ctrl + O</strong> 重写方法<br><strong>Ctrl + I</strong> 实现方法<br><strong>Ctr+shift+U</strong> 大小写转化<br><strong>ALT+回车</strong>    导入包,自动修正 </p>
+        
+          <a class="article-more-a" href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">整理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">idea</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/idea%E5%BF%AB%E6%8D%B7%E9%94%AE/">展开全文 >></a>
         </p>
       
 
@@ -376,6 +1090,82 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CentOS7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">整理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ZooKeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">webstorm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">idea</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
