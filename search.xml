@@ -1,6 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>redis集群搭建</title>
+    <url>/2020/03/16/redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h1 id="redis集群搭建"><a href="#redis集群搭建" class="headerlink" title="redis集群搭建"></a>redis集群搭建</h1><p>在开始redis集群搭建之前，我们先简单回顾一下redis单机版的搭建过程</p>
+<p>下载redis压缩包，然后解压压缩文件；<br>进入到解压缩后的redis文件目录（此时可以看到Makefile文件），编译redis源文件；<br>把编译好的redis源文件安装到/usr/local/redis目录下，如果/local目录下没有redis目录，会自动新建redis目录；<br>进入/usr/local/redis/bin目录，直接./redis-server启动redis（此时为前端启动redis）；<br>将redis启动方式改为后端启动，具体做法：把解压缩的redis文件下的redis.conf文件复制到/usr/local/redis/bin目录下，然后修改该redis.conf文件-&gt;daemonize：no 改为daemonize：yse；<br>在/bin目录下通过./redis-server redis.conf启动redis（此时为后台启动）。<br>综上redis单机版安装启动完成。<br>具体详细带图步骤请参考 -&gt; redis入门<br>请原谅我的啰嗦，ok，接着咱们回到本次话题—-redis集群搭建！</p>
+<a id="more"></a>
+
+<h2 id="一、Redis-Cluster（Redis集群）简介"><a href="#一、Redis-Cluster（Redis集群）简介" class="headerlink" title="一、Redis Cluster（Redis集群）简介"></a>一、Redis Cluster（Redis集群）简介</h2><ul>
+<li>redis是一个开源的key value存储系统，受到了广大互联网公司的青睐。redis3.0版本之前只支持单例模式，在3.0版本及以后才支持集群，我这里用的是redis3.0.0版本；</li>
+<li>redis集群采用P2P模式，是完全去中心化的，不存在中心节点或者代理节点；</li>
+<li>redis集群是没有统一的入口的，客户端（client）连接集群的时候连接集群中的任意节点（node）即可，集群内部的节点是相互通信的（PING-PONG机制），每个节点都是一个redis实例；</li>
+<li>为了实现集群的高可用，即判断节点是否健康（能否正常使用），redis-cluster有这么一个投票容错机制：如果集群中超过半数的节点投票认为某个节点挂了，那么这个节点就挂了（fail）。这是判断节点是否挂了的方法；</li>
+<li>那么如何判断集群是否挂了呢? -&gt; 如果集群中任意一个节点挂了，而且该节点没有从节点（备份节点），那么这个集群就挂了。这是判断集群是否挂了的方法；</li>
+<li>那么为什么任意一个节点挂了（没有从节点）这个集群就挂了呢？ -&gt; 因为集群内置了16384个slot（哈希槽），并且把所有的物理节点映射到了这16384[0-16383]个slot上，或者说把这些slot均等的分配给了各个节点。当需要在Redis集群存放一个数据（key-value）时，redis会先对这个key进行crc16算法，然后得到一个结果。再把这个结果对16384进行求余，这个余数会对应[0-16383]其中一个槽，进而决定key-value存储到哪个节点中。所以一旦某个节点挂了，该节点对应的slot就无法使用，那么就会导致集群无法正常工作。</li>
+<li>综上所述，每个Redis集群理论上最多可以有16384个节点。</li>
+</ul>
+<h2 id="二、集群搭建需要的环境"><a href="#二、集群搭建需要的环境" class="headerlink" title="二、集群搭建需要的环境"></a>二、集群搭建需要的环境</h2><p>2.1 Redis集群至少需要3个节点，因为投票容错机制要求超过半数节点认为某个节点挂了该节点才是挂了，所以2个节点无法构成集群。</p>
+<p>2.2 要保证集群的高可用，需要每个节点都有从节点，也就是备份节点，所以Redis集群至少需要6台服务器。因为我没有那么多服务器，也启动不了那么多虚拟机，所在这里搭建的是伪分布式集群，即一台服务器虚拟运行6个redis实例，修改端口号为（7001-7006），当然实际生产环境的Redis集群搭建和这里是一样的。<br>2.3 安装ruby</p>
+<h2 id="三、集群搭建具体步骤如下（注意要关闭防火墙）"><a href="#三、集群搭建具体步骤如下（注意要关闭防火墙）" class="headerlink" title="三、集群搭建具体步骤如下（注意要关闭防火墙）"></a>三、集群搭建具体步骤如下（注意要关闭防火墙）</h2><p>3.1 在usr/local目录下新建redis-cluster目录，用于存放集群节点</p>
+<p><img src="/assets/img/20181001140534311.png" alt=""></p>
+<p>3.2 把redis目录下的bin目录下的所有文件复制到/usr/local/redis-cluster/redis01目录下，不用担心这里没有redis01目录，会自动创建的。操作命令如下（注意当前所在路径）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp -r redis&#x2F;bin&#x2F; redis-cluster&#x2F;redis01</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/img/20181001141620400.png" alt=""></p>
+<p>3.3 删除redis01目录下的快照文件dump.rdb，并且修改该目录下的redis.cnf文件，具体修改两处地方：一是端口号修改为7001，二是开启集群创建模式，打开注释即可。分别如下图所示：<br>删除dump.rdb文件</p>
+<p><img src="/assets/img/2018100114273634.png" alt=""></p>
+<p>修改端口号为7001,默认是6379</p>
+<p><img src="D:%5C%E7%AC%94%E8%AE%B0%E8%B5%84%E6%96%99%5CRedis%5C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%5Cimages%5C20181001142902121.png" alt=""></p>
+<p>将cluster-enabled yes 的注释打开</p>
+<p><img src="/assets/img/20181001142941621.png" alt=""></p>
+<p>3.4 将redis-cluster/redis01文件复制5份到redis-cluster目录下（redis02-redis06），创建6个redis实例，模拟Redis集群的6个节点。然后将其余5个文件下的redis.conf里面的端口号分别修改为7002-7006。分别如下图所示：<br>创建redis02-06目录</p>
+<p><img src="/assets/img/20181001150344737.png" alt=""></p>
+<p>分别修改redis.conf文件端口号为7002-7006</p>
+<p><img src="/assets/img/20181001150609235.png" alt=""></p>
+<p>3.5 接着启动所有redis节点，由于一个一个启动太麻烦了，所以在这里创建一个批量启动redis节点的脚本文件，命令为start-all.sh，文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd redis01</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis02</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis03</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis04</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis05</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis06</span><br><span class="line">.&#x2F;redis-server redis.conf</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+
+<p>3.6 创建好启动脚本文件之后，需要修改该脚本的权限，使之能够执行，指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x start-all.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/img/20181001151921344.png" alt=""></p>
+<p>3.7 执行start-all.sh脚本，启动6个redis节点</p>
+<p><img src="/assets/img/20181001152259456.png" alt=""></p>
+<p>3.8 ok，至此6个redis节点启动成功，接下来正式开启搭建集群，以上都是准备条件。大家不要觉得图片多看起来冗长所以觉得麻烦，其实以上步骤也就一句话的事情：创建6个redis实例（6个节点）并启动。<br>要搭建集群的话，需要使用一个工具（脚本文件），这个工具在redis解压文件的源代码里。因为这个工具是一个ruby脚本文件，所以这个工具的运行需要ruby的运行环境，就相当于java语言的运行需要在jvm上。所以需要安装ruby，指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ruby</span><br></pre></td></tr></table></figure>
+
+<p>然后需要把ruby相关的包安装到服务器，我这里用的是redis-3.0.0.gem，大家需要注意的是：redis的版本和ruby包的版本最好保持一致。<br>将Ruby包安装到服务器：需要先下载再安装，如图</p>
+<p><img src="/assets/img/20181001155254288.png" alt=""></p>
+<p>然后需要把ruby相关的包安装到服务器，我这里用的是redis-3.0.0.gem，大家需要注意的是：redis的版本和ruby包的版本最好保持一致。<br>将Ruby包安装到服务器：需要先下载再安装，如图</p>
+<p>安装命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gem install redis-3.0.0.gem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/img/20181001155619828.png" alt=""></p>
+<p>3.9 上一步中已经把ruby工具所需要的运行环境和ruby包安装好了，接下来需要把这个ruby脚本工具复制到usr/local/redis-cluster目录下。那么这个ruby脚本工具在哪里呢？之前提到过，在redis解压文件的源代码里，即redis/src目录下的redis-trib.rb文件。</p>
+<p><img src="/assets/img/20181001160619425.png" alt=""></p>
+<p><img src="D:%5C%E7%AC%94%E8%AE%B0%E8%B5%84%E6%96%99%5CRedis%5C%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%5Cimages%5C20181001160630117.png" alt=""></p>
+<p>3.10 将该ruby工具（redis-trib.rb）复制到redis-cluster目录下，指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp redis-trib.rb &#x2F;usr&#x2F;local&#x2F;redis-cluster</span><br></pre></td></tr></table></figure>
+
+<p>然后使用该脚本文件搭建集群，指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;redis-trib.rb create --replicas 1 47.106.219.251:7001 47.106.219.251:7002 47.106.219.251:7003 47.106.219.251:7004 47.106.219.251:7005 47.106.219.251:7006</span><br></pre></td></tr></table></figure>
+
+<p>注意：此处大家应该根据自己的服务器ip输入对应的ip地址！</p>
+<p><img src="/assets/img/20181001161520287.png" alt=""></p>
+<p>中途有个地方需要手动输入yes即可</p>
+<p><img src="/assets/img/20181001161757158.png" alt=""></p>
+<p>至此，Redi集群搭建成功！大家注意最后一段文字，显示了每个节点所分配的slots（哈希槽），这里总共6个节点，其中3个是从节点，所以3个主节点分别映射了0-5460、5461-10922、10933-16383solts。</p>
+<p>3.11 最后连接集群节点，连接任意一个即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">redis01&#x2F;redis-cli -p 7001 -c</span><br></pre></td></tr></table></figure>
+
+<p>注意：一定要加上-c，不然节点之间是无法自动跳转的！如下图可以看到，存储的数据（key-value）是均匀分配到不同的节点的：</p>
+<p><img src="/assets/img/20181001162628508.png" alt=""></p>
+<p>四、结语<br>呼<del>长舒一口气…终于搭建好了Redis集群。<br>整个过程其实挺简单，本篇主要正对入门级别的小伙伴，插入了很多图片，所以显得冗长，希望大家多多理解，如果不当之处，还望及时指正</del></p>
+<p>最后，加上两条redis集群基本命令：<br>1.查看当前集群信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cluster info</span><br></pre></td></tr></table></figure>
+
+<p>2.查看集群里有多少个节点</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cluster nodes</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>linux</tag>
+        <tag>Redis</tag>
+        <tag>CentOS</tag>
+        <tag>集群</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux MySQL安装</title>
+    <url>/2020/03/16/linux%20MySQL%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h3 id="检查系统是否自带MySQL数据库"><a href="#检查系统是否自带MySQL数据库" class="headerlink" title="检查系统是否自带MySQL数据库"></a>检查系统是否自带MySQL数据库</h3><p> rpm -qa | grep mysql</p>
+<h3 id="如果有卸载自带MySQL"><a href="#如果有卸载自带MySQL" class="headerlink" title="如果有卸载自带MySQL"></a>如果有卸载自带MySQL</h3><p><strong>rpm -e –nodeps   后面跟系统自带的MySQL名</strong></p>
+<a id="more"></a>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]#  rpm -qa | grep mysql</span><br><span class="line">mysql-libs-5.1.73-7.el6.x86_64</span><br><span class="line">[root@chenyumeng local]# rpm -e --nodeps mysql-libs-5.1.73-7.el6.x86_64</span><br><span class="line">[root@chenyumeng local]#  rpm -qa | grep mysql    </span><br><span class="line">[root@chenyumeng local]#</span><br></pre></td></tr></table></figure>
+
+<h3 id="进入local目录创建MySQL目录并进入"><a href="#进入local目录创建MySQL目录并进入" class="headerlink" title="进入local目录创建MySQL目录并进入"></a>进入local目录创建MySQL目录并进入</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]# mkdir -p mysql</span><br><span class="line">[root@chenyumeng local]# cd mysql/</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载MySQL安装包"><a href="#下载MySQL安装包" class="headerlink" title="下载MySQL安装包"></a>下载MySQL安装包</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el6-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装用来配置安装MySQL的包"><a href="#安装用来配置安装MySQL的包" class="headerlink" title="安装用来配置安装MySQL的包"></a>安装用来配置安装MySQL的包</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# rpm -Uvh mysql57-community-release-el6-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a><strong>安装MySQL</strong></h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>linux</tag>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>CentOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux JDK安装</title>
+    <url>/2020/03/16/linux%20JDK%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h1 id="一、查看虚拟机中现存在的jdk版本："><a href="#一、查看虚拟机中现存在的jdk版本：" class="headerlink" title="一、查看虚拟机中现存在的jdk版本："></a>一、查看虚拟机中现存在的jdk版本：</h1><p><strong>输入指令：</strong>rpm -qa|grep jdk</p>
+<p><img src="/assets/img/20181014203656142.png" alt=""></p>
+<p>以上红线框内表示现在虚拟机中现存在jdk版本。</p>
+<p>注：在安装jdk1.8之前我们需要先卸载虚拟机现有在jdk版本</p>
+<a id="more"></a>
+
+<h1 id="二、卸载虚拟机现有在jdk"><a href="#二、卸载虚拟机现有在jdk" class="headerlink" title="二、卸载虚拟机现有在jdk"></a>二、卸载虚拟机现有在jdk</h1><p>输入指令：rpm -e –nodeps 后接现有在jdk版本信息，</p>
+<p>例如： </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e --nodeps java-1.7.0-openjdk-1.7.0.45-2.4.3.3.el6.x86_64 java-1.6.0-openjdk-1.6.0.0-1.66.1.13.0.el6.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>显示如下图：</p>
+<p><img src="/assets/img/20181014205411894.png" alt=""></p>
+<h1 id="三、查看jdk是否卸载成功，如下图："><a href="#三、查看jdk是否卸载成功，如下图：" class="headerlink" title="三、查看jdk是否卸载成功，如下图："></a>三、查看jdk是否卸载成功，如下图：</h1><p><img src="/assets/img/2018101420551049.png" alt=""></p>
+<h1 id="四、上传需要安装的jdk1-8后并解压到-usr-local目录下"><a href="#四、上传需要安装的jdk1-8后并解压到-usr-local目录下" class="headerlink" title="四、上传需要安装的jdk1.8后并解压到/usr/local目录下"></a>四、上传需要安装的jdk1.8后并解压到/usr/local目录下</h1><p><strong>指令</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng ~]# tar -zxvf jdk-8u161-linux-x64.tar.gz -C /usr/local</span><br><span class="line">[root@chenyumeng ~]# cd /usr/local</span><br><span class="line">[root@chenyumeng local]# ll</span><br><span class="line">总用量 44</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 bin</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 etc</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 games</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 include</span><br><span class="line">drwxr-xr-x. 8 uucp  143 4096 6月  17 2014 jdk1.8.0_11</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 lib</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 lib64</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 libexec</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 sbin</span><br><span class="line">drwxr-xr-x. 5 root root 4096 2月  21 18:31 share</span><br><span class="line">drwxr-xr-x. 2 root root 4096 9月  23 2011 src</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、编辑环境变量"><a href="#五、编辑环境变量" class="headerlink" title="五、编辑环境变量"></a>五、编辑环境变量</h1><p><strong>指令：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]# vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>随后在profile文件的末尾添加如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_11</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>
+
+<p>注：export JAVA_HOME后接jdk1.8的安装路径。</p>
+<h1 id="六、使环境变量生效"><a href="#六、使环境变量生效" class="headerlink" title="六、使环境变量生效"></a>六、使环境变量生效</h1><p><strong>指令：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]# source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h1 id="七、验证jdk1-8是否安装成功"><a href="#七、验证jdk1-8是否安装成功" class="headerlink" title="七、验证jdk1.8是否安装成功"></a>七、验证jdk1.8是否安装成功</h1><p>指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]# java -version</span><br><span class="line">java version "1.8.0_11"</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_11-b12)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>linux</tag>
+        <tag>CentOS</tag>
+        <tag>JDK</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ZooKeeper单机与集群安装笔记</title>
     <url>/2020/03/15/ZooKeeper/</url>
     <content><![CDATA[<h1 id="ZooKeeper安装"><a href="#ZooKeeper安装" class="headerlink" title="ZooKeeper安装"></a>ZooKeeper安装</h1><p>　　安装环境：</p>
@@ -29,10 +191,13 @@
 <p>　　　　　　状态查看命令：./bin/zkServer.sh status</p>
 <h2 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h2><p>配置文件说明：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> tickTime=2000</span><br><span class="line"> initLimit=5</span><br><span class="line"> syncLimit=2</span><br><span class="line"> dataDir=/data/soft/zookeeper-3.4.12/data</span><br><span class="line"> dataLogDir=/data/soft/zookeeper-3.4.12/logs</span><br><span class="line"> clientPort=2181</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> server.A=B：C：D</span></span><br><span class="line"> server.1=127.0.0.1:2888:3888</span><br><span class="line"> server.2=127.0.0.2:2888:3888</span><br><span class="line"> server.3=127.0.0.3:2888:3888</span><br><span class="line"><span class="meta">#</span><span class="bash"> A是一个数字,表示这个是第几号服务器；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> B是这个服务器的IP地址（或者是与IP地址做了映射的主机名）；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> C第一个端口用来集群成员的信息交换,表示这个服务器与集群中的Leader服务器交换信息的端口；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> D是在leader挂掉时专门用来进行选举leader所用的端口。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意：如果是伪集群的配置方式，不同的 Zookeeper 实例通信端口号不能一样，所以要给它们分配不同的端口号。</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS</tag>
         <tag>linux</tag>
+        <tag>CentOS</tag>
         <tag>ZooKeeper</tag>
         <tag>中间件</tag>
       </tags>
@@ -130,10 +295,13 @@
 
 <p>可参考资料：<a href="http://blog.csdn.net/luozhonghua2014/article/details/54649295" target="_blank" rel="noopener">http://blog.csdn.net/luozhonghua2014/article/details/54649295</a></p>
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS7</tag>
+        <tag>linux</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -4303,13 +4471,18 @@
 <p>在集群的生命周期中， 如果一个带有 <code>PROMOTED</code> 标识的主节点因为某些原因转变成了从节点， 那么该节点将丢失它所带有的 <code>PROMOTED</code> 标识。</p>
 <h2 id="发布-订阅（已实现，但仍然需要改善）"><a href="#发布-订阅（已实现，但仍然需要改善）" class="headerlink" title="发布/订阅（已实现，但仍然需要改善）"></a>发布/订阅（已实现，但仍然需要改善）</h2><p>在一个 Redis 集群中， 客户端可以订阅任意一个节点， 也可以向任意一个节点发送信息， 节点会对客户端所发送的信息进行转发。</p>
 <p>在目前的实现中， 节点会将接收到的信息广播至集群中的其他所有节点， 在将来的实现中， 可能会使用 bloom filter 或者其他算法来优化这一操作。</p>
-<h2 id="附录-A：-CRC16-算法的-ANSI-实现参考"><a href="#附录-A：-CRC16-算法的-ANSI-实现参考" class="headerlink" title="附录 A： CRC16 算法的 ANSI 实现参考"></a>附录 A： CRC16 算法的 ANSI 实现参考</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright 2001-2010 Georges Menie (www.menie.org)</span><br><span class="line"> * Copyright 2010 Salvatore Sanfilippo (adapted to Redis coding style)</span><br><span class="line"> * All rights reserved.</span><br><span class="line"> * Redistribution and use <span class="keyword">in</span> <span class="built_in">source</span> and binary forms, with or without</span><br><span class="line"> * modification, are permitted provided that the following conditions are met:</span><br><span class="line"> *</span><br><span class="line"> *     * Redistributions of <span class="built_in">source</span> code must retain the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer.</span><br><span class="line"> *     * Redistributions <span class="keyword">in</span> binary form must reproduce the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer <span class="keyword">in</span> the</span><br><span class="line"> *       documentation and/or other materials provided with the distribution.</span><br><span class="line"> *     * Neither the name of the University of California, Berkeley nor the</span><br><span class="line"> *       names of its contributors may be used to endorse or promote products</span><br><span class="line"> *       derived from this software without specific prior written permission.</span><br><span class="line"> *</span><br><span class="line"> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS<span class="string">''</span> AND ANY</span><br><span class="line"> * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span><br><span class="line"> * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span><br><span class="line"> * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY</span><br><span class="line"> * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span><br><span class="line"> * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span><br><span class="line"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span><br><span class="line"> * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span><br><span class="line"> * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span><br><span class="line"> * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/* CRC16 implementation acording to CCITT standards.</span><br><span class="line"> *</span><br><span class="line"> * Note by @antirez: this is actually the XMODEM CRC 16 algorithm, using the</span><br><span class="line"> * following parameters:</span><br><span class="line"> *</span><br><span class="line"> * Name                       : <span class="string">"XMODEM"</span>, also known as <span class="string">"ZMODEM"</span>, <span class="string">"CRC-16/ACORN"</span></span><br><span class="line"> * Width                      : 16 bit</span><br><span class="line"> * Poly                       : 1021 (That is actually x^16 + x^12 + x^5 + 1)</span><br><span class="line"> * Initialization             : 0000</span><br><span class="line"> * Reflect Input byte         : False</span><br><span class="line"> * Reflect Output CRC         : False</span><br><span class="line"> * Xor constant to output CRC : 0000</span><br><span class="line"> * Output <span class="keyword">for</span> <span class="string">"123456789"</span>     : 31C3</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">static const uint16_t crc16tab[256]= &#123;</span><br><span class="line">    0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,</span><br><span class="line">    0x8108,0x9129,0xa14a,0xb16b,0xc18c,0xd1ad,0xe1ce,0xf1ef,</span><br><span class="line">    0x1231,0x0210,0x3273,0x2252,0x52b5,0x4294,0x72f7,0x62d6,</span><br><span class="line">    0x9339,0x8318,0xb37b,0xa35a,0xd3bd,0xc39c,0xf3ff,0xe3de,</span><br><span class="line">    0x2462,0x3443,0x0420,0x1401,0x64e6,0x74c7,0x44a4,0x5485,</span><br><span class="line">    0xa56a,0xb54b,0x8528,0x9509,0xe5ee,0xf5cf,0xc5ac,0xd58d,</span><br><span class="line">    0x3653,0x2672,0x1611,0x0630,0x76d7,0x66f6,0x5695,0x46b4,</span><br><span class="line">    0xb75b,0xa77a,0x9719,0x8738,0xf7df,0xe7fe,0xd79d,0xc7bc,</span><br><span class="line">    0x48c4,0x58e5,0x6886,0x78a7,0x0840,0x1861,0x2802,0x3823,</span><br><span class="line">    0xc9cc,0xd9ed,0xe98e,0xf9af,0x8948,0x9969,0xa90a,0xb92b,</span><br><span class="line">    0x5af5,0x4ad4,0x7ab7,0x6a96,0x1a71,0x0a50,0x3a33,0x2a12,</span><br><span class="line">    0xdbfd,0xcbdc,0xfbbf,0xeb9e,0x9b79,0x8b58,0xbb3b,0xab1a,</span><br><span class="line">    0x6ca6,0x7c87,0x4ce4,0x5cc5,0x2c22,0x3c03,0x0c60,0x1c41,</span><br><span class="line">    0xedae,0xfd8f,0xcdec,0xddcd,0xad2a,0xbd0b,0x8d68,0x9d49,</span><br><span class="line">    0x7e97,0x6eb6,0x5ed5,0x4ef4,0x3e13,0x2e32,0x1e51,0x0e70,</span><br><span class="line">    0xff9f,0xefbe,0xdfdd,0xcffc,0xbf1b,0xaf3a,0x9f59,0x8f78,</span><br><span class="line">    0x9188,0x81a9,0xb1ca,0xa1eb,0xd10c,0xc12d,0xf14e,0xe16f,</span><br><span class="line">    0x1080,0x00a1,0x30c2,0x20e3,0x5004,0x4025,0x7046,0x6067,</span><br><span class="line">    0x83b9,0x9398,0xa3fb,0xb3da,0xc33d,0xd31c,0xe37f,0xf35e,</span><br><span class="line">    0x02b1,0x1290,0x22f3,0x32d2,0x4235,0x5214,0x6277,0x7256,</span><br><span class="line">    0xb5ea,0xa5cb,0x95a8,0x8589,0xf56e,0xe54f,0xd52c,0xc50d,</span><br><span class="line">    0x34e2,0x24c3,0x14a0,0x0481,0x7466,0x6447,0x5424,0x4405,</span><br><span class="line">    0xa7db,0xb7fa,0x8799,0x97b8,0xe75f,0xf77e,0xc71d,0xd73c,</span><br><span class="line">    0x26d3,0x36f2,0x0691,0x16b0,0x6657,0x7676,0x4615,0x5634,</span><br><span class="line">    0xd94c,0xc96d,0xf90e,0xe92f,0x99c8,0x89e9,0xb98a,0xa9ab,</span><br><span class="line">    0x5844,0x4865,0x7806,0x6827,0x18c0,0x08e1,0x3882,0x28a3,</span><br><span class="line">    0xcb7d,0xdb5c,0xeb3f,0xfb1e,0x8bf9,0x9bd8,0xabbb,0xbb9a,</span><br><span class="line">    0x4a75,0x5a54,0x6a37,0x7a16,0x0af1,0x1ad0,0x2ab3,0x3a92,</span><br><span class="line">    0xfd2e,0xed0f,0xdd6c,0xcd4d,0xbdaa,0xad8b,0x9de8,0x8dc9,</span><br><span class="line">    0x7c26,0x6c07,0x5c64,0x4c45,0x3ca2,0x2c83,0x1ce0,0x0cc1,</span><br><span class="line">    0xef1f,0xff3e,0xcf5d,0xdf7c,0xaf9b,0xbfba,0x8fd9,0x9ff8,</span><br><span class="line">    0x6e17,0x7e36,0x4e55,0x5e74,0x2e93,0x3eb2,0x0ed1,0x1ef0</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">uint16_t crc16(const char *buf, int len) &#123;</span><br><span class="line">    int counter;</span><br><span class="line">    uint16_t crc = 0;</span><br><span class="line">    <span class="keyword">for</span> (counter = 0; counter &lt; len; counter++)</span><br><span class="line">            crc = (crc&lt;&lt;8) ^ crc16tab[((crc&gt;&gt;8) ^ *buf++)&amp;0x00FF];</span><br><span class="line">    <span class="built_in">return</span> crc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="附录-A：-CRC16-算法的-ANSI-实现参考"><a href="#附录-A：-CRC16-算法的-ANSI-实现参考" class="headerlink" title="附录 A： CRC16 算法的 ANSI 实现参考"></a>附录 A： CRC16 算法的 ANSI 实现参考</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright 2001-2010 Georges Menie (www.menie.org)</span><br><span class="line"> * Copyright 2010 Salvatore Sanfilippo (adapted to Redis coding style)</span><br><span class="line"> * All rights reserved.</span><br><span class="line"> * Redistribution and use <span class="keyword">in</span> <span class="built_in">source</span> and binary forms, with or without</span><br><span class="line"> * modification, are permitted provided that the following conditions are met:</span><br><span class="line"> *</span><br><span class="line"> *     * Redistributions of <span class="built_in">source</span> code must retain the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer.</span><br><span class="line"> *     * Redistributions <span class="keyword">in</span> binary form must reproduce the above copyright</span><br><span class="line"> *       notice, this list of conditions and the following disclaimer <span class="keyword">in</span> the</span><br><span class="line"> *       documentation and/or other materials provided with the distribution.</span><br><span class="line"> *     * Neither the name of the University of California, Berkeley nor the</span><br><span class="line"> *       names of its contributors may be used to endorse or promote products</span><br><span class="line"> *       derived from this software without specific prior written permission.</span><br><span class="line"> *</span><br><span class="line"> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS<span class="string">''</span> AND ANY</span><br><span class="line"> * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span><br><span class="line"> * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span><br><span class="line"> * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY</span><br><span class="line"> * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span><br><span class="line"> * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span><br><span class="line"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span><br><span class="line"> * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span><br><span class="line"> * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span><br><span class="line"> * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/* CRC16 implementation acording to CCITT standards.</span><br><span class="line"> *</span><br><span class="line"> * Note by @antirez: this is actually the XMODEM CRC 16 algorithm, using the</span><br><span class="line"> * following parameters:</span><br><span class="line"> *</span><br><span class="line"> * Name                       : <span class="string">"XMODEM"</span>, also known as <span class="string">"ZMODEM"</span>, <span class="string">"CRC-16/ACORN"</span></span><br><span class="line"> * Width                      : 16 bit</span><br><span class="line"> * Poly                       : 1021 (That is actually x^16 + x^12 + x^5 + 1)</span><br><span class="line"> * Initialization             : 0000</span><br><span class="line"> * Reflect Input byte         : False</span><br><span class="line"> * Reflect Output CRC         : False</span><br><span class="line"> * Xor constant to output CRC : 0000</span><br><span class="line"> * Output <span class="keyword">for</span> <span class="string">"123456789"</span>     : 31C3</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">static const uint16_t crc16tab[256]= &#123;</span><br><span class="line">    0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,</span><br><span class="line">    0x8108,0x9129,0xa14a,0xb16b,0xc18c,0xd1ad,0xe1ce,0xf1ef,</span><br><span class="line">    0x1231,0x0210,0x3273,0x2252,0x52b5,0x4294,0x72f7,0x62d6,</span><br><span class="line">    0x9339,0x8318,0xb37b,0xa35a,0xd3bd,0xc39c,0xf3ff,0xe3de,</span><br><span class="line">    0x2462,0x3443,0x0420,0x1401,0x64e6,0x74c7,0x44a4,0x5485,</span><br><span class="line">    0xa56a,0xb54b,0x8528,0x9509,0xe5ee,0xf5cf,0xc5ac,0xd58d,</span><br><span class="line">    0x3653,0x2672,0x1611,0x0630,0x76d7,0x66f6,0x5695,0x46b4,</span><br><span class="line">    0xb75b,0xa77a,0x9719,0x8738,0xf7df,0xe7fe,0xd79d,0xc7bc,</span><br><span class="line">    0x48c4,0x58e5,0x6886,0x78a7,0x0840,0x1861,0x2802,0x3823,</span><br><span class="line">    0xc9cc,0xd9ed,0xe98e,0xf9af,0x8948,0x9969,0xa90a,0xb92b,</span><br><span class="line">    0x5af5,0x4ad4,0x7ab7,0x6a96,0x1a71,0x0a50,0x3a33,0x2a12,</span><br><span class="line">    0xdbfd,0xcbdc,0xfbbf,0xeb9e,0x9b79,0x8b58,0xbb3b,0xab1a,</span><br><span class="line">    0x6ca6,0x7c87,0x4ce4,0x5cc5,0x2c22,0x3c03,0x0c60,0x1c41,</span><br><span class="line">    0xedae,0xfd8f,0xcdec,0xddcd,0xad2a,0xbd0b,0x8d68,0x9d49,</span><br><span class="line">    0x7e97,0x6eb6,0x5ed5,0x4ef4,0x3e13,0x2e32,0x1e51,0x0e70,</span><br><span class="line">    0xff9f,0xefbe,0xdfdd,0xcffc,0xbf1b,0xaf3a,0x9f59,0x8f78,</span><br><span class="line">    0x9188,0x81a9,0xb1ca,0xa1eb,0xd10c,0xc12d,0xf14e,0xe16f,</span><br><span class="line">    0x1080,0x00a1,0x30c2,0x20e3,0x5004,0x4025,0x7046,0x6067,</span><br><span class="line">    0x83b9,0x9398,0xa3fb,0xb3da,0xc33d,0xd31c,0xe37f,0xf35e,</span><br><span class="line">    0x02b1,0x1290,0x22f3,0x32d2,0x4235,0x5214,0x6277,0x7256,</span><br><span class="line">    0xb5ea,0xa5cb,0x95a8,0x8589,0xf56e,0xe54f,0xd52c,0xc50d,</span><br><span class="line">    0x34e2,0x24c3,0x14a0,0x0481,0x7466,0x6447,0x5424,0x4405,</span><br><span class="line">    0xa7db,0xb7fa,0x8799,0x97b8,0xe75f,0xf77e,0xc71d,0xd73c,</span><br><span class="line">    0x26d3,0x36f2,0x0691,0x16b0,0x6657,0x7676,0x4615,0x5634,</span><br><span class="line">    0xd94c,0xc96d,0xf90e,0xe92f,0x99c8,0x89e9,0xb98a,0xa9ab,</span><br><span class="line">    0x5844,0x4865,0x7806,0x6827,0x18c0,0x08e1,0x3882,0x28a3,</span><br><span class="line">    0xcb7d,0xdb5c,0xeb3f,0xfb1e,0x8bf9,0x9bd8,0xabbb,0xbb9a,</span><br><span class="line">    0x4a75,0x5a54,0x6a37,0x7a16,0x0af1,0x1ad0,0x2ab3,0x3a92,</span><br><span class="line">    0xfd2e,0xed0f,0xdd6c,0xcd4d,0xbdaa,0xad8b,0x9de8,0x8dc9,</span><br><span class="line">    0x7c26,0x6c07,0x5c64,0x4c45,0x3ca2,0x2c83,0x1ce0,0x0cc1,</span><br><span class="line">    0xef1f,0xff3e,0xcf5d,0xdf7c,0xaf9b,0xbfba,0x8fd9,0x9ff8,</span><br><span class="line">    0x6e17,0x7e36,0x4e55,0x5e74,0x2e93,0x3eb2,0x0ed1,0x1ef0</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">uint16_t crc16(const char *buf, int len) &#123;</span><br><span class="line">    int counter;</span><br><span class="line">    uint16_t crc = 0;</span><br><span class="line">    <span class="keyword">for</span> (counter = 0; counter &lt; len; counter++)</span><br><span class="line">            crc = (crc&lt;&lt;8) ^ crc16tab[((crc&gt;&gt;8) ^ *buf++)&amp;0x00FF];</span><br><span class="line">    <span class="built_in">return</span> crc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
-        <tag>数据库</tag>
         <tag>CentOS7</tag>
+        <tag>linux</tag>
         <tag>Redis</tag>
+        <tag>数据库</tag>
         <tag>NoSQL</tag>
       </tags>
   </entry>
@@ -4421,6 +4594,9 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">upstream tomcat2 &#123;</span><br><span class="line">server 192.168.25.148:8081;</span><br><span class="line">server 192.168.25.148:8082 weight=2;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>笔记</tag>
         <tag>中间件</tag>
@@ -4875,6 +5051,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
 <li>清除已有语句：\c</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>整理</tag>
         <tag>数据库</tag>
@@ -4959,6 +5138,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>整理</tag>
         <tag>工具</tag>
@@ -4992,6 +5174,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
 <p>/* 鼠标样式 */<br>input[type=”submit”] {cursor: pointer;}<br>button {cursor: pointer;}<br>input::-moz-focus-inner { border: 0; padding: 0;}</p>
 <p>.clear {clear:both;}</p>
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>整理</tag>
         <tag>前端</tag>
@@ -5004,6 +5189,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
     <content><![CDATA[<h4 id="ctrl-shift-n-打开工程中的文件，目的是打开当前工程下任意目录的文件。"><a href="#ctrl-shift-n-打开工程中的文件，目的是打开当前工程下任意目录的文件。" class="headerlink" title="ctrl + shift + n: 打开工程中的文件，目的是打开当前工程下任意目录的文件。"></a>ctrl + shift + n: 打开工程中的文件，目的是打开当前工程下任意目录的文件。</h4><h4 id="ctrl-j-输出模板"><a href="#ctrl-j-输出模板" class="headerlink" title="ctrl + j: 输出模板"></a>ctrl + j: 输出模板</h4><h4 id="ctrl-b-跳到变量申明处"><a href="#ctrl-b-跳到变量申明处" class="headerlink" title="ctrl + b: 跳到变量申明处"></a>ctrl + b: 跳到变量申明处</h4><h4 id="ctrl-alt-T-围绕包裹代码-包括zencoding的Wrap-with-Abbreviation"><a href="#ctrl-alt-T-围绕包裹代码-包括zencoding的Wrap-with-Abbreviation" class="headerlink" title="ctrl + alt + T: 围绕包裹代码(包括zencoding的Wrap with Abbreviation)"></a>ctrl + alt + T: 围绕包裹代码(包括zencoding的Wrap with Abbreviation)</h4><h4 id="ctrl-匹配"><a href="#ctrl-匹配" class="headerlink" title="ctrl + []: 匹配 {}[]"></a>ctrl + []: 匹配 {}[]</h4><h4 id="ctrl-F12-可以显示当前文件的结构"><a href="#ctrl-F12-可以显示当前文件的结构" class="headerlink" title="ctrl + F12: 可以显示当前文件的结构"></a>ctrl + F12: 可以显示当前文件的结构</h4><h4 id="ctrl-x-剪切-删除-行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容"><a href="#ctrl-x-剪切-删除-行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容" class="headerlink" title="ctrl + x: 剪切(删除)行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容"></a>ctrl + x: 剪切(删除)行，不选中，直接剪切整个行，如果选中部分内容则剪切选中的内容</h4><h4 id="alt-left-right-标签切换"><a href="#alt-left-right-标签切换" class="headerlink" title="alt + left/right:标签切换"></a>alt + left/right:标签切换</h4><a id="more"></a>
 
 <h4 id="ctrl-r-替换"><a href="#ctrl-r-替换" class="headerlink" title="ctrl + r: 替换"></a>ctrl + r: 替换</h4><h4 id="ctrl-shift-up-行移动"><a href="#ctrl-shift-up-行移动" class="headerlink" title="ctrl + shift + up: 行移动"></a>ctrl + shift + up: 行移动</h4><h4 id="shift-alt-up-块移动-if-while-语句块的移动"><a href="#shift-alt-up-块移动-if-while-语句块的移动" class="headerlink" title="shift + alt + up: 块移动(if(){},while(){}语句块的移动)"></a>shift + alt + up: 块移动(if(){},while(){}语句块的移动)</h4><h4 id="ctrl-d-行复制"><a href="#ctrl-d-行复制" class="headerlink" title="ctrl + d: 行复制"></a>ctrl + d: 行复制</h4><h4 id="ctrl-shift-选中块代码"><a href="#ctrl-shift-选中块代码" class="headerlink" title="ctrl + shift + ]/[: 选中块代码"></a>ctrl + shift + ]/[: 选中块代码</h4><h4 id="ctrl-单行注释"><a href="#ctrl-单行注释" class="headerlink" title="ctrl + / : 单行注释"></a>ctrl + / : 单行注释</h4><h4 id="ctrl-shift-块注释"><a href="#ctrl-shift-块注释" class="headerlink" title="ctrl + shift + / : 块注释"></a>ctrl + shift + / : 块注释</h4><h4 id="ctrl-shift-i-显示当前CSS选择器或者JS函数的详细信息"><a href="#ctrl-shift-i-显示当前CSS选择器或者JS函数的详细信息" class="headerlink" title="ctrl + shift + i : 显示当前CSS选择器或者JS函数的详细信息"></a>ctrl + shift + i : 显示当前CSS选择器或者JS函数的详细信息</h4><h4 id="ctrl-‘-’-可以折叠项目中的任何代码块，它不是选中折叠，而是自动识别折叠。"><a href="#ctrl-‘-’-可以折叠项目中的任何代码块，它不是选中折叠，而是自动识别折叠。" class="headerlink" title="ctrl + ‘-/+’: 可以折叠项目中的任何代码块，它不是选中折叠，而是自动识别折叠。"></a>ctrl + ‘-/+’: 可以折叠项目中的任何代码块，它不是选中折叠，而是自动识别折叠。</h4><h4 id="ctrl-‘-’-折叠选中的代码的代码。"><a href="#ctrl-‘-’-折叠选中的代码的代码。" class="headerlink" title="ctrl + ‘.’: 折叠选中的代码的代码。"></a>ctrl + ‘.’: 折叠选中的代码的代码。</h4><h4 id="ctrl-单行注释-1"><a href="#ctrl-单行注释-1" class="headerlink" title="ctrl+/ 单行注释"></a>ctrl+/ 单行注释</h4><h4 id="ctrl-shift-块注释-1"><a href="#ctrl-shift-块注释-1" class="headerlink" title="ctrl+shift+/块注释"></a>ctrl+shift+/块注释</h4><h4 id="ctrl-shift-展开-折叠"><a href="#ctrl-shift-展开-折叠" class="headerlink" title="ctrl+shift+ +/-展开/折叠"></a>ctrl+shift+ +/-展开/折叠</h4><h4 id="ctrl-alt-L-格式化代码"><a href="#ctrl-alt-L-格式化代码" class="headerlink" title="ctrl+alt+L 格式化代码"></a>ctrl+alt+L 格式化代码</h4><h4 id="ctrl-shift-up-down-上下移动句子"><a href="#ctrl-shift-up-down-上下移动句子" class="headerlink" title="ctrl+shift+ up/down 上下移动句子"></a>ctrl+shift+ up/down 上下移动句子</h4><h4 id="Alt-回车-导入包-自动修正"><a href="#Alt-回车-导入包-自动修正" class="headerlink" title="Alt+回车 导入包,自动修正"></a>Alt+回车 导入包,自动修正</h4><h4 id="Ctrl-N-查找类"><a href="#Ctrl-N-查找类" class="headerlink" title="Ctrl+N 查找类"></a>Ctrl+N 查找类</h4><h4 id="Ctrl-Shift-N-查找文件"><a href="#Ctrl-Shift-N-查找文件" class="headerlink" title="Ctrl+Shift+N 查找文件"></a>Ctrl+Shift+N 查找文件</h4><h4 id="Ctrl-Alt-L-格式化代码"><a href="#Ctrl-Alt-L-格式化代码" class="headerlink" title="Ctrl+Alt+L 格式化代码"></a>Ctrl+Alt+L 格式化代码</h4><h4 id="Ctrl-Alt-O-优化导入的类和包"><a href="#Ctrl-Alt-O-优化导入的类和包" class="headerlink" title="Ctrl+Alt+O 优化导入的类和包"></a>Ctrl+Alt+O 优化导入的类和包</h4><h4 id="Alt-Insert-生成代码-如get-set方法-构造函数等"><a href="#Alt-Insert-生成代码-如get-set方法-构造函数等" class="headerlink" title="Alt+Insert 生成代码(如get,set方法,构造函数等)"></a>Alt+Insert 生成代码(如get,set方法,构造函数等)</h4><h4 id="Ctrl-E或者Alt-Shift-C-最近更改的代码"><a href="#Ctrl-E或者Alt-Shift-C-最近更改的代码" class="headerlink" title="Ctrl+E或者Alt+Shift+C 最近更改的代码"></a>Ctrl+E或者Alt+Shift+C 最近更改的代码</h4><h4 id="Ctrl-R-替换文本"><a href="#Ctrl-R-替换文本" class="headerlink" title="Ctrl+R 替换文本"></a>Ctrl+R 替换文本</h4><h4 id="Ctrl-F-查找文本"><a href="#Ctrl-F-查找文本" class="headerlink" title="Ctrl+F 查找文本"></a>Ctrl+F 查找文本</h4><h4 id="Ctrl-Shift-Space-自动补全代码"><a href="#Ctrl-Shift-Space-自动补全代码" class="headerlink" title="Ctrl+Shift+Space 自动补全代码"></a>Ctrl+Shift+Space 自动补全代码</h4><h4 id="Ctrl-空格-代码提示"><a href="#Ctrl-空格-代码提示" class="headerlink" title="Ctrl+空格 代码提示"></a>Ctrl+空格 代码提示</h4><h4 id="Ctrl-Alt-Space-类名或接口名提示"><a href="#Ctrl-Alt-Space-类名或接口名提示" class="headerlink" title="Ctrl+Alt+Space 类名或接口名提示"></a>Ctrl+Alt+Space 类名或接口名提示</h4><h4 id="Ctrl-P-方法参数提示"><a href="#Ctrl-P-方法参数提示" class="headerlink" title="Ctrl+P 方法参数提示"></a>Ctrl+P 方法参数提示</h4><h4 id="Ctrl-Shift-Alt-N-查找类中的方法或变量"><a href="#Ctrl-Shift-Alt-N-查找类中的方法或变量" class="headerlink" title="Ctrl+Shift+Alt+N 查找类中的方法或变量"></a>Ctrl+Shift+Alt+N 查找类中的方法或变量</h4><h4 id="Alt-Shift-C-对比最近修改的代码"><a href="#Alt-Shift-C-对比最近修改的代码" class="headerlink" title="Alt+Shift+C 对比最近修改的代码"></a>Alt+Shift+C 对比最近修改的代码</h4><h4 id="Shift-F6-重构-重命名"><a href="#Shift-F6-重构-重命名" class="headerlink" title="Shift+F6 重构-重命名"></a>Shift+F6 重构-重命名</h4><h4 id="Ctrl-Shift-先上键"><a href="#Ctrl-Shift-先上键" class="headerlink" title="Ctrl+Shift+先上键"></a>Ctrl+Shift+先上键</h4><h4 id="Ctrl-X-删除行"><a href="#Ctrl-X-删除行" class="headerlink" title="Ctrl+X 删除行"></a>Ctrl+X 删除行</h4><h4 id="Ctrl-D-复制行"><a href="#Ctrl-D-复制行" class="headerlink" title="Ctrl+D 复制行"></a>Ctrl+D 复制行</h4><h4 id="Ctrl-或-Ctrl-Shift-注释（-或者-…-）"><a href="#Ctrl-或-Ctrl-Shift-注释（-或者-…-）" class="headerlink" title="Ctrl+/ 或 Ctrl+Shift+/ 注释（// 或者/…/ ）"></a>Ctrl+/ 或 Ctrl+Shift+/ 注释（// 或者/<em>…</em>/ ）</h4><h4 id="Ctrl-J-自动代码"><a href="#Ctrl-J-自动代码" class="headerlink" title="Ctrl+J 自动代码"></a>Ctrl+J 自动代码</h4><h4 id="Ctrl-E-最近打开的文件"><a href="#Ctrl-E-最近打开的文件" class="headerlink" title="Ctrl+E 最近打开的文件"></a>Ctrl+E 最近打开的文件</h4><h4 id="Ctrl-H-显示类结构图"><a href="#Ctrl-H-显示类结构图" class="headerlink" title="Ctrl+H 显示类结构图"></a>Ctrl+H 显示类结构图</h4><h4 id="Ctrl-Q-显示注释文档"><a href="#Ctrl-Q-显示注释文档" class="headerlink" title="Ctrl+Q 显示注释文档"></a>Ctrl+Q 显示注释文档</h4><h4 id="Alt-F1-查找代码所在位置"><a href="#Alt-F1-查找代码所在位置" class="headerlink" title="Alt+F1 查找代码所在位置"></a>Alt+F1 查找代码所在位置</h4><h4 id="Alt-1-快速打开或隐藏工程面板"><a href="#Alt-1-快速打开或隐藏工程面板" class="headerlink" title="Alt+1 快速打开或隐藏工程面板"></a>Alt+1 快速打开或隐藏工程面板</h4><h4 id="Ctrl-Alt-left-right-返回至上次浏览的位置"><a href="#Ctrl-Alt-left-right-返回至上次浏览的位置" class="headerlink" title="Ctrl+Alt+ left/right 返回至上次浏览的位置"></a>Ctrl+Alt+ left/right 返回至上次浏览的位置</h4><h4 id="Alt-left-right-切换代码视图"><a href="#Alt-left-right-切换代码视图" class="headerlink" title="Alt+ left/right 切换代码视图"></a>Alt+ left/right 切换代码视图</h4><h4 id="Alt-Up-Down-在方法间快速移动定位"><a href="#Alt-Up-Down-在方法间快速移动定位" class="headerlink" title="Alt+ Up/Down 在方法间快速移动定位"></a>Alt+ Up/Down 在方法间快速移动定位</h4><h4 id="Ctrl-Shift-Up-Down-代码向上-下移动。"><a href="#Ctrl-Shift-Up-Down-代码向上-下移动。" class="headerlink" title="Ctrl+Shift+Up/Down 代码向上/下移动。"></a>Ctrl+Shift+Up/Down 代码向上/下移动。</h4><h4 id="F2-或Shift-F2-高亮错误或警告快速定位"><a href="#F2-或Shift-F2-高亮错误或警告快速定位" class="headerlink" title="F2 或Shift+F2 高亮错误或警告快速定位"></a>F2 或Shift+F2 高亮错误或警告快速定位</h4><h4 id="代码标签输入完成后，按Tab，生成代码。"><a href="#代码标签输入完成后，按Tab，生成代码。" class="headerlink" title="代码标签输入完成后，按Tab，生成代码。"></a>代码标签输入完成后，按Tab，生成代码。</h4><h4 id="选中文本，按Ctrl-Shift-F7-，高亮显示所有该文本，按Esc高亮消失。"><a href="#选中文本，按Ctrl-Shift-F7-，高亮显示所有该文本，按Esc高亮消失。" class="headerlink" title="选中文本，按Ctrl+Shift+F7 ，高亮显示所有该文本，按Esc高亮消失。"></a>选中文本，按Ctrl+Shift+F7 ，高亮显示所有该文本，按Esc高亮消失。</h4><h4 id="Ctrl-W-选中代码，连续按会有其他效果"><a href="#Ctrl-W-选中代码，连续按会有其他效果" class="headerlink" title="Ctrl+W 选中代码，连续按会有其他效果"></a>Ctrl+W 选中代码，连续按会有其他效果</h4><h4 id="选中文本，按Alt-F3-，逐个往下查找相同文本，并高亮显示。"><a href="#选中文本，按Alt-F3-，逐个往下查找相同文本，并高亮显示。" class="headerlink" title="选中文本，按Alt+F3 ，逐个往下查找相同文本，并高亮显示。"></a>选中文本，按Alt+F3 ，逐个往下查找相同文本，并高亮显示。</h4><h4 id="Ctrl-Up-Down-光标跳转到第一行或最后一行下"><a href="#Ctrl-Up-Down-光标跳转到第一行或最后一行下" class="headerlink" title="Ctrl+Up/Down 光标跳转到第一行或最后一行下"></a>Ctrl+Up/Down 光标跳转到第一行或最后一行下</h4><h4 id="Ctrl-B-快速打开光标处的类或方法"><a href="#Ctrl-B-快速打开光标处的类或方法" class="headerlink" title="Ctrl+B 快速打开光标处的类或方法"></a>Ctrl+B 快速打开光标处的类或方法</h4>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>整理</tag>
         <tag>前端</tag>
@@ -5043,6 +5231,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
 <p>6.————–重构—————<br><strong>Ctrl+Alt+Shift+T</strong>，弹出重构菜单<br><strong>Shift+F6</strong>，重命名<br><strong>F6</strong>，移动<br><strong>F5</strong>，复制<br><strong>Alt+Delete</strong>，安全删除 </p>
 <p><strong>Ctrl+Alt+N</strong>，内联 </p>
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
         <tag>整理</tag>
         <tag>idea</tag>
