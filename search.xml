@@ -85,9 +85,9 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>Redis</tag>
-        <tag>CentOS</tag>
         <tag>集群</tag>
       </tags>
   </entry>
@@ -114,10 +114,10 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
@@ -156,8 +156,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>JDK</tag>
         <tag>Java</tag>
       </tags>
@@ -196,8 +196,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>ZooKeeper</tag>
         <tag>中间件</tag>
       </tags>
@@ -300,8 +300,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -4479,8 +4479,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
         <tag>数据库</tag>
         <tag>NoSQL</tag>
@@ -5055,9 +5055,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
         <category>学习</category>
       </categories>
       <tags>
-        <tag>整理</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
