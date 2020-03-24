@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LeetCode每日一题1（按摩师）</title>
+    <url>/2020/03/24/LeetCode%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%981%EF%BC%88%E6%8C%89%E6%91%A9%E5%B8%88%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="面试题-17-16-按摩师"><a href="#面试题-17-16-按摩师" class="headerlink" title="面试题 17.16. 按摩师"></a>面试题 17.16. 按摩师</h1><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。</p>
+<p>注意：本题相对原题稍作改动</p>
+<p>示例 1：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入： [1,2,3,1]</span><br><span class="line">输出： 4</span><br><span class="line">解释： 选择 1 号预约和 3 号预约，总时长 &#x3D; 1 + 3 &#x3D; 4。</span><br></pre></td></tr></table></figure>
+
+
+<p>示例 2：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入： [2,7,9,3,1]</span><br><span class="line">输出： 12</span><br><span class="line">解释： 选择 1 号预约、 3 号预约和 5 号预约，总时长 &#x3D; 2 + 9 + 1 &#x3D; 12。</span><br></pre></td></tr></table></figure>
+
+
+<p>示例 3：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入： [2,1,4,5,3,1,1,3]</span><br><span class="line">输出： 12</span><br><span class="line">解释： 选择 1 号预约、 3 号预约、 5 号预约和 8 号预约，总时长 &#x3D; 2 + 4 + 3 + 3 &#x3D; 12。</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
+<li>如果接第n个预约的话，那么其相邻的预约不能接，所以sum[n] = sum[n-2] + nums[n] (也就是接预约后的最大时长等于n-2个预约的时长+第n个时长)</li>
+<li>相反，如果不接第n个预约的话，那么就是sum[n] = sum[n-1] (也就是不接预约时的最大时长)</li>
+</ol>
+<p>递推方程：<strong>sum[i] = max(sum[i - 1], sum[i - 2] + nums[i])</strong> (也就是判断当前不接预约的最大时长和接下一个不相邻的预约的最大时间对比)</p>
+<p>空间复杂度为：O(n)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="comment">//处理边界条件</span></span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 定义sum数组，根据状态递推</span></span><br><span class="line">        <span class="keyword">int</span>[] sum = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        sum[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        sum[<span class="number">1</span>] = Math.max(sum[<span class="number">0</span>], nums[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; n; i++) &#123;</span><br><span class="line">            sum[i] = Math.max(sum[i - <span class="number">1</span>], sum[i - <span class="number">2</span>] + nums[i]);</span><br><span class="line">            <span class="comment">// sum[i-1] (也就是不接预约时的最大时长)</span></span><br><span class="line">            <span class="comment">// sum[i-2] + nums[i] (也就是接预约后的最大时长等于 i-2个预约的时长 + 第i个时长)</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum[n - <span class="number">1</span>]; <span class="comment">// 返回当前的最大时长</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>空间复杂度为：O(1)</p>
+<p>发现 sum[i] 其实只依赖于 sum[i-1] 和 sum[i-2] 两个状态</p>
+<p>所以用</p>
+<p>a 表示  sum[i-2]</p>
+<p>b 表示 sum[i-1]</p>
+<p>c 表示 sum[i]</p>
+<p>然后下一轮循环的时候 sum[i-1] 就变成了 sum[i-2] 了，sum[i] 就变成了 sum[i-1] 了</p>
+<p>所以将他们的值进行交换</p>
+<p>就是将 b 的值赋给 a， 将 c 的值赋给 b</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> c = Math.max(b, a + nums[i]);</span><br><span class="line">            a = b;</span><br><span class="line">            b = c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="相关题目"><a href="#相关题目" class="headerlink" title="相关题目"></a>相关题目</h2><p>本题和 198.打家劫舍 是一模一样的重题</p>
+<p>小偷系列一共三道题可以做做： 198.打家劫舍、213.打家劫舍II、337.打家劫舍III</p>
+<p><a href="https://leetcode-cn.com/problems/the-masseuse-lcci/solution/100-kong-jian-cong-onyou-hua-dao-o1bao-hui-by-swee/" target="_blank" rel="noopener">参考于作者：sweetiee</a></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>记录</tag>
+        <tag>LeetCode</tag>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>redis集群搭建</title>
     <url>/2020/03/16/redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h1 id="redis集群搭建"><a href="#redis集群搭建" class="headerlink" title="redis集群搭建"></a>redis集群搭建</h1><p>在开始redis集群搭建之前，我们先简单回顾一下redis单机版的搭建过程</p>
@@ -85,9 +135,9 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>Redis</tag>
-        <tag>CentOS</tag>
         <tag>集群</tag>
       </tags>
   </entry>
@@ -114,10 +164,10 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
@@ -156,8 +206,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>JDK</tag>
         <tag>Java</tag>
       </tags>
@@ -196,10 +246,10 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
-        <tag>中间件</tag>
+        <tag>linux</tag>
         <tag>ZooKeeper</tag>
+        <tag>中间件</tag>
       </tags>
   </entry>
   <entry>
@@ -300,8 +350,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -4479,8 +4529,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
         <tag>数据库</tag>
         <tag>NoSQL</tag>
@@ -4599,8 +4649,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>Nginx</tag>
         <tag>中间件</tag>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -5055,9 +5105,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>整理</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
