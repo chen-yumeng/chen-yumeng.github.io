@@ -22,14 +22,20 @@
     var CONFIG = {"hostname":"chen-yumeng.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1、难度： 一般[单选题] 对于二叉查找树（Binary Search Tree），若其左子树非空，则左子树上所有结点的值均小于根结点的值；若其右子树非空，则右子树上所有结点的值均大于根结点的值；左、右子树本身就是两棵二叉查找树。因此，对任意一棵二叉查找树进行（  ）遍历可以得到一个结点元素的递增序列。在具有n个结点的二叉查找树上进行查找运算，最坏情况下的算法复杂度为（  ）。 问题1选项  A.">
+  <meta name="description" content="1、难度： 一般所属知识点：信号量与PV操作 [单选题] PV操作是操作系统提供的具有特定功能的原语。利用PV操作可以（ ） 问题1选项  A.保证系统不发生死锁  B.实现资源的互斥使用  C.提高资源利用率  D.推迟进程使用共享资源的时间">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2020年04月22日软件设计师每日一练">
-<meta property="og:url" content="http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/index.html">
+<meta property="og:title" content="2020年04月23日软件设计师每日一练">
+<meta property="og:url" content="http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/index.html">
 <meta property="og:site_name" content="Chenyumeng的博客">
-<meta property="og:description" content="1、难度： 一般[单选题] 对于二叉查找树（Binary Search Tree），若其左子树非空，则左子树上所有结点的值均小于根结点的值；若其右子树非空，则右子树上所有结点的值均大于根结点的值；左、右子树本身就是两棵二叉查找树。因此，对任意一棵二叉查找树进行（  ）遍历可以得到一个结点元素的递增序列。在具有n个结点的二叉查找树上进行查找运算，最坏情况下的算法复杂度为（  ）。 问题1选项  A.">
+<meta property="og:description" content="1、难度： 一般所属知识点：信号量与PV操作 [单选题] PV操作是操作系统提供的具有特定功能的原语。利用PV操作可以（ ） 问题1选项  A.保证系统不发生死锁  B.实现资源的互斥使用  C.提高资源利用率  D.推迟进程使用共享资源的时间">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/1013_855581.jpg">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/928_470661.jpg">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/8fba4f635aee4ad496a74a2dc0158609_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/17c702a6068749b98ae13c0fe01c7bff_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/8141bede1e62453b946455e0b25d3dbc_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/4b5c744122cb4d0ab33fb7a95c01088b_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/229e9eafba19431fbb8874f3817067d4_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/f1b6279631f347d584767c05591ed2bb_.png">
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/930_657827.jpg">
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/0d332097882346e7bccc704c2e42be42_.png">
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/77bfd8d4b5794fb3879624eaed82da49_.png">
@@ -46,17 +52,14 @@
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/930_579055.jpg">
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/930_236062.jpg">
 <meta property="og:image" content="http://chen-yumeng.github.io/assets/img/930_422994.jpg">
-<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/eca589c7f9264bbaa5a0f435a1a74573_.png">
-<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/5c8bcc48c40645ffb2e38572b1852dc9_.png">
-<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/f5317a7c5f2c4f91a6db120f63068814_.png">
-<meta property="article:published_time" content="2020-04-22T05:41:30.000Z">
-<meta property="article:modified_time" content="2020-04-22T08:14:20.239Z">
+<meta property="article:published_time" content="2020-04-23T03:44:30.000Z">
+<meta property="article:modified_time" content="2020-04-23T04:09:10.864Z">
 <meta property="article:author" content="Chenyumeng">
 <meta property="article:tag" content="软件设计师每日一练">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://chen-yumeng.github.io/assets/img/1013_855581.jpg">
+<meta name="twitter:image" content="http://chen-yumeng.github.io/assets/img/928_470661.jpg">
 
-<link rel="canonical" href="http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/">
+<link rel="canonical" href="http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/">
 
 
 <script id="page-configurations">
@@ -68,7 +71,7 @@
   };
 </script>
 
-  <title>2020年04月22日软件设计师每日一练 | Chenyumeng的博客</title>
+  <title>2020年04月23日软件设计师每日一练 | Chenyumeng的博客</title>
   
 
 
@@ -222,7 +225,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/">
+    <link itemprop="mainEntityOfPage" href="http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.JPG">
@@ -235,7 +238,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2020年04月22日软件设计师每日一练
+          2020年04月23日软件设计师每日一练
         </h1>
 
         <div class="post-meta">
@@ -246,11 +249,11 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-22 13:41:30 / 修改时间：16:14:20" itemprop="dateCreated datePublished" datetime="2020-04-22T13:41:30+08:00">2020-04-22</time>
+              <time title="创建时间：2020-04-23 11:44:30 / 修改时间：12:09:10" itemprop="dateCreated datePublished" datetime="2020-04-23T11:44:30+08:00">2020-04-23</time>
             </span>
 
           
-            <span id="/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/" class="post-meta-item leancloud_visitors" data-flag-title="2020年04月22日软件设计师每日一练" title="阅读次数">
+            <span id="/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/" class="post-meta-item leancloud_visitors" data-flag-title="2020年04月23日软件设计师每日一练" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -262,14 +265,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -281,25 +284,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p>[单选题]</p>
-<p>对于二叉查找树（Binary Search Tree），若其左子树非空，则左子树上所有结点的值均小于根结点的值；若其右子树非空，则右子树上所有结点的值均大于根结点的值；左、右子树本身就是两棵二叉查找树。因此，对任意一棵二叉查找树进行（  ）遍历可以得到一个结点元素的递增序列。在具有n个结点的二叉查找树上进行查找运算，最坏情况下的算法复杂度为（  ）。</p>
+        <h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p><strong>所属知识点：信号量与PV操作</strong></p>
+<p>[单选题]</p>
+<p>PV操作是操作系统提供的具有特定功能的原语。利用PV操作可以（ ）</p>
 <p>问题1选项</p>
-<p> A.先序</p>
-<p> B.中序</p>
-<p> C.后序</p>
-<p> D.层序</p>
-<p>问题2选项</p>
-<p> A.O（n2）</p>
-<p> B.O (nlog2n）</p>
-<p> C.O（log2n）</p>
-<p> D.O（n）</p>
+<p> A.保证系统不发生死锁</p>
+<p> B.实现资源的互斥使用</p>
+<p> C.提高资源利用率</p>
+<p> D.推迟进程使用共享资源的时间</p>
 <a id="more"></a>
 
-<p><strong>参考答案： B  <em>、</em> D</strong> </p>
-<p><strong>你的答案： B  <em>、</em> C</strong> </p>
-<p>试题解析：</p>
-<p>本题考查动态查找表二叉查找树（二叉排序树）。<br>　　中序遍历二叉树的过程为：若二叉树非空，则先中序遍历左子树，然后访问根结点，最后中序遍历右子树。根据二叉查找树的定义，显然，对二叉查找树进行中序遍历，得到结点元素的递增序列。<br>　　在二叉查找树上进行查找的过程为：若二叉查找树非空，将给定值与根结点的关键字值相比较，若相等，则查找成功；若不等，则当根结点的关键字值大于给定值时，到根的左子树中进行查找。否则到根的右子树中进行查找。若找到，则查找过程是走了一条从树根到所找到结点的路径；否则，查找过程终止于一棵空树。因此，在具有n个结点的二叉查找树上进行查找的算法复杂度与树的高度同阶。<br>　　由于一棵二叉查找树的形态完全由输入序列决定，所以在输入序列己经有序的情况下，所构造的二叉查找树是一棵单枝树。例如，由序列（45， 30， 50）和序列（30， 45，50）构造的二叉查找树如图（a）、（b）所示。<br><img src="/assets/img/1013_855581.jpg" alt="img"></p>
-<h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a><strong>2、难度： 一般</strong></h3><p><strong>所属知识点：关系代数</strong></p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>PV操作利用信号量机制，是一种有效的进程同步与互斥工具，可以实现资源的互斥使用，所以B选项正确。</p>
+<p>PV操作使用不当容易引起死锁，所以PV不能保证“系统不发生死锁”，A选项错误；</p>
+<p>PV操作对应进程每次只能发送一个消息，执行效率低，不能提高资源的利用率，C选项错误；</p>
+<p>PV操作针对的是互斥资源而不是共享资源，D选项错误。</p>
+<h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a><strong>2、难度： 一般</strong></h3><p>[单选题]</p>
+<p>某Web网站向CA申请了数字证书。用户登录该网站时，通过验证（  ），可确认该数字证书的有效性，从而（  ）。</p>
+<p>问题1选项</p>
+<p> A.CA的签名</p>
+<p> B.网站的签名</p>
+<p> C.会话密钥</p>
+<p> D.DES密码</p>
+<p>问题2选项</p>
+<p> A.向网站确认自己的身份</p>
+<p> B.获取访问网站的权限</p>
+<p> C.和网站进行双向认证</p>
+<p> D.验证该网站的真伪</p>
+<p><strong>参考答案： A  <em>、</em> D</strong> </p>
+<p><strong>你的答案： A  <em>、</em> D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查的是公钥基础设施方面有关数字签名的基础知识。数字证书能够验证一个实体身份，而这是在保证数字证书本身有效性这一前提下才能够实现的。验证数字证书的有效性是通过验证颁发证书的CA的签名实现的。</p>
+<h3 id="3、难度：-一般"><a href="#3、难度：-一般" class="headerlink" title="3、难度： 一般"></a><strong>3、难度： 一般</strong></h3><p><strong>所属知识点：Gant图与Pert图</strong></p>
+<p>[单选题]</p>
+<p>某项目主要由A～I任务构成，其计划图（如下图所示）展示了各任务之间的前后关系以及每个任务的工期（单位：天），该项目的关键路径是（  ）。在不延误项目总工期的情况下，任务A 最多可以推迟开始的时间是（  ）天。</p>
+<p><img src="/assets/img/928_470661.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.A→G→I</p>
+<p> B.A→D→F→H→I</p>
+<p> C.B→E→G→I</p>
+<p> D.C→F→H→I</p>
+<p>问题2选项</p>
+<p> A.0</p>
+<p> B.2</p>
+<p> C.5</p>
+<p> D.7</p>
+<p><strong>参考答案： C  <em>、</em> B</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查项目计划的关键路径和松弛时间。图中任务流A→G→I的持续时间为15；任务流A→D→F→H→I的持续时间为18；任务流B→E→G→I的持续时间为20；任务流C→F→H→I的持续时间为13。因此关键路径为B→E→G→I，其持续时间是20。任务A处于任务流A→G→I和任务流A→D→F→H→I中，分别持续时间为15和18，A所在任务流持续时间最长为18，关键路径B→E→G→I，其持续时间是20，因此任务A的可延迟开始时间为2。</p>
+<h3 id="4、难度：-一般"><a href="#4、难度：-一般" class="headerlink" title="4、难度： 一般"></a><strong>4、难度： 一般</strong></h3><p><strong>所属知识点：信号量与PV操作</strong></p>
+<p>[单选题] 进程P1、P2、P3、P4和P5的前趋图如下所示：<img src="/assets/img/8fba4f635aee4ad496a74a2dc0158609_.png" alt="img"></p>
+<p>若用PV操作控制这5个进程的同步与互斥的程序如下，那么程序中的空①和空②处应分别为（  ）；空③和空④处应分别为（  ）；空⑤和空⑥处应分别为（  ）。<br><img src="/assets/img/17c702a6068749b98ae13c0fe01c7bff_.png" alt="img"></p>
+<p>问题1选项</p>
+<p> A.V（S1）和P（S2）</p>
+<p> B. P（S1）和V（S2）</p>
+<p> C. V（S1）和V（S2）</p>
+<p> D. V（S2）和P（S1）</p>
+<p>问题2选项</p>
+<p> A. V（S3）和V（S5）</p>
+<p> B. P（S3）和V（S5）</p>
+<p> C. V（S3）和P（S5）</p>
+<p> D. P（S3）和P（S5）</p>
+<p>问题3选项</p>
+<p> A. P（S6）和P（S5）V（S6）</p>
+<p> B. V（S5）和V（S5）V（S6）</p>
+<p> C. V（S6）和P（S5）P（S6）</p>
+<p> D. P（S6）和P（S5）P（S6）</p>
+<p><strong>参考答案： D  <em>、</em> B  <em>、</em> C</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B  <em>、</em> C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查的是利用PV操作控制进程的并发执行。<br>先理清楚前趋图中的逻辑关系：P1没有前驱，P2的前驱是P1，P3的前驱是P1、P2，P4的前驱是P2，P5的前驱是P3、P4。<br>前驱就是指只有在前驱进程完成后，该进程才能开始执行。由图可知，这里进程之间有6条有向弧，分别表示为P1-&gt;P2，P1-P3，P2-&gt;P3，P2-&gt;P4，P3-&gt;P5，P4-&gt;P5，各个进程间的逻辑关系，那么我们需要设定6个信号量(S1、S2、S3、S4、S5、S6)，利用PV操作来控制这些过程。</p>
+<p>对于第一个空，P1执行完成之后，需要通知P2、P3可以开始，此处需要V(S1)、V(S2)操作分别唤醒P2、P3进程，已有V(S1)，此处需要填写V(S2)。<br>对于第二个空，P2执行之前，需要检查P1进程是否完成，因此需要通过P(S1)操作来判定，P1是否完成。<br>对于第三个空，在P3执行之前，需要检查P1、P2进程是否完成，因此需要通过P(S2)、P(S3)操作来判定P1、P2是否完成，已有P(S2)，此处填写P(S3)。<br>对于第四空，P3执行完成后，需要通知P5进程可以开始，此处需要通过V(S5)操作唤醒P5进程；<br>对于第五空，P4进程完成后，需要通知P5进程可以开始，此处需要通过V(S6)操作唤醒P5进程；<br>对于第六空，P5进程开始之前，需要检查P3、P4进程是否已完成，因此需要P(S5)、P(S6)操作来判断P3、P4是否完成。</p>
+<p>综上，本题分别选择D、B、C选项。</p>
+<h3 id="5、难度：-容易"><a href="#5、难度：-容易" class="headerlink" title="5、难度： 容易"></a><strong>5、难度： 容易</strong></h3><p><strong>所属知识点：Gant图与Pert图</strong></p>
+<p>[单选题]</p>
+<p>某项目制定的开发计划中定义了三个任务，其中任务 A 首先开始，且需要 3 周完成，任务B 必须在任务A 启动1 周后开始，且需要2 周完成，任务C 必须在任务A 完成后才能开始，且需要2周完成。该项目的进度安排可用下面的甘特图（）来描述。</p>
+<p>问题1选项</p>
+<p> A.<img src="/assets/img/8141bede1e62453b946455e0b25d3dbc_.png" alt="img"></p>
+<p> B.<img src="/assets/img/4b5c744122cb4d0ab33fb7a95c01088b_.png" alt="img"></p>
+<p> C.<img src="/assets/img/229e9eafba19431fbb8874f3817067d4_.png" alt="img"></p>
+<p> D.<img src="/assets/img/f1b6279631f347d584767c05591ed2bb_.png" alt="img"></p>
+<p><strong>参考答案： D</strong> </p>
+<p><strong>你的答案： D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查甘特图的概念。甘特图可用来标示一个项目中各任务计划进度和当前进度，能动态反映项目进展情况。甘特图中用水平线表示任务的工作阶段，其起点和终点分别对应任务的开始时间和完成时间，长度表示完成任务的周期。在题中的图A和图C中，任务A结束后任务B才开始，在图B中，任务B和任务A同时开始，这些都与题目要求的“任务B必须在启动任务A后1周开始”不符。</p>
+<h3 id="6、难度：-一般"><a href="#6、难度：-一般" class="headerlink" title="6、难度： 一般"></a><strong>6、难度： 一般</strong></h3><p><strong>所属知识点：关系代数</strong></p>
 <p>[单选题]</p>
 <p>关系 R、S 如下图所示，关系代数表达式π1，5，6(σ2=5(R×S))=（），该表达式与（）等价。</p>
 <p><img src="/assets/img/930_657827.jpg" alt="img"></p>
@@ -323,108 +395,57 @@
 <p><img src="/assets/img/930_579055.jpg" alt="img">)的含义是从<img src="/assets/img/930_236062.jpg" alt="img"></p>
 <p><img src="/assets/img/930_422994.jpg" alt="img"></p>
 <p>　　从上面的分析可见，试题（55）的正确答案是B，试题（56）的正确答案是C。</p>
-<h3 id="3、难度：-一般"><a href="#3、难度：-一般" class="headerlink" title="3、难度： 一般"></a><strong>3、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
+<h3 id="7、难度：-一般"><a href="#7、难度：-一般" class="headerlink" title="7、难度： 一般"></a><strong>7、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
 <p>[单选题]</p>
-<p>内存采用段式存储管理有许多优点，但“（）”不是其优点。</p>
+<p>面向对象分析与设计中的（）是指一个模块在扩展性方面应该是开放的，而在更改性方面应该是封闭的；而（）是指子类应当可以替换父类并出现在父类能够出现的任何地方。</p>
 <p>问题1选项</p>
-<p> A.分段是信息的逻辑单位，用户不可见</p>
-<p> B.各段程序的修改互不影响</p>
-<p> C.地址变换速度快、内存碎片少</p>
-<p> D.便于多道程序共享主存的某些段</p>
-<p><strong>参考答案： C</strong> </p>
-<p><strong>你的答案： A</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p>本题考查操作系统内存管理方面的基本概念。操作系统内存管理方案有许多种，其中，分页存储管理系统中的每一页只是存放信息的物理单位，其本身没有完整的意义，因而不便于实现信息的共享，而段却是信息的逻辑单位，各段程序的修改互不影响，无内碎片，有利于信息的共享。</p>
-<h3 id="4、难度：-一般"><a href="#4、难度：-一般" class="headerlink" title="4、难度： 一般"></a><strong>4、难度： 一般</strong></h3><p><strong>所属知识点：数组与矩阵</strong></p>
-<p>[单选题]</p>
-<p>设某n阶三对角矩阵Anxn的示意图如下图所示。若将该三对角矩阵的非零元素按行存储在一维数组B[k]（1≤k≤3*n-2）中，则k与i、j的对应关系是（  ）。</p>
-<p><img src="/assets/img/eca589c7f9264bbaa5a0f435a1a74573_.png" alt="img"></p>
-<p>问题1选项</p>
-<p> A.k=2i+j-2</p>
-<p> B.k=2i-j+2</p>
-<p> C.k=3i+j-1</p>
-<p> D.K=3i-j+2</p>
-<p><strong>参考答案： A</strong> </p>
-<p><strong>你的答案： D</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p>该题最简单的解题思路是代入法。当i=1,j=1时，k=1。<br>选项A：k=2i+j-2=2+1-2=1；<br>选项B：k=2i-j+2=2-1+2=3；<br>选项C：k=3i+j-1=3+1-1=3；<br>选项D：k=3i-j+2=3+1+2=4。<br>此时可以除排B，C，D，直接选A。若用一个例子，不能排除所有错误选项，则而举一个例子来进行代入，排除更多错误选项。</p>
-<h3 id="5、难度：-一般"><a href="#5、难度：-一般" class="headerlink" title="5、难度： 一般"></a><strong>5、难度： 一般</strong></h3><p><strong>所属知识点：软件开发方法</strong></p>
-<p>[单选题]</p>
-<p>（）是一种面向数据流的开发方法，其基本思想是软件功能的分解和抽象。</p>
-<p>问题1选项</p>
-<p> A.结构化开发方法</p>
-<p> B.Jackson系统开发方法</p>
-<p> C.Booch 方法</p>
-<p> D.UML（统一建模语言）</p>
-<p><strong>参考答案： A</strong> </p>
-<p><strong>你的答案： B</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p>本题考查软件开发方法基本概念。结构化开发方法是传统的、也是应用较为广发的一种软件开发方法，它基于数据流进行需求分析和软件设计，用抽象模型的概念，按照软件内部数据传递和转换关系，对问题和功能自顶向下逐层分解。Jackson系统开发方法是一种典型的面向数据结构的分析和设计方法，以活动为中心，一连串活动的顺序组合成一个完整的工作进程。Booch方法是一种面向对象的软件开发方法。UML仅仅是一种建模标准语言，规定了构成软件的各个元素和构件的图示规范。</p>
-<h3 id="6、难度：-一般"><a href="#6、难度：-一般" class="headerlink" title="6、难度： 一般"></a><strong>6、难度： 一般</strong></h3><p>[单选题]</p>
-<p>在面向对象程序设计中，常常将接口的定义与接口的实现相分离，可定义不同的类实现相同的接口。在程序运行过程中，对该接口的调用可根据实际的对象类型调用其相应的实现。  为达到上述目的，面向对象语言须提供（）机制。</p>
-<p>问题1选项</p>
-<p> A.继承和过载（overloading）</p>
-<p> B.抽象类</p>
-<p> C.继承和重置（overriding）</p>
-<p> D.对象目身引用</p>
-<p><strong>参考答案： C</strong> </p>
-<p><strong>你的答案： B</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p> 　　根据题目的描述，根据一个接口调用不同的实现，需要用多态机制支持，多态机制一般和继承机制结合使用，由于子类可以实现接口，通常将接口定义为虚拟函数，这种机制实际上是重置机制的应用。</p>
-<h3 id="7、难度：-一般"><a href="#7、难度：-一般" class="headerlink" title="7、难度： 一般"></a><strong>7、难度： 一般</strong></h3><p><strong>所属知识点：网络安全协议</strong></p>
-<p>[单选题]</p>
-<p>下述协议中与安全电子邮箱服务无关的是（ ）。</p>
-<p>问题1选项</p>
-<p> A.SSL</p>
-<p> B.HTTPS</p>
-<p> C.MIME</p>
-<p> D.PGP</p>
-<p><strong>参考答案： C</strong> </p>
-<p><strong>你的答案： A</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p>MIME它是一个互联网标准，扩展了电子邮件标准，使其能够支持，与安全无关。与安全电子邮件相关的是S/MIME安全多用途互联网邮件扩展协议。<br>A选项SSL和B选项HTTPS涉及到邮件传输过程的安全，D选项PGP（全称：Pretty Good Privacy，优良保密协议），是一套用于信息加密、验证的应用程序，可用于加密电子邮件内容。</p>
-<h3 id="8、难度：-一般"><a href="#8、难度：-一般" class="headerlink" title="8、难度： 一般"></a><strong>8、难度： 一般</strong></h3><p><strong>所属知识点：可靠性</strong></p>
-<p>[单选题]</p>
-<p>在屏蔽软件错误的容错系统中，冗余附加技术的构成不包括（  ）。</p>
-<p>问题1选项</p>
-<p> A.关键程序和数据的冗余存储及调用</p>
-<p> B.冗余备份程序的存储及调用</p>
-<p> C.实现错误检测和错误恢复的程序</p>
-<p> D.实现容错软件所需的固化程序</p>
-<p><strong>参考答案： A</strong> </p>
-<p><strong>你的答案： B</strong> </p>
-<p><strong>试题解析：</strong></p>
-<p>容错系统是指在一定程度上具有容错功能的系统，实现容错的主要办法就是冗余，冗余附加技术的构成主要包括冗余备份程序的存储及调用、实现错误检测和错误恢复的程序、实现容错软件所需的固化程序。</p>
-<h3 id="9、难度：-一般"><a href="#9、难度：-一般" class="headerlink" title="9、难度： 一般"></a><strong>9、难度： 一般</strong></h3><p><strong>所属知识点：设计模式</strong></p>
-<p>[单选题]</p>
-<p>下图所示为（  ）设计模式，适用于（  ）。</p>
-<p><img src="/assets/img/5c8bcc48c40645ffb2e38572b1852dc9_.png" alt="img"></p>
-<p>问题1选项</p>
-<p> A.适配器（Adapter）</p>
-<p> B.责任链（Chain of Responsibility）</p>
-<p> C.外观（Facade）</p>
-<p> D.桥接（Bridge）</p>
+<p> A.开闭原则</p>
+<p> B.替换原则</p>
+<p> C.依赖原则</p>
+<p> D.单一职责原则</p>
 <p>问题2选项</p>
-<p> A.有多个对象可以处理一个请求，在运行时刻自动确定由哪个对象处理</p>
-<p> B.想使用一个已经存在的类，而其接口不符合要求</p>
-<p> C.类的抽象和其实现之间不希望有一个固定的绑定关系</p>
-<p> D.需要为一个复杂子系统提供一个简单接口</p>
-<p><strong>参考答案： C  <em>、</em> D</strong> </p>
-<p><strong>你的答案： D  <em>、</em> D</strong> </p>
+<p> A.开闭原则</p>
+<p> B.替换原则</p>
+<p> C.依赖原则</p>
+<p> D.单一职责原则</p>
+<p><strong>参考答案： A  <em>、</em> B</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B</strong> </p>
 <p><strong>试题解析：</strong></p>
-<p>外观模式是一种使用频率非常高的结构型设计模式，它通过引入一个外观角色来简化客户端与子系统之间的交互，为复杂的子系统调用提供一个统一的入口，降低子系统与客户端的耦合度，且客户端调用非常方便。<br>适配器模式（Adapter）：将一个类的接口转换成用户希望得到的另一种接口。它使原本不相容的接口得以协同工作。<br>责任链模式（Chain of Responsibility）：通过给多个对象处理请求的机会，减少请求的发送者与接收者之间的耦合。将接收对象链接起来，在链中传递请求，直到有一个对象处理这个请求。<br>桥接模式（Bridge）：将类的抽象部分和它的实现部分分离开来，使它们可以独立地变化。</p>
-<h3 id="10、难度：-一般"><a href="#10、难度：-一般" class="headerlink" title="10、难度： 一般"></a><strong>10、难度： 一般</strong></h3><p><strong>所属知识点：有限自动机</strong></p>
-<p>[单选题] 某确定的有限自动机 (DFA) 的状态转换图如下图所示 (A 是初态，D、E 是终态)，则该 DFA 能识别（  ）。</p>
-<p><img src="/assets/img/f5317a7c5f2c4f91a6db120f63068814_.png" alt="img"></p>
+<p>本题考查面向对象分析与设计中的原则。开闭原则是指一个模块在扩展性方面应该是开放的，而在更改性方面应该是封闭的。其含义是模块容易扩展和修改，但不能对其他的模块产生影响。替换原则是指子类可以替换父类并出现在父类能够出现的任何地方。<br>　　具体地说，就是凡是使用父类对象的地方都可以使用子类对象。</p>
+<h3 id="8、难度：-一般"><a href="#8、难度：-一般" class="headerlink" title="8、难度： 一般"></a><strong>8、难度： 一般</strong></h3><p>[单选题]</p>
+<p>UML中关联的多重度是指（）。</p>
 <p>问题1选项</p>
-<p> A.00110</p>
-<p> B.10101</p>
-<p> C.11100</p>
-<p> D.11001</p>
-<p><strong>参考答案： C</strong> </p>
+<p> A.一个类有多少个方法被另一个类调用</p>
+<p> B.一个类的实例能够与另一个类的多少个实例相关联</p>
+<p> C.一个类的某个方法被另一个类调用的次数</p>
+<p> D.两个类所具有的相同的方法和属性</p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查的是UML中关联的多重度概念。<br>​    关联表示了对象间的结构关系。在很多建模问题中，说明一个关联的实例中有多少个相互连接的对象是很重要的。这个“多少”被称为关联角色的多重度，把它写成一个表示取值范围的表达式或写成一个具体值。指定关联一端的多重度，就是说明；在关联另一端的类的每个对象要求在本端的类必须有多少个对象。</p>
+<h3 id="9、难度：-一般"><a href="#9、难度：-一般" class="headerlink" title="9、难度： 一般"></a><strong>9、难度： 一般</strong></h3><p><strong>所属知识点：操作系统</strong></p>
+<p>[单选题]</p>
+<p>文件系统中，设立打开文件（Open）系统功能调用的基本操作是（）。</p>
+<p>问题1选项</p>
+<p> A.把文件信息从辅存读到内存</p>
+<p> B.把文件的控制管理信息从辅存读到内存</p>
+<p> C.把磁盘的超级块从辅存读到内存</p>
+<p> D.把文件的FAT表信息从辅存读到内存</p>
+<p><strong>参考答案： B</strong> </p>
 <p><strong>你的答案： A</strong> </p>
 <p><strong>试题解析：</strong></p>
-<p>选项中，只有C选项的字符串能被DFA解析。解析路径为：ACEEBDD。</p>
+<p>​    本题考查的是操作系统中文件管理的基本知识。<br>​    在使用已经存在的文件之前，要通过“打开(open )”文件操作建立起文件和用户之间的联系，目的是把文件的控制管理信息从辅存读到内存。打开文件应完成如下功能：<br>   · 在内存的管理表中申请一个空表目，用来存放该文件的文件目录信息。<br>   ·根据文件名在磁盘上查找目录文件。将找到的文件目录信息复制到内存的管理表中。如果打开的是共享文件，则应进行相关处理，如共享用户数加t。<br>   ·文件定位，卷标处理。<br>​    文件一旦打开，可被反复使用直至文件关闭。这样做的优点是减少查找目录的时间，加快文件存取速度，提高系统的运行效率。因此，本题的正确答案为B。</p>
+<h3 id="10、难度：-一般"><a href="#10、难度：-一般" class="headerlink" title="10、难度： 一般"></a><strong>10、难度： 一般</strong></h3><p>[单选题]</p>
+<p>正式的技术评审FTR（Formal Technical Review）是软件工程师组织的软件质量保证活动，下面关于FTR指导原则中不正确的是（）。</p>
+<p>问题1选项</p>
+<p> A.评审产品，而不是评审生产者的能力</p>
+<p> B.要有严格的评审计划，并遵守日程安排</p>
+<p> C.对评审中出现的问题要充分讨论，以求彻底解决</p>
+<p> D.限制参与者人数，并要求评审会之前做好准备</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： D</strong> </p>
+<p>试题解析：</p>
+<p>​    本题考查软件评审的基本概念。<br>​    软件评审是评审软件产品，不要涉及对软件生产者能力的评价；评审前要制定严格的评审计划，并严格遵守预计的日程安排；对评审中出现的问题要记录在案，不要过多地讨论解决方案，把问题留给软件生产者来解决：要限制参与者人数，并要求参加评审的人员在评审会之前仔细阅读文档，做好充分的准备。</p>
 
     </div>
 
@@ -443,16 +464,16 @@
 
           <li class="post-copyright-link">
             <strong>本文标题：</strong>
-            <a href="http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/" title="2020年04月22日软件设计师每日一练">2020年04月22日软件设计师每日一练</a>
+            <a href="http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/" title="2020年04月23日软件设计师每日一练">2020年04月23日软件设计师每日一练</a>
           </li>
 
           <li class="post-copyright-link">
             <strong>本文链接：</strong>
-            <a href="http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/" title="2020年04月22日软件设计师每日一练">http://chen-yumeng.github.io/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/</a>
+            <a href="http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/" title="2020年04月23日软件设计师每日一练">http://chen-yumeng.github.io/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/</a>
           </li>
 
           <li class="post-copyright-date">
-            <strong>发布时间： </strong>2020年4月22日 - 13时04分
+            <strong>发布时间： </strong>2020年4月23日 - 11时04分
           </li>  
 
           <li class="post-copyright-license">
@@ -469,7 +490,7 @@
       <div class="popular-posts-title"><a href="\2020\04\20\2020年04月20日\" rel="bookmark">2020年04月20日软件设计师每日一练</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2020\04\23\2020年04月23日\" rel="bookmark">2020年04月23日软件设计师每日一练</a></div>
+      <div class="popular-posts-title"><a href="\2020\04\22\2020年04月22日\" rel="bookmark">2020年04月22日软件设计师每日一练</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2020\04\21\2020年04月21日\" rel="bookmark">2020年04月21日软件设计师每日一练</a></div>
@@ -521,13 +542,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/21/2020%E5%B9%B404%E6%9C%8821%E6%97%A5/" rel="prev" title="2020年04月21日软件设计师每日一练">
-      <i class="fa fa-chevron-left"></i> 2020年04月21日软件设计师每日一练
+    <a href="/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/" rel="prev" title="2020年04月22日软件设计师每日一练">
+      <i class="fa fa-chevron-left"></i> 2020年04月22日软件设计师每日一练
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/" rel="next" title="2020年04月23日软件设计师每日一练">
-      2020年04月23日软件设计师每日一练 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -596,7 +614,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、难度：-一般"><span class="nav-number">1.</span> <span class="nav-text">1、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、难度：-一般"><span class="nav-number">2.</span> <span class="nav-text">2、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、难度：-一般"><span class="nav-number">3.</span> <span class="nav-text">3、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、难度：-一般"><span class="nav-number">4.</span> <span class="nav-text">4、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、难度：-一般"><span class="nav-number">5.</span> <span class="nav-text">5、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、难度：-一般"><span class="nav-number">6.</span> <span class="nav-text">6、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、难度：-一般"><span class="nav-number">7.</span> <span class="nav-text">7、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、难度：-一般"><span class="nav-number">8.</span> <span class="nav-text">8、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、难度：-一般"><span class="nav-number">9.</span> <span class="nav-text">9、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、难度：-一般"><span class="nav-number">10.</span> <span class="nav-text">10、难度： 一般</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、难度：-一般"><span class="nav-number">1.</span> <span class="nav-text">1、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、难度：-一般"><span class="nav-number">2.</span> <span class="nav-text">2、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、难度：-一般"><span class="nav-number">3.</span> <span class="nav-text">3、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、难度：-一般"><span class="nav-number">4.</span> <span class="nav-text">4、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、难度：-容易"><span class="nav-number">5.</span> <span class="nav-text">5、难度： 容易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、难度：-一般"><span class="nav-number">6.</span> <span class="nav-text">6、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、难度：-一般"><span class="nav-number">7.</span> <span class="nav-text">7、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、难度：-一般"><span class="nav-number">8.</span> <span class="nav-text">8、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、难度：-一般"><span class="nav-number">9.</span> <span class="nav-text">9、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、难度：-一般"><span class="nav-number">10.</span> <span class="nav-text">10、难度： 一般</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

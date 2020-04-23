@@ -1,6 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2020年04月23日软件设计师每日一练</title>
+    <url>/2020/04/23/2020%E5%B9%B404%E6%9C%8823%E6%97%A5/</url>
+    <content><![CDATA[<h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p><strong>所属知识点：信号量与PV操作</strong></p>
+<p>[单选题]</p>
+<p>PV操作是操作系统提供的具有特定功能的原语。利用PV操作可以（ ）</p>
+<p>问题1选项</p>
+<p> A.保证系统不发生死锁</p>
+<p> B.实现资源的互斥使用</p>
+<p> C.提高资源利用率</p>
+<p> D.推迟进程使用共享资源的时间</p>
+<a id="more"></a>
+
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>PV操作利用信号量机制，是一种有效的进程同步与互斥工具，可以实现资源的互斥使用，所以B选项正确。</p>
+<p>PV操作使用不当容易引起死锁，所以PV不能保证“系统不发生死锁”，A选项错误；</p>
+<p>PV操作对应进程每次只能发送一个消息，执行效率低，不能提高资源的利用率，C选项错误；</p>
+<p>PV操作针对的是互斥资源而不是共享资源，D选项错误。</p>
+<h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a><strong>2、难度： 一般</strong></h3><p>[单选题]</p>
+<p>某Web网站向CA申请了数字证书。用户登录该网站时，通过验证（  ），可确认该数字证书的有效性，从而（  ）。</p>
+<p>问题1选项</p>
+<p> A.CA的签名</p>
+<p> B.网站的签名</p>
+<p> C.会话密钥</p>
+<p> D.DES密码</p>
+<p>问题2选项</p>
+<p> A.向网站确认自己的身份</p>
+<p> B.获取访问网站的权限</p>
+<p> C.和网站进行双向认证</p>
+<p> D.验证该网站的真伪</p>
+<p><strong>参考答案： A  <em>、</em> D</strong> </p>
+<p><strong>你的答案： A  <em>、</em> D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查的是公钥基础设施方面有关数字签名的基础知识。数字证书能够验证一个实体身份，而这是在保证数字证书本身有效性这一前提下才能够实现的。验证数字证书的有效性是通过验证颁发证书的CA的签名实现的。</p>
+<h3 id="3、难度：-一般"><a href="#3、难度：-一般" class="headerlink" title="3、难度： 一般"></a><strong>3、难度： 一般</strong></h3><p><strong>所属知识点：Gant图与Pert图</strong></p>
+<p>[单选题]</p>
+<p>某项目主要由A～I任务构成，其计划图（如下图所示）展示了各任务之间的前后关系以及每个任务的工期（单位：天），该项目的关键路径是（  ）。在不延误项目总工期的情况下，任务A 最多可以推迟开始的时间是（  ）天。</p>
+<p><img src="/assets/img/928_470661.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.A→G→I</p>
+<p> B.A→D→F→H→I</p>
+<p> C.B→E→G→I</p>
+<p> D.C→F→H→I</p>
+<p>问题2选项</p>
+<p> A.0</p>
+<p> B.2</p>
+<p> C.5</p>
+<p> D.7</p>
+<p><strong>参考答案： C  <em>、</em> B</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查项目计划的关键路径和松弛时间。图中任务流A→G→I的持续时间为15；任务流A→D→F→H→I的持续时间为18；任务流B→E→G→I的持续时间为20；任务流C→F→H→I的持续时间为13。因此关键路径为B→E→G→I，其持续时间是20。任务A处于任务流A→G→I和任务流A→D→F→H→I中，分别持续时间为15和18，A所在任务流持续时间最长为18，关键路径B→E→G→I，其持续时间是20，因此任务A的可延迟开始时间为2。</p>
+<h3 id="4、难度：-一般"><a href="#4、难度：-一般" class="headerlink" title="4、难度： 一般"></a><strong>4、难度： 一般</strong></h3><p><strong>所属知识点：信号量与PV操作</strong></p>
+<p>[单选题] 进程P1、P2、P3、P4和P5的前趋图如下所示：<img src="/assets/img/8fba4f635aee4ad496a74a2dc0158609_.png" alt="img"></p>
+<p>若用PV操作控制这5个进程的同步与互斥的程序如下，那么程序中的空①和空②处应分别为（  ）；空③和空④处应分别为（  ）；空⑤和空⑥处应分别为（  ）。<br><img src="/assets/img/17c702a6068749b98ae13c0fe01c7bff_.png" alt="img"></p>
+<p>问题1选项</p>
+<p> A.V（S1）和P（S2）</p>
+<p> B. P（S1）和V（S2）</p>
+<p> C. V（S1）和V（S2）</p>
+<p> D. V（S2）和P（S1）</p>
+<p>问题2选项</p>
+<p> A. V（S3）和V（S5）</p>
+<p> B. P（S3）和V（S5）</p>
+<p> C. V（S3）和P（S5）</p>
+<p> D. P（S3）和P（S5）</p>
+<p>问题3选项</p>
+<p> A. P（S6）和P（S5）V（S6）</p>
+<p> B. V（S5）和V（S5）V（S6）</p>
+<p> C. V（S6）和P（S5）P（S6）</p>
+<p> D. P（S6）和P（S5）P（S6）</p>
+<p><strong>参考答案： D  <em>、</em> B  <em>、</em> C</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B  <em>、</em> C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查的是利用PV操作控制进程的并发执行。<br>先理清楚前趋图中的逻辑关系：P1没有前驱，P2的前驱是P1，P3的前驱是P1、P2，P4的前驱是P2，P5的前驱是P3、P4。<br>前驱就是指只有在前驱进程完成后，该进程才能开始执行。由图可知，这里进程之间有6条有向弧，分别表示为P1-&gt;P2，P1-P3，P2-&gt;P3，P2-&gt;P4，P3-&gt;P5，P4-&gt;P5，各个进程间的逻辑关系，那么我们需要设定6个信号量(S1、S2、S3、S4、S5、S6)，利用PV操作来控制这些过程。</p>
+<p>对于第一个空，P1执行完成之后，需要通知P2、P3可以开始，此处需要V(S1)、V(S2)操作分别唤醒P2、P3进程，已有V(S1)，此处需要填写V(S2)。<br>对于第二个空，P2执行之前，需要检查P1进程是否完成，因此需要通过P(S1)操作来判定，P1是否完成。<br>对于第三个空，在P3执行之前，需要检查P1、P2进程是否完成，因此需要通过P(S2)、P(S3)操作来判定P1、P2是否完成，已有P(S2)，此处填写P(S3)。<br>对于第四空，P3执行完成后，需要通知P5进程可以开始，此处需要通过V(S5)操作唤醒P5进程；<br>对于第五空，P4进程完成后，需要通知P5进程可以开始，此处需要通过V(S6)操作唤醒P5进程；<br>对于第六空，P5进程开始之前，需要检查P3、P4进程是否已完成，因此需要P(S5)、P(S6)操作来判断P3、P4是否完成。</p>
+<p>综上，本题分别选择D、B、C选项。</p>
+<h3 id="5、难度：-容易"><a href="#5、难度：-容易" class="headerlink" title="5、难度： 容易"></a><strong>5、难度： 容易</strong></h3><p><strong>所属知识点：Gant图与Pert图</strong></p>
+<p>[单选题]</p>
+<p>某项目制定的开发计划中定义了三个任务，其中任务 A 首先开始，且需要 3 周完成，任务B 必须在任务A 启动1 周后开始，且需要2 周完成，任务C 必须在任务A 完成后才能开始，且需要2周完成。该项目的进度安排可用下面的甘特图（）来描述。</p>
+<p>问题1选项</p>
+<p> A.<img src="/assets/img/8141bede1e62453b946455e0b25d3dbc_.png" alt="img"></p>
+<p> B.<img src="/assets/img/4b5c744122cb4d0ab33fb7a95c01088b_.png" alt="img"></p>
+<p> C.<img src="/assets/img/229e9eafba19431fbb8874f3817067d4_.png" alt="img"></p>
+<p> D.<img src="/assets/img/f1b6279631f347d584767c05591ed2bb_.png" alt="img"></p>
+<p><strong>参考答案： D</strong> </p>
+<p><strong>你的答案： D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查甘特图的概念。甘特图可用来标示一个项目中各任务计划进度和当前进度，能动态反映项目进展情况。甘特图中用水平线表示任务的工作阶段，其起点和终点分别对应任务的开始时间和完成时间，长度表示完成任务的周期。在题中的图A和图C中，任务A结束后任务B才开始，在图B中，任务B和任务A同时开始，这些都与题目要求的“任务B必须在启动任务A后1周开始”不符。</p>
+<h3 id="6、难度：-一般"><a href="#6、难度：-一般" class="headerlink" title="6、难度： 一般"></a><strong>6、难度： 一般</strong></h3><p><strong>所属知识点：关系代数</strong></p>
+<p>[单选题]</p>
+<p>关系 R、S 如下图所示，关系代数表达式π1，5，6(σ2=5(R×S))=（），该表达式与（）等价。</p>
+<p><img src="/assets/img/930_657827.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.<img src="/assets/img/0d332097882346e7bccc704c2e42be42_.png" alt="img"></p>
+<p> B.<img src="/assets/img/77bfd8d4b5794fb3879624eaed82da49_.png" alt="img"></p>
+<p> C.<img src="/assets/img/ad6dec7bdde04d15a46dd29d70f8b187_.png" alt="img"></p>
+<p> D.<img src="/assets/img/76091be668e046c39d6d9968dafe3745_.png" alt="img"></p>
+<p>问题2选项</p>
+<p> A.<img src="/assets/img/e9e0008936ca4287a48220dba3e2fd51_.png" alt="img"></p>
+<p> B.<img src="/assets/img/df0488f167ca401584934093e28f7bdb_.png" alt="img"></p>
+<p> C.<img src="/assets/img/22cfbce7ef7546bfb92fbea771a2f456_.png" alt="img"></p>
+<p> D.<img src="/assets/img/b106d8c3e58f4d1993dbec51c86ba3c7_.png" alt="img"></p>
+<p><strong>参考答案： B  <em>、</em> C</strong> </p>
+<p><strong>你的答案： B  <em>、</em> B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查关系代数运算方面的基础知识。<br>　　本题要求关系代数表达式:<img src="http://www.educity.cn/tiku/UploadFiles/2010-9/930_553787.jpg" alt="img"> 的结果集，其中，RXS的属性列名分别为R.A，R.B，R.C，S.A，S.B和S.C，其结果如下表所示。</p>
+<p><img src="/assets/img/930_586361.jpg" alt="img"></p>
+<p>　　<img src="/assets/img/930_808395.jpg" alt="img">的含义是从R X S结果集中选取第二个分量（R.B）等于第五个分量（S.B）的元组。从上表中可以看出，满足条件的是第14和第16个元组，其结果如下表所示。</p>
+<p><img src="/assets/img/930_683974.jpg" alt="img"></p>
+<p><img src="/assets/img/930_579055.jpg" alt="img">)的含义是从<img src="/assets/img/930_236062.jpg" alt="img"></p>
+<p><img src="/assets/img/930_422994.jpg" alt="img"></p>
+<p>　　从上面的分析可见，试题（55）的正确答案是B，试题（56）的正确答案是C。</p>
+<h3 id="7、难度：-一般"><a href="#7、难度：-一般" class="headerlink" title="7、难度： 一般"></a><strong>7、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
+<p>[单选题]</p>
+<p>面向对象分析与设计中的（）是指一个模块在扩展性方面应该是开放的，而在更改性方面应该是封闭的；而（）是指子类应当可以替换父类并出现在父类能够出现的任何地方。</p>
+<p>问题1选项</p>
+<p> A.开闭原则</p>
+<p> B.替换原则</p>
+<p> C.依赖原则</p>
+<p> D.单一职责原则</p>
+<p>问题2选项</p>
+<p> A.开闭原则</p>
+<p> B.替换原则</p>
+<p> C.依赖原则</p>
+<p> D.单一职责原则</p>
+<p><strong>参考答案： A  <em>、</em> B</strong> </p>
+<p><strong>你的答案： A  <em>、</em> B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查面向对象分析与设计中的原则。开闭原则是指一个模块在扩展性方面应该是开放的，而在更改性方面应该是封闭的。其含义是模块容易扩展和修改，但不能对其他的模块产生影响。替换原则是指子类可以替换父类并出现在父类能够出现的任何地方。<br>　　具体地说，就是凡是使用父类对象的地方都可以使用子类对象。</p>
+<h3 id="8、难度：-一般"><a href="#8、难度：-一般" class="headerlink" title="8、难度： 一般"></a><strong>8、难度： 一般</strong></h3><p>[单选题]</p>
+<p>UML中关联的多重度是指（）。</p>
+<p>问题1选项</p>
+<p> A.一个类有多少个方法被另一个类调用</p>
+<p> B.一个类的实例能够与另一个类的多少个实例相关联</p>
+<p> C.一个类的某个方法被另一个类调用的次数</p>
+<p> D.两个类所具有的相同的方法和属性</p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查的是UML中关联的多重度概念。<br>​    关联表示了对象间的结构关系。在很多建模问题中，说明一个关联的实例中有多少个相互连接的对象是很重要的。这个“多少”被称为关联角色的多重度，把它写成一个表示取值范围的表达式或写成一个具体值。指定关联一端的多重度，就是说明；在关联另一端的类的每个对象要求在本端的类必须有多少个对象。</p>
+<h3 id="9、难度：-一般"><a href="#9、难度：-一般" class="headerlink" title="9、难度： 一般"></a><strong>9、难度： 一般</strong></h3><p><strong>所属知识点：操作系统</strong></p>
+<p>[单选题]</p>
+<p>文件系统中，设立打开文件（Open）系统功能调用的基本操作是（）。</p>
+<p>问题1选项</p>
+<p> A.把文件信息从辅存读到内存</p>
+<p> B.把文件的控制管理信息从辅存读到内存</p>
+<p> C.把磁盘的超级块从辅存读到内存</p>
+<p> D.把文件的FAT表信息从辅存读到内存</p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： A</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查的是操作系统中文件管理的基本知识。<br>​    在使用已经存在的文件之前，要通过“打开(open )”文件操作建立起文件和用户之间的联系，目的是把文件的控制管理信息从辅存读到内存。打开文件应完成如下功能：<br>   · 在内存的管理表中申请一个空表目，用来存放该文件的文件目录信息。<br>   ·根据文件名在磁盘上查找目录文件。将找到的文件目录信息复制到内存的管理表中。如果打开的是共享文件，则应进行相关处理，如共享用户数加t。<br>   ·文件定位，卷标处理。<br>​    文件一旦打开，可被反复使用直至文件关闭。这样做的优点是减少查找目录的时间，加快文件存取速度，提高系统的运行效率。因此，本题的正确答案为B。</p>
+<h3 id="10、难度：-一般"><a href="#10、难度：-一般" class="headerlink" title="10、难度： 一般"></a><strong>10、难度： 一般</strong></h3><p>[单选题]</p>
+<p>正式的技术评审FTR（Formal Technical Review）是软件工程师组织的软件质量保证活动，下面关于FTR指导原则中不正确的是（）。</p>
+<p>问题1选项</p>
+<p> A.评审产品，而不是评审生产者的能力</p>
+<p> B.要有严格的评审计划，并遵守日程安排</p>
+<p> C.对评审中出现的问题要充分讨论，以求彻底解决</p>
+<p> D.限制参与者人数，并要求评审会之前做好准备</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： D</strong> </p>
+<p>试题解析：</p>
+<p>​    本题考查软件评审的基本概念。<br>​    软件评审是评审软件产品，不要涉及对软件生产者能力的评价；评审前要制定严格的评审计划，并严格遵守预计的日程安排；对评审中出现的问题要记录在案，不要过多地讨论解决方案，把问题留给软件生产者来解决：要限制参与者人数，并要求参加评审的人员在评审会之前仔细阅读文档，做好充分的准备。</p>
+]]></content>
+      <tags>
+        <tag>软件设计师每日一练</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2020年04月22日软件设计师每日一练</title>
     <url>/2020/04/22/2020%E5%B9%B404%E6%9C%8822%E6%97%A5/</url>
     <content><![CDATA[<h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p>[单选题]</p>
@@ -694,11 +864,11 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
-        <tag>MySQL</tag>
         <tag>笔记</tag>
         <tag>CentOS</tag>
         <tag>linux</tag>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -5059,11 +5229,11 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>笔记</tag>
         <tag>linux</tag>
         <tag>CentOS7</tag>
         <tag>Redis</tag>
+        <tag>数据库</tag>
         <tag>NoSQL</tag>
       </tags>
   </entry>
@@ -5636,9 +5806,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>整理</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
