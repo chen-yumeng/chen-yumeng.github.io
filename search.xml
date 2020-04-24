@@ -1,6 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2020年04月24日软件设计师每日一练</title>
+    <url>/2020/04/24/2020%E5%B9%B404%E6%9C%8824%E6%97%A5/</url>
+    <content><![CDATA[<h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p><strong>所属知识点：软件设计</strong></p>
+<p>[单选题] 模块A将学生信息，即学生姓名、学号、手机号等放到一个结构体中，传递给模块B。模块A和B之间的耦合类型为（  ）耦合。</p>
+<p>问题1选项</p>
+<p> A.数据</p>
+<p> B.标记</p>
+<p> C.控制</p>
+<p> D.内容</p>
+<a id="more"></a>
+
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： A</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>数据耦合:两个模块彼此间通过数据参数交换信息。</p>
+<p>标记耦合:一组模块通过参数表传递记录信息，这个记录是某一个数据结构的子结构，而不是简单变量。</p>
+<p>控制耦合:两个模块彼此间传递的信息中有控制信息。</p>
+<p>内容耦合:一个模块需要涉及到另一个模块的内部信息。</p>
+<p>本题应该选择B选项。</p>
+<h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a><strong>2、难度： 一般</strong></h3><p>[单选题]</p>
+<p>在下面的用例图（UseCase Diagram）中，X1、X2和X3表示（  ），已知UC3是抽象用例，那么X1可通过（  ）用例与系统进行交互。并且，用例（  ）是UC4的可选部分，用例（  ）是UC4的必须部分。</p>
+<p><img src="/assets/img/1013_970182.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.人</p>
+<p> B.系统</p>
+<p> C.参与者</p>
+<p> D.外部软件</p>
+<p>问题2选项</p>
+<p> A.UC4、UC1</p>
+<p> B.UC5、UC1</p>
+<p> C.UC5、UC2</p>
+<p> D.UC1、UC2</p>
+<p>问题3选项</p>
+<p> A.UC1</p>
+<p> B.UC2</p>
+<p> C.UC3</p>
+<p> D.UC5</p>
+<p>问题4选项</p>
+<p> A.UC1</p>
+<p> B.UC2</p>
+<p> C.UC3</p>
+<p> D.UC5</p>
+<p><strong>参考答案： C  <em>、</em> A  <em>、</em> B  <em>、</em> D</strong> </p>
+<p><strong>你的答案： C  <em>、</em> A  <em>、</em> B  <em>、</em> D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查的是用例模型的基本知识，用例模型中，x1， x2和x3分别表示用例的参与者。因为U3是抽象用例，所以参与者实际上可以通过其子用例UC1和UC4与系统进行交互。<strong>用例模型中include表示的是必须用例，而extend表示可选用例。</strong></p>
+<h3 id="3、难度：-一般"><a href="#3、难度：-一般" class="headerlink" title="3、难度： 一般"></a><strong>3、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
+<p>[单选题]</p>
+<p>对于逻辑表达式“x and y or not z”，and、or、not分别是逻辑与、或、非运算，优先级从高到低为not、and、or，and、or为左结合，not为右结合，若进行短路计算，则（  ）。   </p>
+<p>问题1选项</p>
+<p> A.x为真时，整个表达式的值即为真，不需要计算y和z的值</p>
+<p> B.x为假时，整个表达式的值即为假，不需要计算y和z的值</p>
+<p> C.x为真时，根据y的值决定是否需要计算z的值</p>
+<p> D.x为假时，根据y的值决定是否需要计算z的值</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题主要考查逻辑与、或运算。<br>逻辑与运算需要考虑两个操作数的值，对于本题的运算优先级，最后计算的是逻辑或运算，而逻辑或只要第一个操作数为真，那么整个计算结果即为真，这种情况下无需考虑其第二个操作数的值。<br>对于逻辑或的两端分别为（x and y）和（not z），如果前者为真，则不用计算其他表达式，只有当x为真且y也为真时，整个表达式不需要计算（not z）部分，因此本题的答案选C。</p>
+<p><strong>4、难度： 一般</strong></p>
+<p><strong>所属知识点：设计模式</strong></p>
+<p>[单选题]</p>
+<p>下列UML类图表示的是（  ）设计模式。该设计模式中，（  ）。<br><img src="/assets/img/925_518465.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.备忘录（Memento）</p>
+<p> B.策略（Strategy)</p>
+<p> C.状态（State）</p>
+<p> D.观察者（Observer)</p>
+<p>问题2选项</p>
+<p> A.一个Subject对象可对应多个Observer对象</p>
+<p> B.Subject只能有一个ConcreteSubject子类</p>
+<p> C.Observer只能有一个ConcreteObserver子类</p>
+<p> D.一个Subject对象必须至少对应一个Observer对象</p>
+<p><strong>参考答案： D  <em>、</em> A</strong> </p>
+<p><strong>你的答案： D  <em>、</em> D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查面向对象设计中的设计模式。<br>　　题中的图标是观察者设计模式，在该设计模式中，<strong>一个Subject类可以有多个ConcreteSubject子类，一个Observer类也可以有多个ConcreteObserver子类；一个Subject对象可以对应多个Observer对象。</strong></p>
+<h3 id="5、难度：-一般"><a href="#5、难度：-一般" class="headerlink" title="5、难度： 一般"></a><strong>5、难度： 一般</strong></h3><p><strong>所属知识点：内存</strong></p>
+<p>[单选题] 内存按字节编址。若用存储容量为32Kx8bit的存储器芯片构成地址从A0000H到DFFFFH的内存，则至少需要（  ）片芯片。</p>
+<p>问题1选项</p>
+<p> A.4</p>
+<p> B.8</p>
+<p> C.16</p>
+<p> D.32</p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>地址范围内的存储单元个数：DFFFFH – A0000H + 1 = 40000H==4<em>164=218；<br>按字节编址则存储容量为218B；<br>所选芯片单位容量：32K</em>8bit=32KB=25*210B=215B；<br>需要芯片数量=总容量/单位容量=218B/215B=23=8片。</p>
+<h3 id="6、难度：-一般"><a href="#6、难度：-一般" class="headerlink" title="6、难度： 一般"></a><strong>6、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
+<p>[单选题] 计算机系统的层次结构如下图所示，基于硬件之上的软件可分为a、b和c三个层次。图中 a、b和c分别表示（  ）。</p>
+<p><img src="/assets/img/664114bbb1b04f69afc422f778f2f5c1_.png" alt="img"></p>
+<p>问题1选项</p>
+<p> A.操作系统、系统软件和应用软件</p>
+<p> B.操作系统、应用软件和系统软件</p>
+<p> C.应用软件、系统软件和操作系统</p>
+<p> D.应用软件、操作系统和系统软件</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>系统软件开发人员开发操作系统和系统软件。应用软件开发人员开发应用软件。</p>
+<h3 id="7、难度：-容易"><a href="#7、难度：-容易" class="headerlink" title="7、难度： 容易"></a><strong>7、难度： 容易</strong></h3><p>[单选题]</p>
+<p>下图是一有限自动机的状态转换图，该自动机所识别语言的特点是（），等价的正规式为（）。<br><img src="/assets/img/1013_472680.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.由符号a.b构成且包含偶数个a的串</p>
+<p> B.由符号a.b构成且开头和结尾符号都为a的串</p>
+<p> C.由符号a.b构成的任意串</p>
+<p> D.由符号a.b构成且b的前后必须为a的串</p>
+<p>问题2选项</p>
+<p> A.(a∣b)<em>(aa)</em></p>
+<p> B.a(a∣b)*a</p>
+<p> C.(a∣b)*</p>
+<p> D.a(ba)*a</p>
+<p><strong>参考答案： B  <em>、</em> B</strong> </p>
+<p><strong>你的答案： D  <em>、</em> B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查有限自动机的基本运算。<br>　　在有限自动机的状态转换图中，每一个结点代表一个状态，其中双圈是终态结点。<br>　　对于字符串ω，若存在一条从初态结点到某一终止状态结点的路径，且这条路径上所有弧的标记符连接成的字符串等于ω，则称ω可由DFA M识别（接收或读出）。若一个DFA M的初态结点同时又是终态结点，则空字ε可由该DFA识别（或接收）。DFA M所能识别的语言L（M）={ω|ω）是从M的初态到终态的路径上的弧上标记所形成的串}。<br>　　分析题中给出的自动机：从初态0出发，识别一个符号a后进入状态1，在状态1可识别出任意个a或（和）任意个b，再识别出一个a而到达终态2。显然，该自动机识别的语言特点是“由a开头由a结尾，期间的a、b任意排列”。用正规式表示为“a（a|b）*a”。</p>
+<h3 id="8、难度：-一般"><a href="#8、难度：-一般" class="headerlink" title="8、难度： 一般"></a><strong>8、难度： 一般</strong></h3><p><strong>所属知识点：校验码</strong></p>
+<p><img src="/assets/img/20200424115239.png" alt="img"></p>
+<p>问题1选项</p>
+<p> A.3</p>
+<p> B.4</p>
+<p> C.5</p>
+<p> D.6</p>
+<p>问题2选项</p>
+<p><img src="/assets/img/20200424115418.png" alt="img"></p>
+<p><strong>参考答案： D  <em>、</em> B</strong> </p>
+<p><strong>你的答案： B  <em>、</em> C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p><img src="/assets/img/20200424115511.png" alt="img"></p>
+<h3 id="9、难度：-一般"><a href="#9、难度：-一般" class="headerlink" title="9、难度： 一般"></a><strong>9、难度： 一般</strong></h3><p><strong>所属知识点：数据库模式</strong></p>
+<p>[单选题] 数据的物理独立性和逻辑独立性分别是通过修改（  ）来完成的。</p>
+<p>问题1选项</p>
+<p> A.外模式与内模式之间的映像、模式与内模式之间的映像</p>
+<p> B.外模式与内模式之间的映像、外模式与模式之间的映像</p>
+<p> C.外模式与模式之间的映像、模式与内模式之间的映像</p>
+<p> D.模式与内模式之间的映像、外模式与模式之间的映像</p>
+<p><strong>参考答案： D</strong> </p>
+<p><strong>你的答案： A</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>物理独立性是指的内模式发生变化，只需要调整模式与内模式之间的映像，而不用修改应用程序，通过模式与内模式之间的映像来完成。<br>逻辑独立性是指的模式发生变化，只需要调整外模式与模式之间的映像，而不用修改应用程序，外模式与模式之间的映像来完成。</p>
+<h3 id="10、难度：-一般"><a href="#10、难度：-一般" class="headerlink" title="10、难度： 一般"></a><strong>10、难度： 一般</strong></h3><p><strong>所属知识点：树与二叉树</strong></p>
+<p>[单选题]</p>
+<p>在平衡二叉树中，（）。</p>
+<p>问题1选项</p>
+<p> A.任意结点的左、右子树结点数目相同目</p>
+<p> B.任意结点的左、右子树高度相同</p>
+<p> C.任意结点的左右子树高度之差的绝对值不大于1</p>
+<p> D.不存在度为1的结点</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查平衡二叉树的基本概念。<br>​    平衡二叉树又称为AVL树，它或者是一棵空树，或者是具有下列性质的二叉树；<strong>它的左子树和右子树都是平衡二叉树，且左子树和右子树的深度之差的绝对值不超过1。若将二叉树结点的平衡因子（Balance Factor， BF）定义为该结点的左子树的深度减去其右子树的深度，则平衡二叉树上所有结点的平衡因子只可能是一1， 0和1。只要树上有一个结点的平衡因子的绝对值大于1，则该二叉树就是不平衡的。</strong></p>
+]]></content>
+      <tags>
+        <tag>软件设计师每日一练</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Data JPA的基本使用</title>
     <url>/2020/04/23/SpringDataJPA/</url>
     <content><![CDATA[<h1 id="Spring-Data-JPA-基本使用"><a href="#Spring-Data-JPA-基本使用" class="headerlink" title="Spring Data JPA 基本使用"></a>Spring Data JPA 基本使用</h1><h2 id="Spring-Data-JPA"><a href="#Spring-Data-JPA" class="headerlink" title="Spring Data JPA:"></a>Spring Data JPA:</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Spring Data JPA 是 spring data 项目下的一个模块。提供了一套基于 JPA标准操作数据库的简化方案。底层默认的是依赖 Hibernate JPA 来实现的。</span><br></pre></td></tr></table></figure>
@@ -5509,9 +5666,9 @@
       <tags>
         <tag>笔记</tag>
         <tag>linux</tag>
-        <tag>数据库</tag>
         <tag>CentOS7</tag>
         <tag>Redis</tag>
+        <tag>数据库</tag>
         <tag>NoSQL</tag>
       </tags>
   </entry>
@@ -6084,9 +6241,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>整理</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
