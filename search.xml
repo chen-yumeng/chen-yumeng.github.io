@@ -180,7 +180,7 @@
 <h3 id="4、难度：-一般"><a href="#4、难度：-一般" class="headerlink" title="4、难度： 一般"></a><strong>4、难度： 一般</strong></h3><p><strong>所属知识点：传值与传址</strong></p>
 <p>[单选题]</p>
 <p>函数t()、f()的定义如下所示，若调用函数t时传递给x的值为3，并且调用函数f()时，第一个参数采用传值（call by value）方式，第二个参数采用传引用（call by reference）方式，则函数t的返回值为（）。</p>
-<p><img src="/assets/img20200427093655.png" alt="img"></p>
+<p><img src="/assets/img/20200427093655.png" alt="img"></p>
 <p>问题1选项</p>
 <p> A.35</p>
 <p> B.24</p>
@@ -6079,9 +6079,9 @@
       <tags>
         <tag>笔记</tag>
         <tag>linux</tag>
-        <tag>数据库</tag>
         <tag>CentOS7</tag>
         <tag>Redis</tag>
+        <tag>数据库</tag>
         <tag>NoSQL</tag>
       </tags>
   </entry>
@@ -6654,9 +6654,9 @@ INET_NTOA(2130706433) 将整型转为IP</code></pre></li>
         <category>学习</category>
       </categories>
       <tags>
-        <tag>整理</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
