@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chen-yumeng.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、难度： 一般所属知识点：McCabe复杂度计算 [单选题] 对下图所示的程序流程图进行判定覆盖测试，则至少需要（  ）个测试用例。采用 McCabe度量法计算其环路复杂度为（  ）。 问题1选项  A.2  B.3  C.4  D.5 问题2选项  A.2  B.3  C.4  D.5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020年04月25日软件设计师每日一练">
+<meta property="og:url" content="http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/index.html">
+<meta property="og:site_name" content="Chenyumeng的博客">
+<meta property="og:description" content="1、难度： 一般所属知识点：McCabe复杂度计算 [单选题] 对下图所示的程序流程图进行判定覆盖测试，则至少需要（  ）个测试用例。采用 McCabe度量法计算其环路复杂度为（  ）。 问题1选项  A.2  B.3  C.4  D.5 问题2选项  A.2  B.3  C.4  D.5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/03ad10fa2a31416dafe056779f0ec537_.png">
+<meta property="og:image" content="http://chen-yumeng.github.io/assets/img/109_453069.jpg">
+<meta property="article:published_time" content="2020-04-25T06:20:30.000Z">
+<meta property="article:modified_time" content="2020-04-27T01:28:27.022Z">
+<meta property="article:author" content="Chenyumeng">
+<meta property="article:tag" content="软件设计师每日一练">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://chen-yumeng.github.io/assets/img/03ad10fa2a31416dafe056779f0ec537_.png">
+
+<link rel="canonical" href="http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>2020年04月25日软件设计师每日一练 | Chenyumeng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <link rel="stylesheet" href="/dist/css/share.min.css">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chenyumeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">热爱自己，热爱生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">23</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/chen-yumeng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.JPG">
+      <meta itemprop="name" content="Chenyumeng">
+      <meta itemprop="description" content="用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chenyumeng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2020年04月25日软件设计师每日一练
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-25 14:20:30" itemprop="dateCreated datePublished" datetime="2020-04-25T14:20:30+08:00">2020-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-27 09:28:27" itemprop="dateModified" datetime="2020-04-27T09:28:27+08:00">2020-04-27</time>
+              </span>
+
+          
+            <span id="/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/" class="post-meta-item leancloud_visitors" data-flag-title="2020年04月25日软件设计师每日一练" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a><strong>1、难度： 一般</strong></h3><p><strong>所属知识点：McCabe复杂度计算</strong></p>
+<p>[单选题] 对下图所示的程序流程图进行判定覆盖测试，则至少需要（  ）个测试用例。采用 McCabe度量法计算其环路复杂度为（  ）。<br><img src="/assets/img/03ad10fa2a31416dafe056779f0ec537_.png" alt="img"></p>
+<p>问题1选项</p>
+<p> A.2</p>
+<p> B.3</p>
+<p> C.4</p>
+<p> D.5</p>
+<p>问题2选项</p>
+<p> A.2</p>
+<p> B.3</p>
+<p> C.4</p>
+<p> D.5</p>
+<a id="more"></a>
+
+<p><strong>参考答案： A  <em>、</em> B</strong> </p>
+<p><strong>你的答案： C  <em>、</em> C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>判定覆盖是设计足够多的测试用例，使得程序中的每一个判断至少获得一次“真”和一次“假”，即使得程序流程图中的每一个真假分支至少被执行一次。<strong>根据题意，只需2个测试用例即可；根据环路复杂度的计算公式V（G）=m-n+2=11-10+2=3。</strong></p>
+<h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a><strong>2、难度： 一般</strong></h3><p><strong>所属知识点：编译与解释</strong></p>
+<p>[单选题]</p>
+<p>编译程序分析源程序的阶段依次是（  ）。</p>
+<p>问题1选项</p>
+<p> A.词法分析、语法分析、语义分析</p>
+<p> B.语法分析、词法分析、语义分析</p>
+<p> C.语义分析、语法分析、词法分析</p>
+<p> D.语义分析、词法分析、语法分析</p>
+<p><strong>参考答案： A</strong> </p>
+<p><strong>你的答案： A</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p><strong>编译程序分析源程序的阶段依次词法分析、语法分析、语义分析。</strong></p>
+<h3 id="3、难度：-一般"><a href="#3、难度：-一般" class="headerlink" title="3、难度： 一般"></a><strong>3、难度： 一般</strong></h3><p>[单选题]</p>
+<p>通常在软件的（）活动中无需用户参与。</p>
+<p>问题1选项</p>
+<p> A.需求分析</p>
+<p> B.维护</p>
+<p> C.编码</p>
+<p> D.测试</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    为确保软件符合用户需求，在各种软件开发过程中，用户承担着非常重要的作用。进行需求分析时，需要用户和软件人员共同讨论，并且只有用户参与，才能有助于软件人员了解用户的知识、管理和技能等背景，也才能确保软件符合用户需求。软件设计是将需求分析阶段确定的、直接反映用户需求的逻辑方案转换为可以在计算机中实现的技术方案。在此过程中，不仅需要技术专家参与，也要求系统的用户高度参与和控制，用户主要参与系统总体结构设计、代码设计和数据库设计等工作。测试是软件质量的保证性手段，因为用户是软件的直接或间接使用者，这一群体能对软件系统成果产生重大影响，不同种类的用户可以以不同形式参与系统测试活动。软件编码阶是用程序代码实现软件设计的活动，这一活动只是将软件人员与用户共同确定的软件设计用指定的程序设计语言进行实现，得到可以在计算机上运行的实体，用户通常不需要参与这个过程。</p>
+<p><strong>4、难度： 一般</strong></p>
+<p><strong>所属知识点：Cache</strong></p>
+<p>[单选题] 主存与Cache的地址映射方式中，（  ）方式可以实现主存任意一块装入Cache中任意位置，只有装满才需要替换。</p>
+<p>问题1选项</p>
+<p> A.全相联</p>
+<p> B.直接映射</p>
+<p> C.组相联</p>
+<p> D.串并联</p>
+<p><strong>参考答案： A</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>（1）直接相联映射方式。</p>
+<p>这是一种最简单而又直接的映射方法，指主存中每个块只能映射到Cache的一个特定的块。在该方法中，Cache块地址j和主存块地址i的关系为：  j= i mod Cb</p>
+<p>其中Cb是Cache的块数。这样，整个Cache地址与主存地址的低位部分完全相同。</p>
+<p>直接映射法的优点是所需硬件简单，只需要容量较小的按地址访问的区号标志表存储器和少量比较电路；缺点是Cache块冲突概率较高，只要有两个或两个以上经常使用的块恰好被映射到Cache中的同一个块位置时，就会使Cache命中率急剧下降。</p>
+<p>（2）全相联映射方式。<br>全相联映射是指主存中任一块都可以映射到Cache中任一块的方式，也就是说，当主存中的一块需调入Cache时，可根据当时Cache的块占用或分配情况，选择一个块给主存块存储，所选的Cache块可以是Cache中的任意一块。这种映射方式允许主存的每一块信息可以存到Cache的任何一个块空间，也允许从已被占满的Cache中替换掉任何一块信息。全相联映射的优点是块冲突概率低；其缺点是访问速度慢，并且成本太高。</p>
+<p>（3）组相联映射方式。</p>
+<p>这种方式是前两种方式的折衷方案。这种映射方式在组间是直接映射，而组内是全相联映射，其性能和复杂性介于直接映射和全相联映射之间。</p>
+<p>本题选择A选项。</p>
+<h3 id="5、难度：-一般"><a href="#5、难度：-一般" class="headerlink" title="5、难度： 一般"></a><strong>5、难度： 一般</strong></h3><p><strong>所属知识点：软件维护类型</strong></p>
+<p>[单选题]</p>
+<p>某商场的销售系统所使用的信用卡公司信息系统的<strong>数据格式</strong>发生了更改，因此对该销售系统进行的修改属于（  ）维护。</p>
+<p>问题1选项</p>
+<p> A.改正性</p>
+<p> B.适应性</p>
+<p> C.改善性</p>
+<p> D.预防性</p>
+<p><strong>参考答案： B</strong> </p>
+<p><strong>你的答案： B</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>在系统运行过程中，软件需要维护的原因是多样的，根据维护的原因不同，可以将软件维护分为以下四种：<br><strong>（1）改正性维护。为了识别和纠正软件错误、改正软件性能上的缺陷、排除实施中的误使用，应当进行的诊断和改正错误的过程就称为改正性维护。</strong><br><strong>（2）适应性维护。在使用过程中，外部环境（新的硬、软件配置）、数据环境（数据库、数据格式、数据输入/输出方式、数据存储介质）可能发生变化。为使软件适应这种变化，而去修改软件的过程就称为适应性维护。</strong><br><strong>（3）完善性维护。在软件的使用过程中，用户往往会对软件提出新的功能与性能要求。为了满足这些要求，需要修改或再开发软件，以扩充软件功能、增强软件性能、改进加工效率、提高软件的可维护性。这种情况下进行的维护活动称为完善性维护。</strong><br><strong>（4）预防性维护。这是指预先提高软件的可维护性、可靠性等，为以后进一步改进软件打下良好基础。</strong><br><strong>本题对该销售系统的修改是为了应对数据格式的变化而做出的修改。</strong></p>
+<h3 id="6、难度：-容易"><a href="#6、难度：-容易" class="headerlink" title="6、难度： 容易"></a><strong>6、难度： 容易</strong></h3><p>[单选题]</p>
+<p>人眼看到的任一彩色光都是亮度、色调和饱和度三个特性的综合效果，其中（）反应颜色的种类。</p>
+<p>问题1选项</p>
+<p> A.色调</p>
+<p> B.饱和度</p>
+<p> C.灰度</p>
+<p> D.亮度</p>
+<p><strong>参考答案： A</strong> </p>
+<p><strong>你的答案： A</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查颜色的基本属性。<br>​    彩色光作用于人眼，使之产生彩色视觉。为了能确切地表示某一彩色光的度量，可以用亮度、色调和色饱和度3个物理量来描述，并称之为色彩三要素。<br>​    亮度：亮度是描述光作用于人眼时引起的明暗程度感觉，是指色彩明暗深浅程度。<br>​    色调：色调是指颜色的类别，如红色、绿色、蓝色等不同颜色就是指色调。<br>　色饱和度：色饱和度是指某一颜色的深浅程度(或浓度)。</p>
+<h3 id="7、难度：-一般"><a href="#7、难度：-一般" class="headerlink" title="7、难度： 一般"></a><strong>7、难度： 一般</strong></h3><p><strong>所属知识点：其它</strong></p>
+<p>[单选题] 计算机中CPU的中断响应时间指的是（  ）的时间。</p>
+<p>问题1选项</p>
+<p> A.从发出中断请求到中断处理结束</p>
+<p> B.从中断处理开始到中断处理结束</p>
+<p> C.CPU分析判断中断请求</p>
+<p> D.从发出中断请求到开始进入中断处理程序</p>
+<p><strong>参考答案： D</strong> </p>
+<p><strong>你的答案： D</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查计算机系统的基础知识。<br>中断系统是计算机实现中断功能的软硬件总称。一般在CPU中设置中断机构，在外设接口中设置中断控制器，在软件上设置相应的中断服务程序。中断源在需要得到CPU服务时，请求CPU暂停现行工作转向为中断源服务，服务完成后，再让CPU回到原工作状态继续完成被打断的工作。<strong>中断的发生起始于中断源发出中断请求，中断处理过程中，中断系统需要解决一系列问题，包括中断响应的条件和时机，断点信息的保护与恢复，中断服务程序入口、中断处理等。中断响应时间，是指从发出中断请求到开始进入中断服务程序所需的时间。</strong></p>
+<h3 id="8、难度：-一般"><a href="#8、难度：-一般" class="headerlink" title="8、难度： 一般"></a><strong>8、难度： 一般</strong></h3><p>[单选题]</p>
+<p>若内存按字节编址，用存储容量为32K×8比特的存储器芯片构成地址编号AOOOOH至DFFFFH的内存空间，则至少需要（）片。</p>
+<p>问题1选项</p>
+<p> A.4</p>
+<p> B.6</p>
+<p> C.8</p>
+<p> D.10</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>本题考查内存容量的计算。<br>　　给定起、止地址码的内存容量=终止地址-起始地址+1。<br>　　 将终止地址加1等于E000H，再减去起始地址，即E0000H-A0000H=40000H。十六进制的（40000）16=218。<br>　　组成内存储器的芯片数量=内存储器的容量/单个芯片的容量。<br>　　　　　　　　218/（32*210）=218/215=23。</p>
+<h3 id="9、难度：-一般"><a href="#9、难度：-一般" class="headerlink" title="9、难度： 一般"></a><strong>9、难度： 一般</strong></h3><p><strong>所属知识点：总线系统</strong></p>
+<p>[单选题]</p>
+<p>总线复用方式可以（  ）。</p>
+<p>问题1选项</p>
+<p> A.提高总线的传输带宽</p>
+<p> B.增加总线的功能</p>
+<p> C.减少总线中信号线的数量</p>
+<p> D.提高CPU利用率</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>总线复用，顾名思义就是一条总线实现多种功能。常见的总线复用方式有总线分时复用，它是指在不同时段利用总线上同一个信号线传送不同信号，例如，地址总线和数据总线共用一组信号线。采用这种方式的目的是减少总线数量，提高总线的利用率。</p>
+<h3 id="10、难度：-一般"><a href="#10、难度：-一般" class="headerlink" title="10、难度： 一般"></a><strong>10、难度： 一般</strong></h3><p><strong>所属知识点：树与二叉树</strong></p>
+<p>[单选题]</p>
+<p>下图所示平衡二叉树（树中任一结点的左右子树高度之差不超过 1）中，结点A的右子树AR高度为h，结点B的左子树BL高度为h，结点C的左子树 CL、右子树CR高度都为h-1。若在CR中插入一个结点并使CR的高度增加1，则该二叉树（）。</p>
+<p><img src="/assets/img/109_453069.jpg" alt="img"></p>
+<p>问题1选项</p>
+<p> A.以B 为根的子二叉树变为不平衡</p>
+<p> B.以C 为根的子二叉树变为不平衡</p>
+<p> C.以A 为根的子二叉树变为不平衡</p>
+<p> D.仍然是平衡二叉树</p>
+<p><strong>参考答案： C</strong> </p>
+<p><strong>你的答案： C</strong> </p>
+<p><strong>试题解析：</strong></p>
+<p>​    本题考查平衡查找树。<br>​    由于平衡二叉树中任一结点的左右子树高度之差不超过1，因此，若在CR中插入一个结点并使得CR的高度增加1，则结点C的左右子树高度之差为-1，同时以C为根的子树高度增加了1，所以结点B的左右子树高度之差变为-1。如此一来，A的左子树的高度为h+2、右子树的高度为h，根据定义，以A为根的子二叉树变为不平衡。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+    <div>    
+      
+        <ul class="post-copyright">
+          <li class="post-copyright-link">
+          <strong>本文作者：</strong>
+          <a href="/" title="欢迎访问 Chenyumeng 的个人博客">Chenyumeng</a>
+          </li>
+
+          <li class="post-copyright-link">
+            <strong>本文标题：</strong>
+            <a href="http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/" title="2020年04月25日软件设计师每日一练">2020年04月25日软件设计师每日一练</a>
+          </li>
+
+          <li class="post-copyright-link">
+            <strong>本文链接：</strong>
+            <a href="http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/" title="2020年04月25日软件设计师每日一练">http://chen-yumeng.github.io/2020/04/25/2020%E5%B9%B404%E6%9C%8825%E6%97%A5/</a>
+          </li>
+
+          <li class="post-copyright-date">
+            <strong>发布时间： </strong>2020年4月25日 - 14时04分
+          </li>  
+
+          <li class="post-copyright-license">
+            <strong>版权声明： </strong>
+            本文由 Chenyumeng 原创。
+          </li>
+        </ul>
+      
+    </div>
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\04\21\2020年04月21日\" rel="bookmark">2020年04月21日软件设计师每日一练</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\04\23\2020年04月23日\" rel="bookmark">2020年04月23日软件设计师每日一练</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\04\24\2020年04月24日\" rel="bookmark">2020年04月24日软件设计师每日一练</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\04\20\2020年04月20日\" rel="bookmark">2020年04月20日软件设计师每日一练</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\04\22\2020年04月22日\" rel="bookmark">2020年04月22日软件设计师每日一练</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chenyumeng 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chenyumeng 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+            
+              <a href="/" rel="tag"><i class="fa fa-tag"></i> </a>
+            
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/24/2020%E5%B9%B404%E6%9C%8824%E6%97%A5/" rel="prev" title="2020年04月24日软件设计师每日一练">
+      <i class="fa fa-chevron-left"></i> 2020年04月24日软件设计师每日一练
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/26/2020%E5%B9%B404%E6%9C%8826%E6%97%A5/" rel="next" title="2020年04月26日软件设计师每日一练">
+      2020年04月26日软件设计师每日一练 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+    <!-- 引入share.js -->
+    
+      <div data-weibo-title="分享到微博" data-qq-title="分享到QQ" data-douban-title="分享到豆瓣" class="social-share" class="share-component" data-disabled="twitter,facebook" data-description="Share.js - 一键分享到微博，QQ空间，腾讯微博，人人，豆瓣">分享到：</div>
+    
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80OTExNy8yNTYxMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、难度：-一般"><span class="nav-number">1.</span> <span class="nav-text">1、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、难度：-一般"><span class="nav-number">2.</span> <span class="nav-text">2、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、难度：-一般"><span class="nav-number">3.</span> <span class="nav-text">3、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、难度：-一般"><span class="nav-number">4.</span> <span class="nav-text">5、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、难度：-容易"><span class="nav-number">5.</span> <span class="nav-text">6、难度： 容易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、难度：-一般"><span class="nav-number">6.</span> <span class="nav-text">7、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、难度：-一般"><span class="nav-number">7.</span> <span class="nav-text">8、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、难度：-一般"><span class="nav-number">8.</span> <span class="nav-text">9、难度： 一般</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、难度：-一般"><span class="nav-number">9.</span> <span class="nav-text">10、难度： 一般</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chenyumeng"
+      src="/images/touxiang.JPG">
+  <p class="site-author-name" itemprop="name">Chenyumeng</p>
+  <div class="site-description" itemprop="description">用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chen-yumeng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chen-yumeng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3123221441" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3123221441" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/" title="https:&#x2F;&#x2F;github.com&#x2F;" rel="noopener" target="_blank">Github</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chenyumeng</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">274k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:09</span>
+</div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+              leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : '',
+            'X-LC-Key'    : '',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+  <script src="/dist/js/social-share.min.js"></script>
+</body>
+</html>
