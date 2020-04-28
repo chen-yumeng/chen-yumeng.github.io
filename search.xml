@@ -1832,28 +1832,61 @@
   <entry>
     <title>linux MySQL安装</title>
     <url>/2020/03/16/linux%20MySQL%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h3 id="检查系统是否自带MySQL数据库"><a href="#检查系统是否自带MySQL数据库" class="headerlink" title="检查系统是否自带MySQL数据库"></a>检查系统是否自带MySQL数据库</h3><p> rpm -qa | grep mysql</p>
-<h3 id="如果有卸载自带MySQL"><a href="#如果有卸载自带MySQL" class="headerlink" title="如果有卸载自带MySQL"></a>如果有卸载自带MySQL</h3><p><strong>rpm -e –nodeps   后面跟系统自带的MySQL名</strong></p>
-<a id="more"></a>
+    <content><![CDATA[<h4 id="1-下载-MySQL-yum包"><a href="#1-下载-MySQL-yum包" class="headerlink" title="1.下载 MySQL yum包"></a>1.下载 MySQL yum包</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;wget http:&#96;&#96;&#x2F;&#x2F;repo.mysql.com&#x2F;mysql57-community-release-el7-10.noarch.rpm&#96;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]#  rpm -qa | grep mysql</span><br><span class="line">mysql-libs-5.1.73-7.el6.x86_64</span><br><span class="line">[root@chenyumeng local]# rpm -e --nodeps mysql-libs-5.1.73-7.el6.x86_64</span><br><span class="line">[root@chenyumeng local]#  rpm -qa | grep mysql    </span><br><span class="line">[root@chenyumeng local]#</span><br></pre></td></tr></table></figure>
+<h4 id="2-安装MySQL源"><a href="#2-安装MySQL源" class="headerlink" title="2.安装MySQL源"></a>2.安装MySQL源</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -Uvh mysql57-community-release-el7-10.noarch.rpm</span><br></pre></td></tr></table></figure>
 
-<h3 id="进入local目录创建MySQL目录并进入"><a href="#进入local目录创建MySQL目录并进入" class="headerlink" title="进入local目录创建MySQL目录并进入"></a>进入local目录创建MySQL目录并进入</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng local]# mkdir -p mysql</span><br><span class="line">[root@chenyumeng local]# cd mysql/</span><br></pre></td></tr></table></figure>
+<h4 id="3-安装MySQL服务端-需要等待一些时间"><a href="#3-安装MySQL服务端-需要等待一些时间" class="headerlink" title="3.安装MySQL服务端,需要等待一些时间"></a>3.安装MySQL服务端,需要等待一些时间</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y mysql-community-server</span><br></pre></td></tr></table></figure>
 
-<h3 id="下载MySQL安装包"><a href="#下载MySQL安装包" class="headerlink" title="下载MySQL安装包"></a>下载MySQL安装包</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el6-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+<h4 id="4-启动MySQL"><a href="#4-启动MySQL" class="headerlink" title="4.启动MySQL"></a>4.启动MySQL</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl start mysqld.service</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装用来配置安装MySQL的包"><a href="#安装用来配置安装MySQL的包" class="headerlink" title="安装用来配置安装MySQL的包"></a>安装用来配置安装MySQL的包</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# rpm -Uvh mysql57-community-release-el6-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+<h4 id="5-检查是否启动成功"><a href="#5-检查是否启动成功" class="headerlink" title="5.检查是否启动成功"></a>5.检查是否启动成功</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a><strong>安装MySQL</strong></h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@chenyumeng mysql]# yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+<h4 id="6-获取临时密码，MySQL5-7为root用户随机生成了一个密码"><a href="#6-获取临时密码，MySQL5-7为root用户随机生成了一个密码" class="headerlink" title="6.获取临时密码，MySQL5.7为root用户随机生成了一个密码"></a>6.获取临时密码，MySQL5.7为root用户随机生成了一个密码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &#39;temporary password&#39; &#x2F;var&#x2F;log&#x2F;mysqld.log</span><br></pre></td></tr></table></figure>
 
+<p><img src="/assets/img/mysql1.png" alt="img"></p>
+<h4 id="7-通过临时密码登录MySQL，进行修改密码操作"><a href="#7-通过临时密码登录MySQL，进行修改密码操作" class="headerlink" title="7.通过临时密码登录MySQL，进行修改密码操作"></a>7.通过临时密码登录MySQL，进行修改密码操作</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>使用临时密码登录后，不能进行其他的操作，否则会报错，这时候我们进行修改密码操作</p>
+<h4 id="8-因为MySQL的密码规则需要很复杂，我们一般自己设置的不会设置成这样，所以我们全局修改一下"><a href="#8-因为MySQL的密码规则需要很复杂，我们一般自己设置的不会设置成这样，所以我们全局修改一下" class="headerlink" title="8.因为MySQL的密码规则需要很复杂，我们一般自己设置的不会设置成这样，所以我们全局修改一下"></a>8.因为MySQL的密码规则需要很复杂，我们一般自己设置的不会设置成这样，所以我们全局修改一下</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; set global validate_password_policy&#x3D;0;</span><br><span class="line">mysql&gt; set global validate_password_length&#x3D;1;</span><br></pre></td></tr></table></figure>
+
+<p>这时候我们就可以自己设置想要的密码了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;yourpassword&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-授权其他机器远程登录"><a href="#9-授权其他机器远程登录" class="headerlink" title="9.授权其他机器远程登录"></a>9.授权其他机器远程登录</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;yourpassword&#39; WITH GRANT OPTION;</span><br><span class="line"> </span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<h4 id="10-开启开机自启动"><a href="#10-开启开机自启动" class="headerlink" title="10.开启开机自启动"></a>10.开启开机自启动</h4><p>先退出mysql命令行，然后输入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl enable mysqld</span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<h4 id="11-设置MySQL的字符集为UTF-8，令其支持中文"><a href="#11-设置MySQL的字符集为UTF-8，令其支持中文" class="headerlink" title="11.设置MySQL的字符集为UTF-8，令其支持中文"></a>11.设置MySQL的字符集为UTF-8，令其支持中文</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>改成如下,然后保存</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># For advice on how to change settings please see</span><br><span class="line"># http:&#x2F;&#x2F;dev.mysql.com&#x2F;doc&#x2F;refman&#x2F;5.7&#x2F;en&#x2F;server-configuration-defaults.html</span><br><span class="line"> </span><br><span class="line">[mysql]</span><br><span class="line">default-character-set&#x3D;utf8</span><br><span class="line"> </span><br><span class="line">[mysqld]</span><br><span class="line">datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock</span><br><span class="line">default-storage-engine&#x3D;INNODB</span><br><span class="line">character_set_server&#x3D;utf8</span><br><span class="line"> </span><br><span class="line">symbolic-links&#x3D;0</span><br><span class="line"> </span><br><span class="line">log-error&#x3D;&#x2F;var&#x2F;log&#x2F;mysqld.log</span><br><span class="line">pid-file&#x3D;&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid</span><br></pre></td></tr></table></figure>
+
+<h4 id="12-重启一下MySQL-令配置生效"><a href="#12-重启一下MySQL-令配置生效" class="headerlink" title="12.重启一下MySQL,令配置生效"></a>12.重启一下MySQL,令配置生效</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">service mysqld restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="13-防火墙开放3306端口"><a href="#13-防火墙开放3306端口" class="headerlink" title="13.防火墙开放3306端口"></a>13.防火墙开放3306端口</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --state</span><br><span class="line">firewall-cmd --zone&#x3D;public --add-port&#x3D;3306&#x2F;tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h4 id="14-卸载MySQL仓库"><a href="#14-卸载MySQL仓库" class="headerlink" title="14.卸载MySQL仓库"></a>14.卸载MySQL仓库</h4><p>一开始的时候我们安装的yum，每次yum操作都会更新一次，耗费时间，我们把他卸载掉</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/img/mysql2.png" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum -y remove mysql57-community-release-el7-10.noarch</span><br></pre></td></tr></table></figure>
+
+<p>15.数据库的操作</p>
+<p>（1）查看mysql是否启动：service mysqld status</p>
+<p>启动mysql：service mysqld start</p>
+<p>停止mysql：service mysqld stop</p>
+<p>重启mysql：service mysqld restart</p>
+<p>（2）查看临时密码：grep password /var/log/mysqld.log</p>
 ]]></content>
       <categories>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>笔记</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
-        <tag>笔记</tag>
         <tag>CentOS</tag>
         <tag>linux</tag>
       </tags>
@@ -6216,8 +6249,8 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>笔记</tag>
+        <tag>数据库</tag>
         <tag>linux</tag>
         <tag>CentOS7</tag>
         <tag>Redis</tag>
