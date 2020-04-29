@@ -1960,9 +1960,9 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>Redis</tag>
-        <tag>CentOS</tag>
         <tag>集群</tag>
       </tags>
   </entry>
@@ -2021,11 +2021,11 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
-        <tag>linux</tag>
-        <tag>CentOS</tag>
         <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>笔记</tag>
+        <tag>CentOS</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2064,8 +2064,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>JDK</tag>
         <tag>Java</tag>
       </tags>
@@ -2104,8 +2104,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>ZooKeeper</tag>
         <tag>中间件</tag>
       </tags>
@@ -2208,8 +2208,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -6386,11 +6386,11 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
-        <tag>CentOS7</tag>
-        <tag>linux</tag>
-        <tag>Redis</tag>
         <tag>数据库</tag>
+        <tag>笔记</tag>
+        <tag>linux</tag>
+        <tag>CentOS7</tag>
+        <tag>Redis</tag>
         <tag>NoSQL</tag>
       </tags>
   </entry>
