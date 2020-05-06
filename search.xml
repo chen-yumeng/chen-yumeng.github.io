@@ -6,7 +6,7 @@
     <content><![CDATA[<h3 id="1、难度：-一般"><a href="#1、难度：-一般" class="headerlink" title="1、难度： 一般"></a>1、难度： 一般</h3><p>磁盘存储</p>
 <p>[单选题]</p>
 <p>  假设某磁盘的每个磁道划分成9个物理块，每块存放1个逻辑记录。逻辑记录R0，R1，…，R8存放在同一个磁道上，记录的安排顺序如下表所示：</p>
-<p><img src="http://static.educity.cn/images/shiti/2018-12/906/1.jpg" alt="img"></p>
+<p><img src="/assets/img/1.jpg" alt="img"></p>
 <p>​    如果磁盘的旋转速度为 27ms/周，磁头当前处在 R0 的开始处。若系统顺序处理这些记录，使用单缓冲区，每个记录处理时间为 3ms，则处理这 9 个记录的最长时间为（  ）；若对信息存储进行优化分布后，处理 9个记录的最少时间为（  ）。</p>
 <p>问题1选项</p>
 <p> A.54ms</p>
@@ -30,12 +30,12 @@
 <p>后面的R2至R8依此类推，当处理完R7并将磁头移到R8时总共耗时：8*30=240ms，再加上R8的读取和处理时间，</p>
 <p>因此整个的时间为：8*30+3+3=246ms</p>
 <p>对于第二种情况，若对信息进行分布优化的结果如下所示：</p>
-<p> <img src="assets/img/1.jpg" alt="img"></p>
+<p> <img src="/assets/img/1.jpg" alt="img"></p>
 <p>从上表可以看出，当读出记录R1并处理结束后，磁头刚好转至R2记录的开始处，立即就可以读出并处理，因此处理9个记录的总时间为：<br>    9×（3ms（读记录）＋3ms（处理记录））＝9 × 6ms=54ms</p>
 <h3 id="2、难度：-一般"><a href="#2、难度：-一般" class="headerlink" title="2、难度： 一般"></a>2、难度： 一般</h3><p><strong>所属知识点：设计模式</strong></p>
 <p>[单选题]</p>
 <p>下图所示为（  ）设计模式，适用于（  ）。</p>
-<p><img src="assets/img/e3af483ffa0f40fc82e8c11b21dc1bef_.png" alt="img"></p>
+<p><img src="/assets/img/e3af483ffa0f40fc82e8c11b21dc1bef_.png" alt="img"></p>
 <p>问题1选项</p>
 <p> A.抽象工厂(Abstract Factory)</p>
 <p> B.生成器(Builder)</p>
@@ -87,7 +87,7 @@
 <p><strong>参考答案： C</strong> </p>
 <p><strong>你的答案： C</strong> </p>
 <p><strong>试题解析：</strong></p>
-<p>将有序表放入数组如下：<br><img src="assets/img/vxJe4quPki.png" alt="img"><br>根据二分法的查找过程：<br>（1）第一轮比较对象（0+8）/2=4，即与序号为4的关键字26进行比较；<br>（2）第二轮如果选择左侧较小列，则下一个比较对象应该为（0+3）/2=1（向下取整），即与序号为1的关键字15比较，没有对应的选项；<br>（3）第二轮如果选择右侧较大列，则下一个比较对象应该为（5+8）/2=6（向下取整），即与序号为6的关键字40进行比较。<br>所以应该选择C选项。</p>
+<p>将有序表放入数组如下：<br><img src="/assets/img/vxJe4quPki.png" alt="img"><br>根据二分法的查找过程：<br>（1）第一轮比较对象（0+8）/2=4，即与序号为4的关键字26进行比较；<br>（2）第二轮如果选择左侧较小列，则下一个比较对象应该为（0+3）/2=1（向下取整），即与序号为1的关键字15比较，没有对应的选项；<br>（3）第二轮如果选择右侧较大列，则下一个比较对象应该为（5+8）/2=6（向下取整），即与序号为6的关键字40进行比较。<br>所以应该选择C选项。</p>
 <h3 id="6、难度：-一般"><a href="#6、难度：-一般" class="headerlink" title="6、难度： 一般"></a>6、难度： 一般</h3><p><strong>所属知识点：其它</strong></p>
 <p>[单选题] 嵌入式系统初始化过程主要有3个环节，按照自底向上、从硬件到软件的次序依次为（  ）。系统级初始化主要任务是（  ）。</p>
 <p>问题1选项</p>
@@ -2396,9 +2396,9 @@
       </categories>
       <tags>
         <tag>笔记</tag>
+        <tag>CentOS</tag>
         <tag>linux</tag>
         <tag>Redis</tag>
-        <tag>CentOS</tag>
         <tag>集群</tag>
       </tags>
   </entry>
@@ -2460,8 +2460,8 @@
         <tag>数据库</tag>
         <tag>MySQL</tag>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2500,8 +2500,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>JDK</tag>
         <tag>Java</tag>
       </tags>
@@ -2540,8 +2540,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>linux</tag>
         <tag>CentOS</tag>
+        <tag>linux</tag>
         <tag>ZooKeeper</tag>
         <tag>中间件</tag>
       </tags>
@@ -2644,8 +2644,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -6824,8 +6824,8 @@
       <tags>
         <tag>数据库</tag>
         <tag>笔记</tag>
-        <tag>CentOS7</tag>
         <tag>linux</tag>
+        <tag>CentOS7</tag>
         <tag>Redis</tag>
         <tag>NoSQL</tag>
       </tags>
