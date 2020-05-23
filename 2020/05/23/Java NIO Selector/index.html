@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chen-yumeng.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. Java NIO Selector1.1. Selector入门1.1.1. Selector的和Channel的关系Java NIO的核心组件包括： （1）Channel(通道) （2）Buffer(缓冲区) （3）Selector(选择器) 其中Channel和Buffer比较好理解 ，联系也比较密切，他们的关系简单来说就是：数据总是从通道中读到buffer缓冲区内，或者从buffer写">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java NIO Selector">
+<meta property="og:url" content="http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/index.html">
+<meta property="og:site_name" content="Chenyumeng的博客">
+<meta property="og:description" content="1. Java NIO Selector1.1. Selector入门1.1.1. Selector的和Channel的关系Java NIO的核心组件包括： （1）Channel(通道) （2）Buffer(缓冲区) （3）Selector(选择器) 其中Channel和Buffer比较好理解 ，联系也比较密切，他们的关系简单来说就是：数据总是从通道中读到buffer缓冲区内，或者从buffer写">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-23T06:40:53.000Z">
+<meta property="article:modified_time" content="2020-05-23T06:38:26.949Z">
+<meta property="article:author" content="Chenyumeng">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="NIO">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Java NIO Selector | Chenyumeng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <link rel="stylesheet" href="/dist/css/share.min.css">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chenyumeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">热爱自己，热爱生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/chen-yumeng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.JPG">
+      <meta itemprop="name" content="Chenyumeng">
+      <meta itemprop="description" content="用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chenyumeng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java NIO Selector
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-23 14:40:53 / 修改时间：14:38:26" itemprop="dateCreated datePublished" datetime="2020-05-23T14:40:53+08:00">2020-05-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/23/Java%20NIO%20Selector/" class="post-meta-item leancloud_visitors" data-flag-title="Java NIO Selector" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1-Java-NIO-Selector"><a href="#1-Java-NIO-Selector" class="headerlink" title="1. Java NIO Selector"></a>1. Java NIO Selector</h3><h4 id="1-1-Selector入门"><a href="#1-1-Selector入门" class="headerlink" title="1.1. Selector入门"></a>1.1. <strong>Selector入门</strong></h4><h5 id="1-1-1-Selector的和Channel的关系"><a href="#1-1-1-Selector的和Channel的关系" class="headerlink" title="1.1.1. Selector的和Channel的关系"></a>1.1.1. Selector的和Channel的关系</h5><p>Java NIO的核心组件包括：</p>
+<p>（1）Channel(通道)</p>
+<p>（2）Buffer(缓冲区)</p>
+<p>（3）Selector(选择器)</p>
+<p>其中Channel和Buffer比较好理解 ，联系也比较密切，他们的关系简单来说就是：数据总是从通道中读到buffer缓冲区内，或者从buffer写入到通道中。</p>
+<p>选择器和他们的关系又是什么？</p>
+<a id="more"></a>
+
+<p>选择器（Selector） 是 Channel（通道）的多路复用器，Selector 可以同时监控多个 通道的 IO（输入输出） 状况。</p>
+<p>Selector的作用是什么？</p>
+<p>选择器提供选择执行已经就绪的任务的能力。从底层来看，Selector提供了询问通道是否已经准备好执行每个I/O操作的能力。Selector 允许单线程处理多个Channel。仅用单个线程来处理多个Channels的好处是，只需要更少的线程来处理通道。事实上，可以只用一个线程处理所有的通道，这样会大量的减少线程之间上下文切换的开销。</p>
+<h5 id="1-1-2-可选择通道-SelectableChannel"><a href="#1-1-2-可选择通道-SelectableChannel" class="headerlink" title="1.1.2. 可选择通道(SelectableChannel)"></a>1.1.2. 可选择通道(SelectableChannel)</h5><p>并不是所有的Channel，都是可以被Selector 复用的。比方说，FileChannel就不能被选择器复用。为什么呢？</p>
+<p>判断一个Channel 能被Selector 复用，有一个前提：判断他是否继承了一个抽象类SelectableChannel。如果继承了SelectableChannel，则可以被复用，否则不能。</p>
+<p>SelectableChannel类是何方神圣？</p>
+<p>SelectableChannel类提供了实现通道的可选择性所需要的公共方法。它是所有支持就绪检查的通道类的父类。所有socket通道，都继承了SelectableChannel类都是可选择的，包括从管道(Pipe)对象的中获得的通道。而FileChannel类，没有继承SelectableChannel，因此是不是可选通道。</p>
+<p>通道和选择器注册之后，他们是绑定的关系吗？</p>
+<p>答案是不是。不是一对一的关系。一个通道可以被注册到多个选择器上，但对每个选择器而言只能被注册一次。</p>
+<p>通道和选择器之间的关系，使用注册的方式完成。SelectableChannel可以被注册到Selector对象上，在注册的时候，需要指定通道的哪些操作，是Selector感兴趣的。</p>
+<h5 id="1-1-3-Channel注册到Selector"><a href="#1-1-3-Channel注册到Selector" class="headerlink" title="1.1.3. Channel注册到Selector"></a>1.1.3. Channel注册到Selector</h5><p>使用Channel.register（Selector sel，int ops）方法，将一个通道注册到一个选择器时。</p>
+<p>第一个参数，指定通道要注册的选择器是谁。</p>
+<p>第二个参数指定选择器需要查询的通道操作。</p>
+<p>可以供选择器查询的通道操作，从类型来分，包括以下四种：</p>
+<p>（1）可读 : SelectionKey.OP_READ</p>
+<p>（2）可写 : SelectionKey.OP_WRITE</p>
+<p>（3）连接 : SelectionKey.OP_CONNECT</p>
+<p>（4）接收 : SelectionKey.OP_ACCEPT</p>
+<p>如果Selector对通道的多操作类型感兴趣，可以用“位或”操作符来实现：int key = SelectionKey.OP_READ | SelectionKey.OP_WRITE ;</p>
+<p>注意，操作一词，是一个是使用非常泛滥，也是一个容易混淆的词。特别提醒的是，选择器查询的不是通道的操作，而是通道的某个操作的一种就绪状态。</p>
+<p>什么是操作的就绪状态？</p>
+<p>一旦通道具备完成某个操作的条件，表示该通道的某个操作已经就绪，就可以被Selector查询到，程序可以对通道进行对应的操作。比方说，某个SocketChannel通道可以连接到一个服务器，则处于“连接就绪”(OP_CONNECT)。再比方说，一个ServerSocketChannel服务器通道准备好接收新进入的连接，则处于“接收就绪”（OP_ACCEPT）状态。还比方说，一个有数据可读的通道，可以说是“读就绪”(OP_READ)。一个等待写数据的通道可以说是“写就绪”(OP_WRITE)。</p>
+<h5 id="1-1-4-选择键-SelectionKey"><a href="#1-1-4-选择键-SelectionKey" class="headerlink" title="1.1.4. 选择键(SelectionKey)"></a>1.1.4. 选择键(SelectionKey)</h5><p>Channel和Selector的关系确定好后，并且一旦通道处于某种就绪的状态，就可以被选择器查询到。这个工作，使用选择器Selector的select（）方法完成。select方法的作用，对感兴趣的通道操作，进行就绪状态的查询。</p>
+<p>Selector可以不断的查询Channel中发生的操作的就绪状态。并且挑选感兴趣的操作就绪状态。一旦通道有操作的就绪状态达成，并且是Selector感兴趣的操作，就会被Selector选中，放入选择键集合中。</p>
+<p>一个选择键，首先是包含了注册在Selector的通道操作的类型，比方说SelectionKey.OP_READ。也包含了特定的通道与特定的选择器之间的注册关系。</p>
+<p>开发应用程序是，选择键是编程的关键。NIO的编程，就是根据对应的选择键，进行不同的业务逻辑处理。</p>
+<p>选择键的概念，有点儿像事件的概念。</p>
+<p>选择键和事件的关系是什么？</p>
+<p>一个选择键有点儿像监听器模式里边的一个事件，但是又不是。由于Selector不是事件触发的模式，而是主动去查询的模式，所以不叫事件Event，而是叫SelectionKey选择键。</p>
+<h4 id="1-2-Selector的使用流程"><a href="#1-2-Selector的使用流程" class="headerlink" title="1.2. Selector的使用流程"></a>1.2. <strong>Selector的使用流程</strong></h4><h5 id="1-2-1-创建Selector"><a href="#1-2-1-创建Selector" class="headerlink" title="1.2.1. 创建Selector"></a>1.2.1. 创建Selector</h5><p>Selector对象是通过调用静态工厂方法open()来实例化的，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、获取Selector选择器</span></span><br><span class="line">Selector selector = Selector.open();</span><br></pre></td></tr></table></figure>
+
+<p>Selector的类方法open()内部是向SPI发出请求，通过默认的SelectorProvider对象获取一个新的实例。</p>
+<h5 id="1-2-2-将Channel注册到Selector"><a href="#1-2-2-将Channel注册到Selector" class="headerlink" title="1.2.2. 将Channel注册到Selector"></a>1.2.2. 将Channel注册到Selector</h5><p>要实现Selector管理Channel，需要将channel注册到相应的Selector上，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2、获取通道</span></span><br><span class="line">ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><br><span class="line"><span class="comment">// 3.设置为非阻塞</span></span><br><span class="line">serverSocketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line"><span class="comment">// 4、绑定连接</span></span><br><span class="line">serverSocketChannel.bind(<span class="keyword">new</span> InetSocketAddress(SystemConfig.SOCKET_SERVER_PORT));</span><br><span class="line"><span class="comment">// 5、将通道注册到选择器上,并制定监听事件为：“接收”事件</span></span><br><span class="line">serverSocketChannel.register(selector，SelectionKey.OP_ACCEPT);</span><br></pre></td></tr></table></figure>
+
+<p>上面通过调用通道的register()方法会将它注册到一个选择器上。</p>
+<p>首先需要注意的是：</p>
+<p>与Selector一起使用时，Channel必须处于非阻塞模式下，否则将抛出异常IllegalBlockingModeException。这意味着，FileChannel不能与Selector一起使用，因为FileChannel不能切换到非阻塞模式，而套接字相关的所有的通道都可以。</p>
+<p>另外，还需要注意的是：</p>
+<p>一个通道，并没有一定要支持所有的四种操作。比如服务器通道ServerSocketChannel支持Accept 接受操作，而SocketChannel客户端通道则不支持。可以通过通道上的validOps()方法，来获取特定通道下所有支持的操作集合。</p>
+<h5 id="1-2-3-轮询查询就绪操作"><a href="#1-2-3-轮询查询就绪操作" class="headerlink" title="1.2.3. 轮询查询就绪操作"></a>1.2.3. 轮询查询就绪操作</h5><p>万事俱备，可以开干。下一步是查询就绪的操作。</p>
+<p>通过Selector的select（）方法，可以查询出已经就绪的通道操作，这些就绪的状态集合，包存在一个元素是SelectionKey对象的Set集合中。</p>
+<p>下面是Selector几个重载的查询select()方法：</p>
+<p>（1）select():阻塞到至少有一个通道在你注册的事件上就绪了。</p>
+<p>（2）select(long timeout)：和select()一样，但最长阻塞事件为timeout毫秒。</p>
+<p>（3）selectNow():非阻塞，只要有通道就绪就立刻返回。</p>
+<p>select()方法返回的int值，表示有多少通道已经就绪，更准确的说，是自前一次select方法以来到这一次select方法之间的时间段上，有多少通道变成就绪状态。</p>
+<p>一旦调用select()方法，并且返回值不为0时，下一步工干啥？</p>
+<p>通过调用Selector的selectedKeys()方法来访问已选择键集合，然后迭代集合的每一个选择键元素，根据就绪操作的类型，完成对应的操作：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> readyChannels = selector.select();</span><br><span class="line">    <span class="keyword">if</span> (readyChannels == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Iterator&lt;SelectionKey&gt; iterator = selector.selectedKeys().iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        SelectionKey selectionKey = iterator.next();</span><br><span class="line">        <span class="keyword">if</span> (selectionKey.isAcceptable()) &#123;</span><br><span class="line">            <span class="comment">// a connection was accepted by a ServerSocketChannel.</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selectionKey.isConnectable()) &#123;</span><br><span class="line">            <span class="comment">// a connection was established with a remote server.</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selectionKey.isReadable()) &#123;</span><br><span class="line">            <span class="comment">// a channel is ready for reading</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selectionKey.isWritable()) &#123;</span><br><span class="line">            <span class="comment">// a channel is ready for writing</span></span><br><span class="line">        &#125;</span><br><span class="line">        iterator.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>处理完成后，直接将选择键，从这个集合中移除，防止下一次循环的时候，被重复的处理。键可以但不能添加。试图向已选择的键的集合中添加元素将抛出java.lang.UnsupportedOperationException。</p>
+<p>注意每次迭代末尾的keyIterator.remove()调用。Selector不会自己从已选择键集中移除SelectionKey实例。必须在处理完通道时自己移除。下次该通道变成就绪时，Selector会再次将其放入已选择键集中。</p>
+<p>SelectionKey.channel()方法返回的通道需要转型成你要处理的类型，如ServerSocketChannel或SocketChannel等。</p>
+<h4 id="1-3-一个NIO-编程的简单实例"><a href="#1-3-一个NIO-编程的简单实例" class="headerlink" title="1.3. 一个NIO 编程的简单实例"></a>1.3. <strong>一个NIO 编程的简单实例</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.cg.test.NIO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.SelectionKey;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.Selector;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.ServerSocketChannel;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.SocketChannel;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: JavaSourceLearm-&gt;SelectorDemo</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: cg</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020-05-23 14:28</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectorDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 客户端</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testClient</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            InetSocketAddress address = <span class="keyword">new</span> InetSocketAddress(<span class="string">"localhost"</span>, <span class="number">8888</span>);</span><br><span class="line">            <span class="comment">// 1、获取通道（channel）</span></span><br><span class="line">            SocketChannel socketChannel = SocketChannel.open(address);</span><br><span class="line">            <span class="comment">// 2、切换成非阻塞模式</span></span><br><span class="line">            socketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">            <span class="comment">// 3、分配指定大小的缓冲区</span></span><br><span class="line">            ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">            byteBuffer.put(<span class="string">"hello world  "</span>.getBytes());</span><br><span class="line">            byteBuffer.flip();</span><br><span class="line">            socketChannel.write(byteBuffer);</span><br><span class="line">            System.out.println(<span class="string">"客户端数据发送完成！"</span>);</span><br><span class="line">            socketChannel.close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            testClient();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testServer</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            <span class="comment">// 1、获取Selector选择器</span></span><br><span class="line">            Selector selector = Selector.open();</span><br><span class="line">            <span class="comment">// 2、获取通道</span></span><br><span class="line">            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><br><span class="line">            <span class="comment">// 3.设置为非阻塞</span></span><br><span class="line">            serverSocketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">            <span class="comment">// 4、绑定连接</span></span><br><span class="line">            serverSocketChannel.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8888</span>));</span><br><span class="line">            <span class="comment">// 5、将通道注册到选择器上,并注册的操作为：“接收”操作</span></span><br><span class="line">            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line">            <span class="comment">// 6、采用轮询的方式，查询获取“准备就绪”的注册过的操作</span></span><br><span class="line">            <span class="keyword">while</span> (selector.select() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 7、获取当前选择器中所有注册的选择键（“已经准备就绪的操作”）</span></span><br><span class="line">                Iterator&lt;SelectionKey&gt; selectedKeys = selector.selectedKeys().iterator();</span><br><span class="line">                <span class="keyword">while</span> (selectedKeys.hasNext()) &#123;</span><br><span class="line">                    <span class="comment">// 8、获取“准备就绪”的时间</span></span><br><span class="line">                    SelectionKey selectedKey = selectedKeys.next();</span><br><span class="line">                    <span class="comment">// 9、判断key是具体的什么事件</span></span><br><span class="line">                    <span class="keyword">if</span> (selectedKey.isAcceptable()) &#123;</span><br><span class="line">                        <span class="comment">// 10、若接受的事件是“接收就绪” 操作,就获取客户端连接</span></span><br><span class="line">                        SocketChannel socketChannel = serverSocketChannel.accept();</span><br><span class="line">                        <span class="comment">// 11、切换为非阻塞模式</span></span><br><span class="line">                        socketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">                        <span class="comment">// 12、将该通道注册到selector选择器上</span></span><br><span class="line">                        socketChannel.register(selector, SelectionKey.OP_READ);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selectedKey.isReadable()) &#123;</span><br><span class="line">                        <span class="comment">// 13、获取该选择器上的“读就绪”状态的通道</span></span><br><span class="line">                        SocketChannel socketChannel = (SocketChannel) selectedKey.channel();</span><br><span class="line">                        <span class="comment">// 14、读取数据</span></span><br><span class="line">                        ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">                        <span class="keyword">int</span> length = <span class="number">0</span>;</span><br><span class="line">                        <span class="keyword">while</span> ((length = socketChannel.read(byteBuffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                            byteBuffer.flip();</span><br><span class="line">                            System.out.println(<span class="string">"客户端发送的数据为："</span>+<span class="keyword">new</span> String(byteBuffer.array(), <span class="number">0</span>, length));</span><br><span class="line">                            byteBuffer.clear();</span><br><span class="line">                        &#125;</span><br><span class="line">                        socketChannel.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 15、移除选择键</span></span><br><span class="line">                    selectedKeys.remove();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 7、关闭连接</span></span><br><span class="line">            serverSocketChannel.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            testServer();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-NIO编程小结"><a href="#2-NIO编程小结" class="headerlink" title="2. NIO编程小结"></a>2. <strong>NIO编程小结</strong></h3><p>NIO编程的难度比同步阻塞BIO大很多。</p>
+<p>请注意以上的代码中并没有考虑“半包读”和“半包写”，如果加上这些，代码将会更加复杂。</p>
+<p>（1）客户端发起的连接操作是异步的，可以通过在多路复用器注册OP_CONNECT等待后续结果，不需要像之前的客户端那样被同步阻塞。</p>
+<p>（2）SocketChannel的读写操作都是异步的，如果没有可读写的数据它不会同步等待，直接返回，这样I/O通信线程就可以处理其他的链路，不需要同步等待这个链路可用。</p>
+<p>（3）线程模型的优化：由于JDK的Selector在Linux等主流操作系统上通过epoll实现，它没有连接句柄数的限制（只受限于操作系统的最大句柄数或者对单个进程的句柄限制），这意味着一个Selector线程可以同时处理成千上万个客户端连接，而且性能不会随着客户端的增加而线性下降。因此，它非常适合做高性能、高负载的网络服务器。</p>
+<p>学习于<a href="https://www.cnblogs.com/crazymakercircle/p/9826906.html" target="_blank" rel="noopener">疯狂创客圈</a></p>
+
+    </div>
+
+    
+    
+    
+
+    
+    <div>    
+      
+        <ul class="post-copyright">
+          <li class="post-copyright-link">
+          <strong>本文作者：</strong>
+          <a href="/" title="欢迎访问 Chenyumeng 的个人博客">Chenyumeng</a>
+          </li>
+
+          <li class="post-copyright-link">
+            <strong>本文标题：</strong>
+            <a href="http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/" title="Java NIO Selector">Java NIO Selector</a>
+          </li>
+
+          <li class="post-copyright-link">
+            <strong>本文链接：</strong>
+            <a href="http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/" title="Java NIO Selector">http://chen-yumeng.github.io/2020/05/23/Java%20NIO%20Selector/</a>
+          </li>
+
+          <li class="post-copyright-date">
+            <strong>发布时间： </strong>2020年5月23日 - 14时05分
+          </li>  
+
+          <li class="post-copyright-license">
+            <strong>版权声明： </strong>
+            本文由 Chenyumeng 原创。
+          </li>
+        </ul>
+      
+    </div>
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\22\Java NIO Buffer\" rel="bookmark">Java NIO Buffer</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\23\Java NIO Channel\" rel="bookmark">Java NIO Channel</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\03\16\linux JDK安装\" rel="bookmark">linux JDK安装</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\03\15\ZooKeeper\" rel="bookmark">ZooKeeper单机与集群安装笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\03\15\centOs7_Redis\" rel="bookmark">centOs7下安装Redis记录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chenyumeng 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chenyumeng 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+            
+              <a href="/" rel="tag"><i class="fa fa-tag"></i> </a>
+            
+              <a href="/" rel="tag"><i class="fa fa-tag"></i> </a>
+            
+              <a href="/" rel="tag"><i class="fa fa-tag"></i> </a>
+            
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/23/Java%20NIO%20Channel/" rel="prev" title="Java NIO Channel">
+      <i class="fa fa-chevron-left"></i> Java NIO Channel
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+    <!-- 引入share.js -->
+    
+      <div data-weibo-title="分享到微博" data-qq-title="分享到QQ" data-douban-title="分享到豆瓣" class="social-share" class="share-component" data-disabled="twitter,facebook" data-description="Share.js - 一键分享到微博，QQ空间，腾讯微博，人人，豆瓣">分享到：</div>
+    
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80OTExNy8yNTYxMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Java-NIO-Selector"><span class="nav-number">1.</span> <span class="nav-text">1. Java NIO Selector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Selector入门"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. Selector入门</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-Selector的和Channel的关系"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1. Selector的和Channel的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-2-可选择通道-SelectableChannel"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2. 可选择通道(SelectableChannel)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-Channel注册到Selector"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3. Channel注册到Selector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-选择键-SelectionKey"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4. 选择键(SelectionKey)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-Selector的使用流程"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. Selector的使用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-创建Selector"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1. 创建Selector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-将Channel注册到Selector"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2. 将Channel注册到Selector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-3-轮询查询就绪操作"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3. 轮询查询就绪操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-一个NIO-编程的简单实例"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 一个NIO 编程的简单实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-NIO编程小结"><span class="nav-number">2.</span> <span class="nav-text">2. NIO编程小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chenyumeng"
+      src="/images/touxiang.JPG">
+  <p class="site-author-name" itemprop="name">Chenyumeng</p>
+  <div class="site-description" itemprop="description">用来记录自己学习中所遇到的问题以及如何解决和自己所学知识的理解</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chen-yumeng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chen-yumeng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3123221441" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3123221441" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/" title="https:&#x2F;&#x2F;github.com&#x2F;" rel="noopener" target="_blank">Github</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chenyumeng</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">320k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:51</span>
+</div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+              leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : '',
+            'X-LC-Key'    : '',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+  <script src="/dist/js/social-share.min.js"></script>
+</body>
+</html>
